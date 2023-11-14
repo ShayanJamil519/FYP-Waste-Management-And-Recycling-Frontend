@@ -1,5 +1,7 @@
 import { Inter } from 'next/font/google'
 import LayoutWrapper from './LayoutWrapper'
+import Header from '@/components/Shared/Header'
+import Footer from '@/components/Shared/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,7 +15,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <LayoutWrapper>
+          <Header />
           {children}
+          <Footer />
         </LayoutWrapper>
       </body>
     </html>

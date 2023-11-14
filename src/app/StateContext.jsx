@@ -5,7 +5,21 @@ const StateContext = createContext({});
 
 // Create a provider component
 export function StateProvider({ children }) {
-  return <StateContext.Provider value={{}}>{children}</StateContext.Provider>;
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openSignupModal, setOpenSignupModal] = useState(false);
+
+  return (
+    <StateContext.Provider
+      value={{
+        openLoginModal,
+        setOpenLoginModal,
+        openSignupModal,
+        setOpenSignupModal,
+      }}
+    >
+      {children}
+    </StateContext.Provider>
+  );
 }
 
 // Custom hook to access the context
