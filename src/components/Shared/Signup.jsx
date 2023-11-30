@@ -11,13 +11,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import SwiperCore from "swiper";
+import { signupSliderImages } from "@/app/data";
 
 const SignUp = () => {
   const { setOpenSignupModal, setOpenLoginModal } = useStateContext();
 
   return (
-    <div className=" flex items-center justify-center fixed top-0 left-0 right-0 w-full px-4 overflow-x-hidden overflow-y-auto  h-full z-10 bg-black bg-opacity-50 my-4 lg:p-0 ">
-      <div className="w-[90%] mx-auto sm:w-[70%] lg:w-[1062px]  bg-[#CA2981] flex rounded-[15px] sm:rounded-[20px] flex-col lg:flex-row ">
+    <div className=" flex items-center justify-center fixed top-0 left-0 right-0 w-full px-4 overflow-x-hidden   h-screen z-10 bg-black bg-opacity-80 lg:p-0 ">
+      <div className="w-[90%] mx-auto sm:w-[70%] lg:w-[80%]  bg-[#32A632] flex rounded-[15px] sm:rounded-[20px] flex-col lg:flex-row ">
         <div
           className="text-end mx-2 sm:mx-5 mt-3 sm:mt-7  block lg:hidden"
           onClick={() => setOpenSignupModal(false)}
@@ -39,15 +40,12 @@ const SignUp = () => {
           >
             {signupSliderImages.map((slide, index) => (
               <SwiperSlide key={index} className="z-10">
-                <div className="h-[200px] rounded-2xl mx-auto w-full lg:h-[450px] relative">
+                <div className="h-[200px] rounded-2xl mx-auto w-full lg:h-[420px] relative">
                   <img
                     src={slide.image}
                     alt="logo"
                     className="w-full h-full rounded-2xl"
                   />
-                  <p className="sm:px-4 sm:py-2 py-1 px-2 bg-[#806D67] rounded-full text-white  absolute bottom-5 left-1/3  z-20 text-[9px] md:text-[12px] lg:text-[18px]">
-                    Nora Fatehi
-                  </p>
                 </div>
                 <div className="h-7 sm:h-10"></div>
               </SwiperSlide>
@@ -60,15 +58,15 @@ const SignUp = () => {
             className="text-end hidden lg:block"
             onClick={() => setOpenSignupModal(false)}
           >
-            <button className="bg-[#CA2981] text-white p-1 rounded-full mt-2">
+            <button className="bg-[#32A632] text-white p-1 rounded-full mt-2">
               <FaTimes />
             </button>
           </div>
-          <p className="text-[#D42978] font-satisfy text-[12px] sm:text-[16px] lg:text-2xl mt-1 sm:my-0 lg:mb-3">
+          <p className="text-[#32A632] font-satisfy text-[12px] sm:text-[16px] lg:text-2xl mt-1 sm:my-0 lg:mb-3">
             Welcome
           </p>
           <h2 className="font-extrabold text-[20px]  lg:text-3xl">
-            Sign up with FanGram
+            Sign up with RecySense
           </h2>
           <div className="flex mt-1 sm:mt-1 lg:mt-6">
             <div className="bg-[#EAEAEA] p-2 rounded-full w-[30px] h-[30px] lg:w-[50px] lg:h-[50px] flex items-center justify-center">
@@ -94,7 +92,7 @@ const SignUp = () => {
             </div>
             <div
               className="bg-[#EAEAEA] p-2 rounded-full ml-3 w-[30px] h-[30px] lg:w-[50px] lg:h-[50px] flex items-center justify-center "
-              onClick={handleGoogleLogin}
+              // onClick={handleGoogleLogin}
             >
               <svg
                 width="24"
@@ -192,7 +190,7 @@ const SignUp = () => {
             <div className="grid place-items-center mt-4">
               <button
                 type="submit"
-                className="bg-[#CA2981] text-white rounded-full py-2 px-24 text-[10px] lg:text-lg"
+                className="bg-[#32A632] text-white rounded-full py-2 px-24 text-[10px] lg:text-lg"
               >
                 Sign up
               </button>
@@ -203,7 +201,7 @@ const SignUp = () => {
             Already on FanGram?
             <span
               href="#"
-              className="text-[#CA2981] ml-1 underline cursor-pointer"
+              className="text-[#32A632] ml-1 underline cursor-pointer"
               onClick={() => {
                 setOpenSignupModal(false);
                 setOpenLoginModal(true);

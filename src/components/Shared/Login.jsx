@@ -6,12 +6,12 @@ const Login = () => {
   const { setOpenSignupModal, setOpenLoginModal } = useStateContext();
 
   return (
-    <div className="w-full  flex items-center justify-center fixed left-0 right-0 top-0 bottom-0 z-10 bg-black bg-opacity-50">
-      <div className="w-[85%] md:w-[70%] lg:w-fit  bg-white rounded-xl  ">
-        <div className="lg:w-[584px] lg:h-[511px] border-2 rounded-xl">
+    <div className="w-full  flex items-center justify-center fixed left-0 right-0 top-0 bottom-0 z-10 bg-black bg-opacity-80">
+      <div className="w-[85%] md:w-[70%] lg:w-[40%] mx-auto  bg-white rounded-xl  ">
+        <div className="w-full mx-auto border-2 rounded-xl">
           <div className="text-end ">
             <button
-              className="bg-[#CA2981] text-white p-1 rounded-full mt-2 mr-2"
+              className="bg-[#32A632] text-white p-1 rounded-full mt-2 mr-2"
               onClick={() => {
                 setOpenLoginModal(false);
               }}
@@ -21,7 +21,7 @@ const Login = () => {
           </div>
           <div className="px-4 lg:px-10">
             <h2 className="font-extrabold text-[20px] lg:text-3xl lg:my-6">
-              Login with FanGram
+              Login with RecySense
             </h2>
             <div className="flex mt-3 sm:mt-1 lg:mt-6">
               <div className="bg-[#EAEAEA] p-2 rounded-full w-[30px] h-[30px] lg:w-[50px] lg:h-[50px] flex items-center justify-center">
@@ -133,7 +133,7 @@ const Login = () => {
               <div className="grid place-items-center mt-6">
                 <button
                   type="submit"
-                  className="bg-[#CA2981] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24"
+                  className="bg-[#32A632] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24"
                 >
                   Login
                 </button>
@@ -143,7 +143,7 @@ const Login = () => {
               Not on FanGram?
               <Link
                 href="#"
-                className="text-[#CA2981] ml-1 underline cursor-pointer"
+                className="text-[#32A632] ml-1 underline cursor-pointer"
                 onClick={() => {
                   setOpenLoginModal(false);
                   setOpenSignupModal(true);

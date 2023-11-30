@@ -40,15 +40,31 @@ const Header = () => {
   };
 
   return (
-    <div className=" bg-[#000] py-3 border-b-[1px] border-[#4b4b4b]">
-      <div className="w-[90%] md:w-[85%] mx-auto flex justify-between items-center">
+    <div className=" bg-[#000] py-4 border-b-[1px] border-[#4b4b4b]">
+      <div className="w-[90%] md:w-[90%] mx-auto flex justify-between items-center">
         <div className="flex w-full justify-between items-center gap-16">
-          <Link href="/" className="lg:block hidden">
-            <img src="/images/header__logo.png" alt="logo" />
-          </Link>
-          <Link href="/" className="lg:hidden block">
-            <img src="/images/header__logo__small.png" alt="logo" />
-          </Link>
+          <div className="lg:flex justify-start items-center gap-3  hidden ">
+            <Link href="/">
+              <img
+                src="/shared/header__logo.png"
+                alt="logo"
+                className="w-[50px]"
+              />
+            </Link>
+            <h1 className="text-[#fff]">RecySense</h1>
+          </div>
+
+          <div className="lg:hidden block">
+            <Link href="/">
+              <img
+                src="/shared/header__logo__small.png"
+                alt="logo"
+                className="w-[50px]"
+              />
+            </Link>
+            <h1 className="text-[#fff]">RecySense</h1>
+          </div>
+
           <div className="hidden lg:flex justify-start items-center gap-10">
             <div className="flex justify-start items-center gap-10">
               {headerLinks.map((item, index) => (
@@ -58,8 +74,8 @@ const Header = () => {
                 >
                   <Link
                     className={`${
-                      location.pathname === item.linkTo
-                        ? "text-[#D42978]"
+                      router.pathname === item.linkTo
+                        ? "text-[#32A632]"
                         : "text-[#fff]"
                     }`}
                     key={index}
@@ -69,7 +85,7 @@ const Header = () => {
                   </Link>
 
                   {router.pathname === item.linkTo && (
-                    <div className="bg-[#D42978] h-[1px] w-[80%]"></div>
+                    <div className="bg-[#32A632] h-[1px] w-[80%]"></div>
                   )}
                 </div>
               ))}
@@ -82,7 +98,7 @@ const Header = () => {
                 <Link href="/promotion">Promote My Business</Link>
               </button>
               <button
-                className="outline-none lg:text-base text-[14px] py-[5px] sm:py-2 px-3 sm:px-4  rounded-[40px] bg-[#D42978] text-[#fff]"
+                className="outline-none lg:text-base text-[14px] py-[5px] sm:py-2 px-3 sm:px-4  rounded-[40px] bg-[#32A632] text-[#fff]"
                 onClick={() => setOpenLoginModal(true)}
               >
                 Login/Signup
@@ -124,7 +140,7 @@ const Header = () => {
           <Link
             href={"/promotion"}
             onClick={handleNavbar}
-            className="text-center text-sm py-2 px-4  text-white bg-[#D42978] hover:shadow-lg block w-full mb-2 rounded-[16px] capitalize shadow-none"
+            className="text-center text-sm py-2 px-4  text-white bg-[#32A632] hover:shadow-lg block w-full mb-2 rounded-[16px] capitalize shadow-none"
           >
             <span>Promote My Business</span>
           </Link>

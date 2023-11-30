@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* button  32A632 */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.no-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.hero__caurosel
+  .swiper-pagination
+  .swiper-pagination-bullets
+  .swiper-pagination-horizontal {
+  margin-top: 4rem !important;
+}
+
+.hero__caurosel .swiper-pagination-bullet-active {
+  background: #fff !important;
+}
+
+.hero__caurosel .swiper-pagination-bullet {
+  background: #dbdbdb !important;
+}
