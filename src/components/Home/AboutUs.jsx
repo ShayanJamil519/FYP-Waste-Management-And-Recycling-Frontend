@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -26,13 +27,18 @@ const AboutUs = () => {
               Reliable and trusted services to meet all your waste requirements,
               feel free to request a free quote today!!
             </p>
-            <div className="group flex justify-start items-center gap-3 mt-2 cursor-pointer transition duration-500 hover:scale-125">
+            <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
               <span className="text-[#257830] text-[15px] font-semibold font-poppins">
                 Contact Us Now
               </span>
-              <span className="p-1 rounded-full bg-[#257830] group-hover:scale-125 transition-transform   text-[#fff] ">
+              <span className="p-1 rounded-full bg-[#257830] transition duration-500  text-[#fff] ">
                 <IoIosArrowRoundForward className="text-[25px] font-bold" />
               </span>{" "}
+              <style jsx>{`
+                .hover_effect:hover span:nth-child(2) {
+                  transform: scale(1.2);
+                }
+              `}</style>
             </div>
           </div>
         </div>
@@ -47,14 +53,21 @@ const AboutUs = () => {
               We understand that we must lead by example and are committed to
               further improving health.
             </p>
-            <div className="group flex justify-start items-center gap-3 mt-3 cursor-pointer transition duration-500 hover:scale-125">
-              <span className="p-0 rounded-full bg-[#fff] group-hover:scale-125 transition-transform   text-[#257830] ">
+
+            <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
+              <span className="p-0 rounded-full bg-[#fff] transition duration-500  text-[#257830] ">
                 <IoIosArrowRoundForward className="text-[23px] font-bold" />
               </span>{" "}
+              <style jsx>{`
+                .hover_effect:hover span:nth-child(1) {
+                  transform: scale(1.2);
+                }
+              `}</style>
               <span className="text-[#fff] text-[14px] font-semibold font-poppins">
                 Explore More
               </span>
             </div>
+
             <img
               src="/home/about__icon1.png"
               alt="logo"
@@ -68,10 +81,15 @@ const AboutUs = () => {
               Almost 6000 employees to carry out all essential operations daily
               to support our economy.
             </p>
-            <div className="group flex justify-start items-center gap-3 mt-3 cursor-pointer transition duration-500 hover:scale-125">
-              <span className="p-0 rounded-full bg-[#fff] group-hover:scale-125 transition-transform   text-[#f29620] ">
+            <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
+              <span className="p-0 rounded-full bg-[#fff] transition duration-500  text-[#f29620] ">
                 <IoIosArrowRoundForward className="text-[23px] font-bold" />
               </span>{" "}
+              <style jsx>{`
+                .hover_effect:hover span:nth-child(1) {
+                  transform: scale(1.2);
+                }
+              `}</style>
               <span className="text-[#fff] text-[14px] font-semibold font-poppins">
                 Explore More
               </span>
