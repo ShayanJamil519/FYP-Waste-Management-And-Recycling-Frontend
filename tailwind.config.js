@@ -9,7 +9,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {},
+      fontFamily: {
+        paralucent: "var(--font-paralucent)",
+        poppins: "var(--font-poppins)",
+      },
+
+      backgroundImage: {
+        hero__slider__1: "url('/home/hero__slider1.jpg')",
+      },
     },
   },
   plugins: [],

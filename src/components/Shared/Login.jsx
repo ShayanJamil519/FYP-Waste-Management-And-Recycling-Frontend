@@ -6,7 +6,7 @@ const Login = () => {
   const { setOpenSignupModal, setOpenLoginModal } = useStateContext();
 
   return (
-    <div className="w-full  flex items-center justify-center fixed left-0 right-0 top-0 bottom-0 z-10 bg-black bg-opacity-80">
+    <div className="w-full  flex items-center justify-center fixed left-0 right-0 top-0 bottom-0 z-50 bg-black bg-opacity-80">
       <div className="w-[85%] md:w-[70%] lg:w-[40%] mx-auto  bg-white rounded-xl  ">
         <div className="w-full mx-auto border-2 rounded-xl">
           <div className="text-end ">

@@ -18,7 +18,7 @@ const headerLinks = [
   },
 
   {
-    linkText: "How to Fangram",
+    linkText: "How to Join",
     linkTo: "/how_to_fangram",
   },
 
@@ -40,7 +40,7 @@ const Header = () => {
   };
 
   return (
-    <div className=" bg-[#000] py-4 border-b-[1px] border-[#4b4b4b]">
+    <div className=" bg-[#fff] py-4 border-b-[1px] text-[#000]">
       <div className="w-[90%] md:w-[90%] mx-auto flex justify-between items-center">
         <div className="flex w-full justify-between items-center gap-16">
           <div className="lg:flex justify-start items-center gap-3  hidden ">
@@ -51,7 +51,7 @@ const Header = () => {
                 className="w-[50px]"
               />
             </Link>
-            <h1 className="text-[#fff]">RecySense</h1>
+            <h1 className="text-[#000]">RecySense</h1>
           </div>
 
           <div className="lg:hidden block">
@@ -62,7 +62,7 @@ const Header = () => {
                 className="w-[50px]"
               />
             </Link>
-            <h1 className="text-[#fff]">RecySense</h1>
+            <h1 className="text-[#000]">RecySense</h1>
           </div>
 
           <div className="hidden lg:flex justify-start items-center gap-10">
@@ -76,7 +76,7 @@ const Header = () => {
                     className={`${
                       router.pathname === item.linkTo
                         ? "text-[#32A632]"
-                        : "text-[#fff]"
+                        : "text-[#000]"
                     }`}
                     key={index}
                     href={item.linkTo}
@@ -94,7 +94,7 @@ const Header = () => {
 
           <div className="flex justify-between items-center gap-3 md:gap-5">
             <div className="flex justify-between items-center gap-3 md:gap-5">
-              <button className="hidden lg:block outline-none border-[1px] py-2 px-4 rounded-[40px] border-[#fff] text-[#fff]">
+              <button className="hidden lg:block outline-none border-[1px] py-2 px-4 rounded-[40px] border-[#000] text-[#000]">
                 <Link href="/promotion">Promote My Business</Link>
               </button>
               <button
@@ -128,7 +128,7 @@ const Header = () => {
               <li
                 key={item.linkTo}
                 onClick={handleNavbar}
-                className={`text-[#fff] block antialiased font-sans text-sm leading-normal  p-1  lg:transition-transform lg:hover:scale-105`}
+                className={`text-[#000] block antialiased font-sans text-sm leading-normal  p-1  lg:transition-transform lg:hover:scale-105`}
               >
                 <Link className="flex items-center" href={item.linkTo}>
                   {item.linkText}
@@ -140,7 +140,7 @@ const Header = () => {
           <Link
             href={"/promotion"}
             onClick={handleNavbar}
-            className="text-center text-sm py-2 px-4  text-white bg-[#32A632] hover:shadow-lg block w-full mb-2 rounded-[16px] capitalize shadow-none"
+            className="text-center text-sm py-2 px-4  text-[#000] bg-[#32A632] hover:shadow-lg block w-full mb-2 rounded-[16px] capitalize shadow-none"
           >
             <span>Promote My Business</span>
           </Link>

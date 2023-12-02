@@ -1,10 +1,21 @@
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import LayoutWrapper from "./LayoutWrapper";
 import "./globals.css";
 import Header from "@/components/Shared/Header";
 import Footer from "@/components/Shared/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const PoppinsFont = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+  style: ["normal"],
+  variable: "--font-poppins",
+});
+const Paralucent = localFont({
+  src: "../../public/fonts/Paralucent-Bold.ttf",
+  subsets: ["latin"],
+  variable: "--font-paralucent",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +25,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${PoppinsFont.variable} ${Paralucent.variable}`}>
         <LayoutWrapper>
           <Header />
           {children}
