@@ -12,24 +12,44 @@ import "swiper/css/scrollbar";
 import SwiperCore from "swiper";
 import { useRouter } from "next/navigation";
 import { heroSliderImages } from "@/app/data";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 SwiperCore.use([Navigation, Pagination]);
 
 const Hero = () => {
-  const [value, setValue] = useState();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2, // Adjust this threshold as needed
+  });
+
+  const variants = {
+    hidden: { opacity: 0, x: "-100vw" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 1, ease: "easeOut" },
+    },
+  };
 
   const navigate = useRouter();
 
   return (
     <div className=" flex  relative min-h-[90vh] w-full ">
       <div
+        ref={ref}
         style={{
           background:
             "linear-gradient( 135deg, rgba(0, 0, 0, 0.7) 45%, rgba(0, 0, 0, 0.2)), url('/home/hero__slider1.jpg') no-repeat center center/cover",
         }}
         className="w-[full] px-10 flex justify-start items-center"
       >
-        <div className="w-[55%] text-[#fff] ">
+        <motion.div
+          className="w-[55%] text-[#fff]"
+          variants={variants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+        >
           <h1 className="font-paralucent text-[80px] leading-[80px]">
             Competitive And Reliable Business Waste Collection!
           </h1>
@@ -57,7 +77,7 @@ const Hero = () => {
               More About Us!
             </button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
