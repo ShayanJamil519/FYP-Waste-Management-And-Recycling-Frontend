@@ -46,3 +46,31 @@ body {
 .hero__caurosel .swiper-pagination-bullet {
   background: #dbdbdb !important;
 }
+
+/* Home Page */
+
+/* How It Works Section */
+@keyframes rotating {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.rotating {
+  animation: rotating 10s linear infinite;
+}
+
+@keyframes bubble-shadow {
+  0% {
+    box-shadow: 0 0 0 0px rgba(37, 120, 48, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 25px rgba(37, 120, 48, 0);
+  }
+}
+
+.shadow-bubble:hover {
+  animation: bubble-shadow 0.8s forwards infinite;
+}
