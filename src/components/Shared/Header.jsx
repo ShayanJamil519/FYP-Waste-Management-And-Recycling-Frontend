@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion, useAnimation, useScroll } from "framer-motion";
 import { useStateContext } from "@/app/StateContext";
 import Login from "./Login";
 import SignUp from "./Signup";
@@ -31,7 +30,6 @@ const headerLinks = [
 
 const Header = () => {
   const router = useRouter();
-  const { scrollYProgress } = useScroll();
 
   const { openLoginModal, setOpenLoginModal, openSignupModal } =
     useStateContext();
@@ -41,28 +39,8 @@ const Header = () => {
     setOpenNavbar(!openNavbar);
   };
 
-  const controls = useAnimation();
-
-  const handleScroll = () => {
-    if (scrollYProgress) {
-      controls.start({ opacity: 1, y: "0%" });
-    } else {
-      controls.start({ opacity: 0, y: "-100%" });
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <div
-      className="bg-[#fff] font-poppins py-4 border-b-[1px] text-[#000] block z-50  sticky top-0 left-0 right-0 backdrop-saturate-200 backdrop-blur-2xl bg-opacity-90"
-      // initial={{ opacity: 1, y: "0%" }}
-      // animate={controls}
-      // transition={{ duration: 0.2 }}
-    >
+    <div className="bg-[#fff] font-poppins py-3 border-b-[1px] text-[#000] block z-50  sticky top-0 left-0 right-0 backdrop-saturate-200 backdrop-blur-2xl bg-opacity-90">
       <div className="w-[90%] md:w-[90%] mx-auto flex justify-between items-center">
         <div className="flex w-full justify-between items-center gap-16">
           <div className="lg:flex justify-start items-center gap-3  hidden ">

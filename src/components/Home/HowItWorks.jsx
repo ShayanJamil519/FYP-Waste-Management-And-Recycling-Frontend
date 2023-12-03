@@ -52,7 +52,7 @@ const HowItWorks = () => {
             background:
               "url('/home/how__it__works1.jpg') no-repeat center center/cover",
           }}
-          className="w-[60%] h-[550px] rounded-3xl relative"
+          className="w-[60%] h-[550px] rounded-3xl sticky top-20 bottom-0"
         >
           <div className="absolute -left-12 bottom-28  w-full  h-48 flex justify-center items-stretch">
             <div className="w-[15%] bg-[#f29620] grid place-items-center rounded-s-xl cursor-pointer transition duration-500 ease-in-out hover:bg-[#257830]">
