@@ -95,7 +95,7 @@ const Header = () => {
           <div className="flex justify-between items-center gap-3 md:gap-5">
             <div className="flex justify-between items-center gap-3 md:gap-5">
               <button className="hidden lg:block outline-none border-[1px] py-2 px-4 rounded-[40px] border-[#000] text-[#000]">
-                <Link href="/promotion">Promote My Business</Link>
+                <Link href="/complain">Make a Complain</Link>
               </button>
               <button
                 className="outline-none lg:text-base text-[14px] py-[5px] sm:py-2 px-3 sm:px-4  rounded-[40px] bg-[#32A632] text-[#fff]"
