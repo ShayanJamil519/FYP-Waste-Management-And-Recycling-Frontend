@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StateProvider } from "./StateContext";
+// import { ReactQueryDevtools } from "react-query/devtools";
 
 // import { StateProvider } from "@/Context/StateContext";
 
@@ -17,8 +18,9 @@ export default function LayoutWrapper({ children }) {
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <StateProvider>
-        <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient} contextSharing={true}>
           {children}
+          {/* <ReactQueryDevtools /> */}
         </QueryClientProvider>
       </StateProvider>
     </>

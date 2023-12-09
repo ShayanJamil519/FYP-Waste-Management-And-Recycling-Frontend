@@ -1,9 +1,54 @@
+"use client";
 import { FaTimes } from "react-icons/fa";
 import { useStateContext } from "@/app/StateContext";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useUserLogin } from "../../hooks/auth-hook";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Login = () => {
+  
   const { setOpenSignupModal, setOpenLoginModal } = useStateContext();
+  const router = useRouter();
+  const [userData, setUserData] = useState({
+    name: "",
+    password: "",
+  });
+
+  const {
+    mutate: addMutate,
+  } = useUserLogin(JSON.stringify(userData));
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+          if (response?.data?.error) {
+            toast.error(response?.data?.error);
+          }
+          if (response?.data?.message) {
+            console.log("abc");
+            console.log(response);
+            toast.success(response?.data?.message);
+            localStorage.setItem("email", userData.email);
+            router.back();
+          }
+        },
+      }
+    );
+  };
 
   return (
     <div className="w-full  flex items-center justify-center fixed top-0 left-0 right-0 h-screen z-50 bg-black bg-opacity-80">
@@ -111,13 +156,13 @@ const Login = () => {
               <p className="text-[10px] sm:text-sm">Or Continue With Email</p>
               <div className="h-[1px] bg-[#C9C6C6] w-1/2 sm:w-[60%]"></div>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mt-4">
                 <input
-                  type="email"
-                  name="email"
+                  type="text"
+                  name="name"
                   required
-                  //   onChange={handleInputChange}
+                  onChange={handleInputChange}
                   placeholder="Enter Your Email Address"
                   className="text-[10px] lg:text-base px-2 md:px-4 w-full py-3 rounded-lg outline-none bg-[#EAEAEA]"
                 />
@@ -125,7 +170,7 @@ const Login = () => {
                   type="text"
                   name="password"
                   required
-                  //   onChange={handleInputChange}
+                  onChange={handleInputChange}
                   placeholder="Password"
                   className="text-[10px]  py-3 lg:text-base px-2 md:px-4 w-full rounded-lg outline-none mt-3 bg-[#EAEAEA]"
                 />

@@ -1,5 +1,16 @@
+"use client";
+// import Link from "next/link";
+// import { IoIosArrowBack } from "react-icons/io";
+// import RequestLoader from "../shared/RequestLoader";
+// import { useQuery } from 'react-query';
+// import axios from "axios";
+// import { useMutation } from "@tanstack/react-query";
+import { useUserSignup } from "../../hooks/auth-hook";
+import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 import { useStateContext } from "@/app/StateContext";
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
 
 // slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -13,8 +24,60 @@ import "swiper/css/scrollbar";
 import SwiperCore from "swiper";
 import { signupSliderImages } from "@/app/data";
 
+
+
 const SignUp = () => {
+  
   const { setOpenSignupModal, setOpenLoginModal } = useStateContext();
+  const router = useRouter();
+
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    ethAddress: "",
+    district: "",
+    subDivision: "",
+    area: "",
+    avatar: "",
+  });
+
+  const {
+    mutate: addMutate,
+  } = useUserSignup(JSON.stringify(userData));
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // if (userData.password !== confirmPassword) {
+    //   toast.error("Passwords doesn't match");
+    //   return;
+    // }
+
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+          if (response?.data?.error) {
+            toast.error(response?.data?.error);
+          }
+          if (response?.data?.message) {
+            toast.success(response?.data?.message);
+            router.push("/login");
+          }
+        },
+      }
+    );
+  };
 
   return (
     <div className=" flex items-center justify-center fixed top-0 left-0 right-0 w-full px-4 overflow-x-hidden   h-screen z-50 bg-black bg-opacity-80 lg:p-0 ">
@@ -160,14 +223,14 @@ const SignUp = () => {
             <div className="h-[1px] bg-[#C9C6C6] w-1/2 sm:w-[60%]"></div>
           </div>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mt-1 lg:mt-4">
               <input
                 type="text"
                 placeholder="Enter Your name"
-                name="username"
+                name="name"
                 required
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none  rounded-lg bg-[#EAEAEA]"
               />
               <input
@@ -175,7 +238,7 @@ const SignUp = () => {
                 placeholder="Enter Your Email Address"
                 name="email"
                 required
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg mt-3 bg-[#EAEAEA]"
               />
               <input
@@ -183,7 +246,47 @@ const SignUp = () => {
                 placeholder="Enter Your Password"
                 name="password"
                 required
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
+                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg mt-3 bg-[#EAEAEA]"
+              />
+              <input
+                type="text"
+                placeholder="ethAddress"
+                name="ethAddress"
+                // required
+                onChange={handleInputChange}
+                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg mt-3 bg-[#EAEAEA]"
+              />
+              <input
+                type="text"
+                placeholder="district"
+                name="district"
+                // required
+                onChange={handleInputChange}
+                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg mt-3 bg-[#EAEAEA]"
+              />
+              <input
+                type="text"
+                placeholder="subDivison"
+                name="subDivison"
+                // required
+                onChange={handleInputChange}
+                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg mt-3 bg-[#EAEAEA]"
+              />
+              <input
+                type="text"
+                placeholder="area"
+                name="area"
+                // required
+                onChange={handleInputChange}
+                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg mt-3 bg-[#EAEAEA]"
+              />
+              <input
+                type="url"
+                placeholder="avatar"
+                name="avatar"
+                // required
+                onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg mt-3 bg-[#EAEAEA]"
               />
             </div>
