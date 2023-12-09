@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StateProvider } from "./StateContext";
+import Header from "@/components/Shared/Header";
+import Footer from "@/components/Shared/Footer";
+import { usePathname } from "next/navigation";
 
 // import { StateProvider } from "@/Context/StateContext";
 
@@ -13,12 +16,16 @@ import { StateProvider } from "./StateContext";
 
 export default function LayoutWrapper({ children }) {
   const [queryClient] = useState(() => new QueryClient());
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <StateProvider>
         <QueryClientProvider client={queryClient}>
+          {!pathname?.includes("/dashboard") && <Header />}
           {children}
+          {!pathname?.includes("/dashboard") && <Footer />}
         </QueryClientProvider>
       </StateProvider>
     </>
