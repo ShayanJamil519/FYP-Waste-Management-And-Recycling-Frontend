@@ -1,5 +1,6 @@
 import axios from "axios";
 import apiUrl from "../utils/baseURL";
+import Cookies from 'js-cookie';
 
 class AuthService {
   /**
@@ -28,6 +29,8 @@ class AuthService {
         "Content-Type": "application/json",
       },
     });
+    const { token } = res.data;
+    Cookies.set('jwt', token, { expires: 3 });
     return res;
   }
 
