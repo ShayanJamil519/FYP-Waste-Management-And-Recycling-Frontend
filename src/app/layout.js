@@ -2,8 +2,6 @@ import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import LayoutWrapper from "./LayoutWrapper";
 import "./globals.css";
-import Header from "@/components/Shared/Header";
-import Footer from "@/components/Shared/Footer";
 
 const PoppinsFont = Poppins({
   subsets: ["latin"],
@@ -26,11 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${PoppinsFont.variable} ${Paralucent.variable}`}>
-        <LayoutWrapper>
-          <Header />
-          {children}
-          <Footer />
-        </LayoutWrapper>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
