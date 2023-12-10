@@ -1,6 +1,31 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import AuthService from "../services/auth-service";
 
+
+
+const useUserId = () => {
+  // return useQuery(["/get-UserId"], () =>
+  //   AuthService.getMyId()
+  // );
+  return useQuery({  queryKey: ['user'],  queryFn: () => AuthService.getMyId()
+  })
+};
+
+
+// const useUserId = () => {
+//   const queryClient = useQueryClient();
+//   return useMutation(
+//     () => {
+//       return AuthService.getMyId();
+//     },
+//     {
+//       onSuccess: () => {
+//         queryClient.invalidateQueries("userId");
+//       },
+//     }
+//   );
+// };
+
 const useUserSignup = (userData) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -74,6 +99,7 @@ const useUserLogin = (userData) => {
 export {
   useUserSignup,
   useUserLogin,
+  useUserId,
   // useUserForgotPassword,
   // useUserResetPassword,
   // useContactUs,

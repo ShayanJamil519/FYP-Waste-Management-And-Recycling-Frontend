@@ -1,8 +1,27 @@
 import axios from "axios";
 import apiUrl from "../utils/baseURL";
 import Cookies from 'js-cookie';
+const token = Cookies.get('jwt');
 
 class AuthService {
+  async getMyId() {
+    
+    const res = await axios.get(
+      `${apiUrl}/get-UserId`,
+
+      {
+        headers: {
+          Authorization:token,
+          "Content-Type": "application/json",
+
+        },
+      }
+    );
+    console.log("authhOOK")
+    const userId = res.data.userId
+    console.log(userId)
+    return userId;
+  }
   /**
    *User Signup
    * @returns
