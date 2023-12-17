@@ -1,10 +1,9 @@
-import Sidebar from "@/components/Dashboard/Sidebar";
-import React from "react";
+import Dashboard from "@/components/Dashboard/User";
 
 const page = () => {
   return (
     <div>
-      <Sidebar />
+      <Dashboard />
     </div>
   );
 };
