@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-jvectormap/core": "^1.0.4",
+    "@react-jvectormap/unitedstates": "^1.0.1",
     "@tanstack/react-query": "^4.35.3",
+    "apexcharts": "^3.45.0",
     "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
     "crypto": "^1.0.1",
@@ -23,6 +26,7 @@
     "nodemailer": "^6.9.5",
     "npm": "^10.2.5",
     "react": "^18",
+    "react-apexcharts": "^1.4.1",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
     "react-intersection-observer": "^9.5.3",
