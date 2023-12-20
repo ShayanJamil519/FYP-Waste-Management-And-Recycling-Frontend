@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import ReactApexChart from "react-apexcharts";
 // const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -148,9 +148,11 @@ const ChartOne = () => {
   handleReset;
 
   // NextJS Requirement
-  const isWindowAvailable = () => typeof window !== "undefined";
+  useEffect(() => {
+    const isWindowAvailable = () => typeof window !== "undefined";
 
-  if (!isWindowAvailable()) return <></>;
+    if (!isWindowAvailable()) return <></>;
+  }, []);
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7 pb-5 shadow-sm sm:px-7 xl:col-span-8">

@@ -7,7 +7,6 @@ import EditComplainModal from "./EditComplainModal";
 
 const productData = [
   {
-    image: "/home/waste.jpeg",
     district: "South",
     area: "Malir",
     description: "In Front of my house",
@@ -15,7 +14,6 @@ const productData = [
     date: "12/20/2023",
   },
   {
-    image: "/home/garbage.jpg",
     district: "North",
     area: "Nazimabad",
     description: "On my street",
@@ -23,7 +21,6 @@ const productData = [
     date: "12/20/2023",
   },
   {
-    image: "/home/waste.jpeg",
     district: "East",
     area: "Korangi",
     description: "In Front of my house",
@@ -31,7 +28,6 @@ const productData = [
     date: "12/20/2023",
   },
   {
-    image: "/home/garbage.jpg",
     district: "South",
     area: "Malir",
     description: "On my street",
@@ -47,7 +43,6 @@ const productData = [
     date: "12/20/2023",
   },
   {
-    image: "/home/garbage.jpg",
     district: "South",
     area: "Malir",
     description: "On my street",
@@ -63,7 +58,6 @@ const productData = [
     date: "12/20/2023",
   },
   {
-    image: "/home/garbage.jpg",
     district: "South",
     area: "Malir",
     description: "In Front of my house",
@@ -79,7 +73,6 @@ const productData = [
     date: "12/20/2023",
   },
   {
-    image: "/home/garbage.jpg",
     district: "East",
     area: "Korangi",
     description: "In Front of my house",
@@ -95,7 +88,6 @@ const productData = [
     date: "12/20/2023",
   },
   {
-    image: "/home/garbage.jpg",
     district: "East",
     area: "Korangi",
     description: "On my street",
@@ -104,7 +96,7 @@ const productData = [
   },
 ];
 
-const ComplainsTable = () => {
+const IncentivesTable = () => {
   const [tableData, setTableData] = useState(productData);
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
   const paginate = usePagination();
@@ -147,14 +139,11 @@ const ComplainsTable = () => {
         <div className="h-[55vh] overflow-auto">
           {visibleItems.map((product, key) => (
             <div
-              className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
+              className=" grid grid-cols-7 border-t border-stroke py-6 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
               key={key}
             >
               <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-20 h-20 rounded-md">
-                    <img src={product.image} alt="Product" />
-                  </div>
                   <p className="text-sm text-black dark:text-white">
                     {product.district}
                   </p>
@@ -207,4 +196,4 @@ const ComplainsTable = () => {
   );
 };
 
-export default ComplainsTable;
+export default IncentivesTable;

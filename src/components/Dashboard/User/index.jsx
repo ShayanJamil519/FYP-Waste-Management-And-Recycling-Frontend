@@ -6,6 +6,7 @@ import { RxDashboard } from "react-icons/rx";
 import ProfileDropdown from "../ProfileDropdown";
 import ComplainsTable from "./ComplainsTable";
 import Home from "./Home";
+import IncentivesTable from "./IncentivesTable";
 
 const sidebarLinks = [
   {
@@ -49,7 +50,7 @@ const Dashboard = () => {
         <div className="px-7 py-5">
           {currentTab === 0 && <Home />}
           {currentTab === 1 && <ComplainsTable />}
-          {/* {currentTab === 1 && <DataSharedWithMeTable />} */}
+          {currentTab === 2 && <IncentivesTable />}
         </div>
       </div>
     </div>
