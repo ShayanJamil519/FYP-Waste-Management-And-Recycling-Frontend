@@ -7,104 +7,106 @@ import EditComplainModal from "./EditComplainModal";
 
 const productData = [
   {
-    image: "/home/contact__avatar.jpg",
-    name: "Apple Watch Series 7",
-    category: "Electronics",
-    price: 296,
-    sold: 22,
-    profit: 45,
+    image: "/home/waste.jpeg",
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Processing",
+    date: "12/20/2023"
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "Macbook Pro M1",
-    category: "Electronics",
-    price: 546,
-    sold: 12,
-    profit: 125,
+    image: "/home/garbage.jpg",
+    district: "North",
+    area: "Nazimabad",
+    description: "On my street",
+    resonse: "Rejected",
+    date: "12/20/2023",
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "Dell Inspiron 15",
-    category: "Electronics",
-    price: 443,
-    sold: 64,
-    profit: 247,
+    image: "/home/waste.jpeg",
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "12/20/2023",
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/garbage.jpg",
+    district: "South",
+    area: "Malir",
+    description: "On my street",
+    resonse: "Processing",
+    date: "12/20/2023"
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/waste.jpeg",
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "12/20/2023",
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/garbage.jpg",
+    district: "South",
+    area: "Malir",
+    description: "On my street",
+    resonse: "Processing",
+    date: "12/20/2023"
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/waste.jpeg",
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "12/20/2023",
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/garbage.jpg",
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Processing",
+    date: "12/20/2023"
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/waste.jpeg",
+    district: "North",
+    area: "Nazimabad",
+    description: "On my street",
+    resonse: "Rejected",
+    date: "12/20/2023",
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/garbage.jpg",
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "12/20/2023",
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/waste.jpeg",
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Processing",
+    date: "12/20/2023"
   },
   {
-    image: "/home/contact__avatar.jpg",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    image: "/home/garbage.jpg",
+    district: "East",
+    area: "Korangi",
+    description: "On my street",
+    resonse: "Approved",
+    date: "12/20/2023",
   },
 ];
 
 const ComplainsTable = () => {
+
+  const [tableData, setTableData] = useState(productData);
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
   const paginate = usePagination();
 
@@ -123,19 +125,19 @@ const ComplainsTable = () => {
 
         <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
           <div className="col-span-3 flex items-center">
-            <p className="font-medium">Product Name</p>
+            <p className="font-medium">District</p>
           </div>
           <div className=" hidden items-center sm:flex">
-            <p className="font-medium">Category</p>
+            <p className="font-medium">Area</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Price</p>
+            <p className="font-medium">Description</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Sold</p>
+            <p className="font-medium">Response</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Profit</p>
+            <p className="font-medium">Date</p>
           </div>
           <div className=" flex items-center">
             <p className="font-medium">Actions</p>
@@ -151,31 +153,31 @@ const ComplainsTable = () => {
             >
               <div className="col-span-3 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-15 rounded-md">
+                  <div className=" w-20 h-20 rounded-md">
                     <img src={product.image} alt="Product" />
                   </div>
                   <p className="text-sm text-black dark:text-white">
-                    {product.name}
+                    {product.district}
                   </p>
                 </div>
               </div>
               <div className="hidden items-center sm:flex">
                 <p className="text-sm text-black dark:text-white">
-                  {product.category}
+                  {product.area}
                 </p>
               </div>
               <div className=" flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  ${product.price}
+                  {product.description}
                 </p>
               </div>
               <div className=" flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  {product.sold}
+                  {product.resonse}
                 </p>
               </div>
               <div className=" flex items-center">
-                <p className="text-sm text-meta-3">${product.profit}</p>
+                <p className="text-sm text-meta-3">{product.date}</p>
               </div>
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit

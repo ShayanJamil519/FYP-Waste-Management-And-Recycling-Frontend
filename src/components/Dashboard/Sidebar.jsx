@@ -63,7 +63,7 @@ const Sidebar = ({ currentTab, setCurrentTab, sidebarLinks }) => {
             alt="Logo"
             className="w-[40px]"
           />
-          <h1 className="text-[#fff] text-3xl font-semibold">RecySense</h1>
+          <h1 className="text-[#fff] text-3xl font-semibold">Waste Management & Recycling</h1>
         </Link>
 
         <button
