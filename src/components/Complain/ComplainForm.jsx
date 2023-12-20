@@ -144,42 +144,42 @@ const { mutate: addMutate } = useComplain(JSON.stringify(userData));
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-5">
-          <input
+          <Input
             name="userId"
             label="Enter Your ID"
             type="text"
-            // value={userId}
+            value={userData.userId}
             placeholder="Please write you details"
             onChange={handleInputChange}
           />
-          <input
+          <Input
             name="district"
             label="Enter Your Destrict"
             type="text"
-            // value={district}
+            value={userData.district}
             placeholder="Please write you details"
             onChange={handleInputChange}
           />
-          <input
+          <Input
             name="area"
             label="Enter Your Area"
             type="text"
-            // value={area}
+            value={userData.area}
             placeholder="Please write you details"
             onChange={handleInputChange}
           />
-          <input
+          <Input
             cursor="pointer"
             type="file"
-            // value={image}
+            // value={userData.image}
             label="image"
             name="image"
             onChange={handleInputChange}
           />
-          <input
+          <Input
             name="description"
             onChange={handleInputChange}
-            // value={description}
+            value={userData.description}
             placeholder="Enter your text here..."
             label="Your Query"
           />

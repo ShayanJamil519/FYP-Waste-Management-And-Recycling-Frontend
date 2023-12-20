@@ -12,7 +12,8 @@ const Input = ({
   return (
     <div className="">
       <p className="font-semibold text-sm text-[#202725] mb-1">{label}</p>
-      <input
+      <input 
+        name={name}
         type={type}
         value={value}
         onChange={onChange}
