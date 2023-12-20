@@ -112,9 +112,8 @@ const HowItWorks = () => {
             </div>
           </div>
           <p className=" text-[#63716c]">
-            There are many variations of passages of Lorem Ipsum available, but
-            the majority have suffered alteration in some form, by injected
-            humour
+          Our approach not only conserves natural resources but also fosters a more resilient and eco-friendly waste management system, 
+          thereby promoting sustainability at both local and global levels.
           </p>
           {/* Buttons Container */}
           <div className="font-poppins my-7 flex justify-start items-center gap-7 text-[15px] font-semibold">

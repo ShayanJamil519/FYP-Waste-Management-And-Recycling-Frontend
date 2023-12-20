@@ -19,15 +19,15 @@ export const heroSliderImages = [
 export const howItWorksHomeData = [
   {
     imageSrc: "/home/how__it__works2.png",
-    title: " Great Service & Low Cost",
+    title: "Environment Friendly",
   },
   {
     imageSrc: "/home/how__it__works3.png",
-    title: "Carbon Trust Certified",
+    title: "User Incentives",
   },
   {
     imageSrc: "/home/how__it__works4.png",
-    title: "Trusted & Local Experts",
+    title: "User Complaints",
   },
 ];
 
