@@ -66,7 +66,7 @@ const Login = () => {
           </div>
           <div className="px-4 lg:px-10">
             <h2 className="font-extrabold text-[20px] lg:text-3xl lg:my-6">
-              Login with RecySense
+              Login
             </h2>
             <div className="flex mt-3 sm:mt-1 lg:mt-6">
               <div className="bg-[#EAEAEA] p-2 rounded-full w-[30px] h-[30px] lg:w-[50px] lg:h-[50px] flex items-center justify-center">
@@ -185,7 +185,7 @@ const Login = () => {
               </div>
             </form>
             <p className="text-center my-4 sm:mt-7 font-semibold  text-[10px] lg:text-sm">
-              Not on FanGram?
+              Not With Us?
               <Link
                 href="#"
                 className="text-[#32A632] ml-1 underline cursor-pointer"

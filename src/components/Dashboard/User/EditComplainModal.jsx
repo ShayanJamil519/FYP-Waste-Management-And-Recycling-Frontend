@@ -25,7 +25,7 @@ const EditComplainModal = ({ setOpenEditComplainModal }) => {
         }}
         className=" h-[90vh] overflow-y-auto p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  border-2 border-[#000] font-urbanist w-[97%] sm:w-[65%] md:w-[55%] lg:w-[80%] mx-auto"
       >
-        <h1 className="font-bold text-3xl">Review Complain</h1>
+        <h1 className="font-bold text-3xl">Edit Complain</h1>
         <p className="text-sm mt-3 leading-6 text-[#62706b]">
           Please complete the form below, to request a quote, and we’ll be in
           touch. Or you can call us and our specialists will provide help!
@@ -35,23 +35,22 @@ const EditComplainModal = ({ setOpenEditComplainModal }) => {
 
           <div className="grid grid-cols-2 gap-5">
             <Input
-              label="Enquiry Type"
-              type="text"
-              placeholder="Please write you details"
-            />
-
-            <Input
-              label="Enquiry Type"
+              label="District"
               type="text"
               placeholder="Please write you details"
             />
             <Input
-              label="Enquiry Type"
+              label="Area"
               type="text"
               placeholder="Please write you details"
             />
             <Input
-              label="Enquiry Type"
+              label="Response"
+              type="text"
+              placeholder="Please write you details"
+            />
+            <Input
+              label="Date"
               type="text"
               placeholder="Please write you details"
             />
@@ -62,14 +61,14 @@ const EditComplainModal = ({ setOpenEditComplainModal }) => {
             // onChange={handleTextChange}
             placeholder="Enter your text here..."
             rows={6}
-            label="Your Query"
+            label="Description"
           />
           <TextArea
             // value={textValue}
             // onChange={handleTextChange}
             placeholder="Enter your text here..."
             rows={6}
-            label="Your Query"
+            label="Optional"
           />
 
           <button

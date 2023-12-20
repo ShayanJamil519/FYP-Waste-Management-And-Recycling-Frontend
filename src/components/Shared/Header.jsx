@@ -23,8 +23,8 @@ const headerLinks = [
   },
 
   {
-    linkText: "News and Media",
-    linkTo: "/news_and_media",
+    linkText: "Dashboard",
+    linkTo: "/dashboard",
   },
 ];
 

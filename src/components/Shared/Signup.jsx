@@ -131,7 +131,7 @@ const SignUp = () => {
             Welcome
           </p>
           <h2 className="font-extrabold text-[20px]  lg:text-3xl">
-            Sign up with RecySense
+            Sign up with Us
           </h2>
           <div className="flex mt-1 sm:mt-1 lg:mt-6">
             <div className="bg-[#EAEAEA] p-2 rounded-full w-[30px] h-[30px] lg:w-[50px] lg:h-[50px] flex items-center justify-center">
@@ -303,7 +303,7 @@ const SignUp = () => {
           </form>
 
           <p className="text-center my-2 font-semibold  text-[10px] lg:text-sm">
-            Already on FanGram?
+            Already With Us?
             <span
               href="#"
               className="text-[#32A632] ml-1 underline cursor-pointer"
