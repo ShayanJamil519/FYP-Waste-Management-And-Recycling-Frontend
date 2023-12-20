@@ -51,7 +51,7 @@ const Header = () => {
                 className="w-[50px]"
               />
             </Link>
-            <h1 className="text-[#000]">RecySense</h1>
+            <h1 className="text-[#000]">Waste Management & Recycling</h1>
           </div>
 
           <div className="lg:hidden block">
@@ -62,7 +62,7 @@ const Header = () => {
                 className="w-[50px]"
               />
             </Link>
-            <h1 className="text-[#000]">RecySense</h1>
+            <h1 className="text-[#000]">Waste Management & Recycling</h1>
           </div>
 
           <div className="hidden lg:flex justify-start items-center gap-10">
