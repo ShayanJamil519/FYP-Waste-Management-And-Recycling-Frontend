@@ -26,12 +26,10 @@ const Services = () => {
             />
             <div className="p-7 relative rounded-lg w-[90%] -mt-28 bg-[#fff] font-poppins transition duration-500 ease-in-out shadow-sm hover:shadow-lg shadow-[#ddd9d9]">
               <h1 className="font-paralucent text-xl text-[#182822] hover:text-[#f29620] transition duration-500 ease-in-out cursor-pointer">
-                Commercial Liquid And Special Waste
+              Real-Time Waste Tracking
               </h1>
               <p className="text-[#62706b] text-sm my-5">
-                We offer recycle services for a variety of liquid waste in order
-                to reuse including oil filters, antifreeze, glycol, absorbents,
-                dry cleaning fluids, and light fuels.
+              Our platform offers a groundbreaking service by providing users with real-time insights into the entire waste management process. From generation to recycling and disposal, users can track and verify the journey of their waste.
               </p>
               <button className="flex justify-center items-center gap-3 transition duration-500 ease-in-out hover:bg-[#257830] text-[#20332c] hover:text-[#fff] outline-none border-2 hover:border-[#257830] border-[#20332c] px-8 py-4 rounded-sm">
                 Explore More

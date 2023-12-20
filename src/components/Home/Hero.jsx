@@ -51,12 +51,10 @@ const Hero = () => {
           animate={inView ? "visible" : "hidden"}
         >
           <h1 className="font-paralucent text-[80px] leading-[80px]">
-            Competitive And Reliable Business Waste Collection!
+            Accountable Waste Management And Recycling !
           </h1>
           <p className="font-semibold font-poppins my-7">
-            We’ll work with you to deliver your dumpster promptly when you need
-            it, and create proper custom pickup schedule that makes sense,
-            whether it’s daily,
+          Empowering citizens with transparent and immutable data, our software utilizes blockchain to hold government authorities accountable for efficient waste management
           </p>
           {/* Buttons Container */}
           <div className="font-poppins flex justify-start items-center gap-10 text-[15px] font-semibold">

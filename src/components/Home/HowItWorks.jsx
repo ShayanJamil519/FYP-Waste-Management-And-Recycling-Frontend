@@ -11,8 +11,7 @@ const HowItWorks = () => {
       {/* Top Container */}
       <div className="flex justify-between items-center px-10">
         <h1 className="font-paralucent text-4xl w-3/4 text-[#182822]">
-          Providing Trusted, Competitive And Reliable Business Waste Collection
-          On A Scheduled Time Or Call In Service.
+        Every action, from waste recycling statistics to user complaints and responses, is securely recorded, fostering a decentralized system
         </h1>
 
         <div className="relative">
@@ -80,15 +79,10 @@ const HowItWorks = () => {
         {/* Right Container */}
         <div className="w-[40%] font-poppins ">
           <p className="mb-5 text-[#63716c]">
-            We have already made huge strides in our sustainability journey by
-            investing in plastic recycling and energy from waste infrastructure
-            and low carbon collections, leading to a huge reduction in nation’s
-            carbon smoke.
+          In our commitment to sustainability, our project revolutionizes waste management by promoting efficient recycling practices and reducing environmental impact. By leveraging blockchain and AI integration, we create a decentralized platform that not only empowers users with real-time data
           </p>
           <p className=" text-[#63716c]">
-            We already made huge strides in our sustainability journey by
-            investing in recycling, offering low cost commercial waste
-            collection services to meet all your waste.
+          This innovative approach not only minimizes the ecological footprint but also contributes to a cleaner, healthier environment for current and future generations
           </p>
           <div className="w-full flex justify-center items-start rounded-md my-7 gap-5 py-7 px-7 bg-[#f7f9f8]">
             <img
@@ -125,7 +119,7 @@ const HowItWorks = () => {
           {/* Buttons Container */}
           <div className="font-poppins my-7 flex justify-start items-center gap-7 text-[15px] font-semibold">
             <button className="flex justify-center items-center gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] outline-none border-0 px-10 py-5 rounded-sm">
-              Explore Products{" "}
+              Explore Our Goals{" "}
               <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
                 <IoIosArrowRoundForward className="text-[27px] font-bold" />
               </span>{" "}
