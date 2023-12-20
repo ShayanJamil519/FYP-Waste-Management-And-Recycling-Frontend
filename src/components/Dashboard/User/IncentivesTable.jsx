@@ -4,6 +4,7 @@ import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import EditComplainModal from "./EditComplainModal";
+import ReviewIncentiveModal from "./ReviewIncentiveModal";
 
 const productData = [
   {
@@ -98,7 +99,8 @@ const productData = [
 
 const IncentivesTable = () => {
   const [tableData, setTableData] = useState(productData);
-  const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
+  const [openReviewIncentiveModal, setOpenReviewIncentiveModal] =
+    useState(false);
   const paginate = usePagination();
 
   const { currentPage, totalPages, visibleItems, goToPage } =
@@ -170,7 +172,7 @@ const IncentivesTable = () => {
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit
                   className="cursor-pointer"
-                  onClick={() => setOpenEditComplainModal(true)}
+                  onClick={() => setOpenReviewIncentiveModal(true)}
                 />
                 <MdDelete className="cursor-pointer" />
               </div>
@@ -187,9 +189,9 @@ const IncentivesTable = () => {
 
       {/* Edit Modal */}
 
-      {openEditComplainModal && (
-        <EditComplainModal
-          setOpenEditComplainModal={setOpenEditComplainModal}
+      {openReviewIncentiveModal && (
+        <ReviewIncentiveModal
+          setOpenReviewIncentiveModal={setOpenReviewIncentiveModal}
         />
       )}
     </div>
