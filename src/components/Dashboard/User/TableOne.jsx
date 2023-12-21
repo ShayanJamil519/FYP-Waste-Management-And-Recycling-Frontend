@@ -2,41 +2,41 @@ import Image from "next/image";
 
 const brandData = [
   {
-    logo: "/home/contact__avatar.jpg",
-    name: "Google",
-    visitors: 3.5,
+    logo: "/home/karachi.jpg",
+    name: "Landhi",
+    visitors: 35,
     revenues: "5,768",
     sales: 590,
     conversion: 4.8,
   },
   {
-    logo: "/home/contact__avatar.jpg",
-    name: "Twitter",
-    visitors: 2.2,
+    logo: "/home/karachi2.jpg",
+    name: "Malir",
+    visitors: 22,
     revenues: "4,635",
     sales: 467,
     conversion: 4.3,
   },
   {
-    logo: "/home/contact__avatar.jpg",
-    name: "Github",
-    visitors: 2.1,
+    logo: "/home/karachi.jpg",
+    name: "Korangi",
+    visitors: 21,
     revenues: "4,290",
     sales: 420,
     conversion: 3.7,
   },
   {
-    logo: "/home/contact__avatar.jpg",
-    name: "Vimeo",
-    visitors: 1.5,
+    logo: "/home/karachi2.jpg",
+    name: "Safoora",
+    visitors: 15,
     revenues: "3,580",
     sales: 389,
     conversion: 2.5,
   },
   {
-    logo: "/home/contact__avatar.jpg",
-    name: "Facebook",
-    visitors: 3.5,
+    logo: "/home/karachi.jpg",
+    name: "Mausamiyat",
+    visitors: 35,
     revenues: "6,768",
     sales: 390,
     conversion: 4.2,
@@ -47,7 +47,7 @@ const TableOne = () => {
   return (
     <div className="rounded-sm border  bg-white px-5 pt-6 pb-2  sm:px-7 xl:pb-1 font-poppins">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-        Top Channels
+        Top Areas
       </h4>
 
       <div className="flex flex-col">
@@ -59,22 +59,22 @@ const TableOne = () => {
           </div>
           <div className="p-2.5 text-center xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Visitors
+              Population
             </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Revenues
+              Waste Generated
             </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Sales
+              Incentives
             </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Conversion
+              Recycling
             </h5>
           </div>
         </div>

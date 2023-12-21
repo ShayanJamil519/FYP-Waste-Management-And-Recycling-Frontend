@@ -66,11 +66,11 @@ const ChartTwo = () => {
   const [state, setState] = useState({
     series: [
       {
-        name: "Sales",
+        name: "Waste generated",
         data: [44, 55, 41, 67, 22, 43, 65],
       },
       {
-        name: "Revenue",
+        name: "Waste Recycled",
         data: [13, 23, 20, 8, 13, 27, 15],
       },
     ],

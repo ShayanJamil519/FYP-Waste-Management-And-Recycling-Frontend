@@ -128,12 +128,12 @@ const ChartOne = () => {
   const [state, setState] = useState({
     series: [
       {
-        name: "Product One",
+        name: "Complaints Resolved",
         data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
       },
 
       {
-        name: "Product Two",
+        name: "Complaints Made",
         data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
       },
     ],

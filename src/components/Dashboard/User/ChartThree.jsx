@@ -11,7 +11,7 @@ const options = {
     type: "donut",
   },
   colors: ["#10B981", "#375E83", "#259AE6", "#FFA70B"],
-  labels: ["Remote", "Hybrid", "Onsite", "Leave"],
+  labels: ["Metalloids", "Other", "Plastic", "Glass"],
   legend: {
     show: true,
     position: "bottom",
@@ -58,7 +58,7 @@ const ChartThree = () => {
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Visitors Analytics
+            Waste Recycling Analytics Analytics
           </h5>
         </div>
         <div>

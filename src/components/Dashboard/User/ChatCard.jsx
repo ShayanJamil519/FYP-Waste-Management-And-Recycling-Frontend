@@ -4,48 +4,48 @@ import Image from "next/image";
 const chatData = [
   {
     avatar: "/home/contact__avatar.jpg",
-    name: "Devid Heilo",
-    text: "How are you?",
+    name: "Shayan Khan",
+    text: "Segregating Waste",
     time: 12,
     textCount: 3,
     dot: 3,
   },
   {
     avatar: "/home/contact__avatar.jpg",
-    name: "Henry Fisher",
-    text: "Waiting for you!",
+    name: "Anas Ali",
+    text: "How Landfills Work",
     time: 12,
     textCount: 0,
     dot: 1,
   },
   {
     avatar: "/home/contact__avatar.jpg",
-    name: "Jhon Doe",
-    text: "What's up?",
+    name: "Anas Khan",
+    text: "How Recyling points Work",
     time: 32,
     textCount: 0,
     dot: 3,
   },
   {
     avatar: "/home/contact__avatar.jpg",
-    name: "Jane Doe",
-    text: "Great",
+    name: "Abdullah Tariq",
+    text: "How Much waste we Generate",
     time: 32,
     textCount: 2,
     dot: 6,
   },
   {
     avatar: "/home/contact__avatar.jpg",
-    name: "Jhon Doe",
-    text: "How are you?",
+    name: "Aziz Khan",
+    text: "How not to Decompose Waste",
     time: 32,
     textCount: 0,
     dot: 3,
   },
   {
     avatar: "/home/contact__avatar.jpg",
-    name: "Jhon Doe",
-    text: "How are you?",
+    name: "Murtuza Khan",
+    text: "How to Recycle Waste",
     time: 32,
     textCount: 3,
     dot: 6,
@@ -55,7 +55,7 @@ const chatData = [
 const ChatCard = () => {
   return (
     <div className="col-span-12 rounded-sm border  bg-white py-6 xl:col-span-4 font-poppins">
-      <h4 className="mb-6 px-7 text-xl font-semibold text-black ">Chats</h4>
+      <h4 className="mb-6 px-7 text-xl font-semibold text-black ">Top Articles</h4>
 
       <div>
         {chatData.map((chat, key) => (
