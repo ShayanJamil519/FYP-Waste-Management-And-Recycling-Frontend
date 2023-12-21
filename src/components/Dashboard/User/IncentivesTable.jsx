@@ -10,30 +10,120 @@ const productData = [
   {
     district: "South",
     area: "Malir",
+    description: "Polygon",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "North",
+    area: "Nazimabad",
+    description: "Ethereum",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "East",
+    area: "Korangi",
+    description: "Ethereum",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    district: "South",
+    area: "Malir",
+    description: "Ethereum",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "East",
+    area: "Korangi",
+    description: "Polygon",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    district: "South",
+    area: "Malir",
+    description: "Polygon",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "East",
+    area: "Korangi",
+    description: "Polygon",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    district: "South",
+    area: "Malir",
     description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "North",
+    area: "Nazimabad",
+    description: "On my street",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "East",
+    area: "Korangi",
+    description: "On my street",
+    resonse: "Approved",
+    date: "100",
+  },
+];
+const productData2 = [
+  {
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     district: "North",
     area: "Nazimabad",
     description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     district: "East",
     area: "Korangi",
     description: "In Front of my house",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
   {
     district: "South",
     area: "Malir",
     description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
@@ -41,14 +131,14 @@ const productData = [
     area: "Korangi",
     description: "In Front of my house",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
   {
     district: "South",
     area: "Malir",
     description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
@@ -56,44 +146,44 @@ const productData = [
     area: "Korangi",
     description: "In Front of my house",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
   {
     district: "South",
     area: "Malir",
     description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
     district: "North",
     area: "Nazimabad",
     description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     district: "East",
     area: "Korangi",
     description: "In Front of my house",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
     district: "South",
     area: "Malir",
     description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     district: "East",
     area: "Korangi",
     description: "On my street",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
 ];
 
@@ -124,13 +214,13 @@ const IncentivesTable = () => {
             <p className="font-medium">Area</p>
           </div>
           <div className=" flex items-center col-span-2">
-            <p className="font-medium">Description</p>
+            <p className="font-medium">Chain</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Response</p>
+            <p className="font-medium">Token</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Date</p>
+            <p className="font-medium">Amount</p>
           </div>
           <div className=" flex items-center">
             <p className="font-medium">Actions</p>

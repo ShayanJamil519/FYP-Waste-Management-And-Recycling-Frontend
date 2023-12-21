@@ -11,8 +11,7 @@ const Action = () => {
         Trusted And Reliable Waste Collection!
       </h1>
       <p className="text-sm mt-3 leading-6">
-        We offer customers regular collection of trash, on a scheduled or call
-        basis, with a safe level of service.
+      The platform becomes a catalyst for positive change, encouraging responsible waste management practices while rewarding users for their contributions to a sustainable future.
       </p>
       <button className="mt-6 flex justify-center items-center font-semibold text-sm gap-3 bg-[#fff] transition duration-500 ease-in-out hover:bg-[#20332c] text-[#20332c] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm">
         Get Started Now
@@ -29,11 +28,11 @@ const Action = () => {
       <div className="font-poppins text-[#fff] mt-10">
         <p className="flex justify-start items-center gap-6 mb-2">
           <MdMarkEmailUnread className="text-[25px]" />
-          <span className="cursor-pointer">Trashco@7oroof.com</span>
+          <span className="cursor-pointer">Recy-sense@gmail.com</span>
         </p>
         <p className="flex justify-start items-center gap-6">
           <FaPhone className="text-[21px]" />
-          <span className="cursor-pointer">+2 01161145741</span>
+          <span className="cursor-pointer">+92 01161145741</span>
         </p>
       </div>
     </div>
