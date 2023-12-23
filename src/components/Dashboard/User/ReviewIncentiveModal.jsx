@@ -3,21 +3,10 @@ import Modal from "../Modal";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
-import ImageSlider from "../ImageSlider";
 
-const Images = [
-  "/home/hero__slider1.jpg",
-  "/home/hero__slider1.jpg",
-  "/home/hero__slider1.jpg",
-  ,
-  "/home/hero__slider1.jpg",
-  ,
-  "/home/hero__slider1.jpg",
-];
-
-const EditComplainModal = ({ setOpenEditComplainModal }) => {
+const ReviewIncentiveModal = ({ setOpenReviewIncentiveModal }) => {
   return (
-    <Modal onClose={setOpenEditComplainModal}>
+    <Modal onClose={setOpenReviewIncentiveModal}>
       <div
         style={{
           boxShadow:
@@ -25,14 +14,12 @@ const EditComplainModal = ({ setOpenEditComplainModal }) => {
         }}
         className=" h-[90vh] overflow-y-auto p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  border-2 border-[#000] font-urbanist w-[97%] sm:w-[65%] md:w-[55%] lg:w-[80%] mx-auto"
       >
-        <h1 className="font-bold text-3xl">Edit Complain</h1>
+        <h1 className="font-bold text-3xl">Review Incentive</h1>
         <p className="text-sm mt-3 leading-6 text-[#62706b]">
           Please complete the form below, to request a quote, and we’ll be in
           touch. Or you can call us and our specialists will provide help!
         </p>
         <form className="w-full mt-10 ">
-          <ImageSlider images={Images} />
-
           <div className="grid grid-cols-2 gap-5">
             <Input
               label="District"
@@ -75,7 +62,7 @@ const EditComplainModal = ({ setOpenEditComplainModal }) => {
             type="submit"
             className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
           >
-            Add Response
+            Send Tokens
             <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
               <IoIosArrowRoundForward className="text-[27px] font-bold" />
             </span>{" "}
@@ -92,4 +79,4 @@ const EditComplainModal = ({ setOpenEditComplainModal }) => {
   );
 };
 
-export default EditComplainModal;
+export default ReviewIncentiveModal;

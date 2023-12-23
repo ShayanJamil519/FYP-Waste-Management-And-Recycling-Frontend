@@ -4,109 +4,193 @@ import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import EditComplainModal from "./EditComplainModal";
+import ReviewIncentiveModal from "./ReviewIncentiveModal";
 
 const productData = [
   {
-    image: "/home/waste.jpeg",
     district: "South",
     area: "Malir",
-    description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
+    description: "Polygon",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
-    image: "/home/garbage.jpg",
     district: "North",
     area: "Nazimabad",
-    description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
+    description: "Ethereum",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "East",
+    area: "Korangi",
+    description: "Ethereum",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    district: "South",
+    area: "Malir",
+    description: "Ethereum",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
     district: "East",
     area: "Korangi",
-    description: "In Front of my house",
+    description: "Polygon",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
   {
-    image: "/home/garbage.jpg",
     district: "South",
     area: "Malir",
-    description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
+    description: "Polygon",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
     district: "East",
     area: "Korangi",
-    description: "In Front of my house",
+    description: "Polygon",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
   {
-    image: "/home/garbage.jpg",
-    district: "South",
-    area: "Malir",
-    description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
     district: "South",
     area: "Malir",
     description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
     district: "North",
     area: "Nazimabad",
     description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
-    image: "/home/garbage.jpg",
     district: "East",
     area: "Korangi",
     description: "In Front of my house",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
   },
   {
     image: "/home/waste.jpeg",
     district: "South",
     area: "Malir",
     description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
+    resonse: "Recy Token",
+    date: "100",
   },
   {
-    image: "/home/garbage.jpg",
     district: "East",
     area: "Korangi",
     description: "On my street",
     resonse: "Approved",
-    date: "12/20/2023",
+    date: "100",
+  },
+];
+const productData2 = [
+  {
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "North",
+    area: "Nazimabad",
+    description: "On my street",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    district: "South",
+    area: "Malir",
+    description: "On my street",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    district: "South",
+    area: "Malir",
+    description: "On my street",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "North",
+    area: "Nazimabad",
+    description: "On my street",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "East",
+    area: "Korangi",
+    description: "In Front of my house",
+    resonse: "Approved",
+    date: "100",
+  },
+  {
+    image: "/home/waste.jpeg",
+    district: "South",
+    area: "Malir",
+    description: "In Front of my house",
+    resonse: "Recy Token",
+    date: "100",
+  },
+  {
+    district: "East",
+    area: "Korangi",
+    description: "On my street",
+    resonse: "Approved",
+    date: "100",
   },
 ];
 
-const ComplainsTable = () => {
+const IncentivesTable = () => {
   const [tableData, setTableData] = useState(productData);
-  const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
+  const [openReviewIncentiveModal, setOpenReviewIncentiveModal] =
+    useState(false);
   const paginate = usePagination();
 
   const { currentPage, totalPages, visibleItems, goToPage } =
@@ -130,13 +214,13 @@ const ComplainsTable = () => {
             <p className="font-medium">Area</p>
           </div>
           <div className=" flex items-center col-span-2">
-            <p className="font-medium">Description</p>
+            <p className="font-medium">Chain</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Response</p>
+            <p className="font-medium">Token</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Date</p>
+            <p className="font-medium">Amount</p>
           </div>
           <div className=" flex items-center">
             <p className="font-medium">Actions</p>
@@ -147,14 +231,11 @@ const ComplainsTable = () => {
         <div className="h-[55vh] overflow-auto">
           {visibleItems.map((product, key) => (
             <div
-              className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
+              className=" grid grid-cols-7 border-t border-stroke py-6 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
               key={key}
             >
               <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-20 h-20 rounded-md">
-                    <img src={product.image} alt="Product" />
-                  </div>
                   <p className="text-sm text-black dark:text-white">
                     {product.district}
                   </p>
@@ -181,7 +262,7 @@ const ComplainsTable = () => {
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit
                   className="cursor-pointer"
-                  onClick={() => setOpenEditComplainModal(true)}
+                  onClick={() => setOpenReviewIncentiveModal(true)}
                 />
                 <MdDelete className="cursor-pointer" />
               </div>
@@ -198,13 +279,13 @@ const ComplainsTable = () => {
 
       {/* Edit Modal */}
 
-      {openEditComplainModal && (
-        <EditComplainModal
-          setOpenEditComplainModal={setOpenEditComplainModal}
+      {openReviewIncentiveModal && (
+        <ReviewIncentiveModal
+          setOpenReviewIncentiveModal={setOpenReviewIncentiveModal}
         />
       )}
     </div>
   );
 };
 
-export default ComplainsTable;
+export default IncentivesTable;

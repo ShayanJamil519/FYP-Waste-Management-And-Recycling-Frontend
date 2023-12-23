@@ -24,8 +24,8 @@ const AboutUs = () => {
           {/* Right Container */}
           <div>
             <p className="text-[#62706b] text-[15px] font-poppins font-semibold">
-              Reliable and trusted services to meet all your waste requirements,
-              feel free to request a free quote today!!
+            Blockchain integration ensures
+             the security and immutability of these incentives, promoting a fair and accountable system. 
             </p>
             <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
               <span className="text-[#257830] text-[15px] font-semibold font-poppins">
@@ -47,11 +47,10 @@ const AboutUs = () => {
           {/* First Div */}
           <div className="text-[#fff] bg-[#257830] font-poppins px-8 py-7 h-fit w-[320px] rounded-md relative">
             <h1 className="font-semibold text-lg">
-              Trusted 97% <br /> Satisfaction
+              User<br /> Satisfaction
             </h1>
             <p className="mt-3 mb-5 text-sm">
-              We understand that we must lead by example and are committed to
-              further improving health.
+            Municipal authorities can utilize our platform to incentivize communities based on the quality of segregated waste.
             </p>
 
             <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
@@ -78,8 +77,7 @@ const AboutUs = () => {
           <div className="text-[#fff] bg-[#f29620] font-poppins px-8 py-7 w-[320px] h-fit rounded-md relative">
             <h1 className="font-semibold text-lg">Sustainable Management</h1>
             <p className="mt-3 mb-5 text-sm">
-              Almost 6000 employees to carry out all essential operations daily
-              to support our economy.
+            Our services extend to a user-friendly interface where citizens can lodge complaints about improper waste disposal
             </p>
             <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
               <span className="p-0 rounded-full bg-[#fff] transition duration-500  text-[#f29620] ">

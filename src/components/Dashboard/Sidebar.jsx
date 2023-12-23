@@ -52,7 +52,7 @@ const Sidebar = ({ currentTab, setCurrentTab, sidebarLinks }) => {
   return (
     <aside
       ref={sidebar}
-      className={`font-poppins absolute left-0 top-0 z-9999 flex h-screen w-[25%] flex-col overflow-y-hidden bg-black text-[#fff] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`font-poppins absolute left-0 top-0 z-9999 flex h-screen w-[22%] flex-col overflow-y-hidden bg-black text-[#fff] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -63,7 +63,7 @@ const Sidebar = ({ currentTab, setCurrentTab, sidebarLinks }) => {
             alt="Logo"
             className="w-[40px]"
           />
-          <h1 className="text-[#fff] text-3xl font-semibold">Waste Management & Recycling</h1>
+          <h1 className="text-[#fff] text-2xl font-semibold">Recysense</h1>
         </Link>
 
         <button
