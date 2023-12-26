@@ -22,7 +22,7 @@ export default function LayoutWrapper({ children }) {
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <StateProvider>
-        <QueryClientProvider client={queryClient} contextSharing={true}>
+        <QueryClientProvider client={queryClient} >
           {!pathname?.includes("/dashboard") && <Header />}
           {children}
           {!pathname?.includes("/dashboard") && <Footer />}

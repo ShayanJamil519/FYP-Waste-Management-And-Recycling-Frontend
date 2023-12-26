@@ -5,10 +5,9 @@ const token = Cookies.get('jwt');
 
 class AuthService {
   async getMyId() {
-    
+    console.log("sasdf")
     const res = await axios.get(
       `${apiUrl}/get-UserId`,
-
       {
         headers: {
           Authorization:token,

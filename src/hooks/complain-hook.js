@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import ComplainService from "../services/complain-service";
-
+import AuthService from "../services/auth-service";
 const useComplain = (userData) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -38,16 +38,22 @@ const useAddResponseToComplaint = () => {
 
 
 const useGetComplaintsInDistrict = (district) => {
-  console.log(district)
-  console.log("hook")
-  return useQuery(
+console.log("SAsasasasa")
+console.log(district)
+return useQuery(
+  {  queryKey: ['user'],  queryFn:  ComplainService.getComplaintsInDistrict(district)
+})
+  /*return useQuery(
+    {  queryKey: ['complaints'],  queryFn: () => ComplainService.getComplaintsInDistrict(district)
+  })*/
+  /*return useQuery(
     // {
     // queryKey: ["complaints", district],
     // queryFn: () => ComplainService.getComplaintsInDistrict(district)
     ["complaintsTable", district],
     () => ComplainService.getComplaintsInDistrict(district)
   // }
-  );
+  );*/
 
 };
 
