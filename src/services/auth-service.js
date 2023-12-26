@@ -43,7 +43,7 @@ class AuthService {
    */
 
   async LoginUser(userData) {
-    const res = await axios.post(`${apiUrl}/Login-user`, userData, {
+    const res = await axios.post(`${apiUrl}/Login-district`, userData, {
       headers: {
         "Content-Type": "application/json",
       },

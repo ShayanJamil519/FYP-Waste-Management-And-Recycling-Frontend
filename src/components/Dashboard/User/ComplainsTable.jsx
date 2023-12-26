@@ -1,116 +1,124 @@
+"use client";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import EditComplainModal from "./EditComplainModal";
-
-const productData = [
-  {
-    image: "/home/waste.jpeg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "South",
-    area: "Malir",
-    description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "South",
-    area: "Malir",
-    description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "East",
-    area: "Korangi",
-    description: "On my street",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-];
+import {useGetComplaintsInDistrict} from "../../../hooks/complain-hook";
+import { data } from "autoprefixer";
+// const productData = [
+//   {
+//     image: "/home/waste.jpeg",
+//     district: "South",
+//     area: "Malir",
+//     description: "In Front of my house",
+//     resonse: "Processing",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/garbage.jpg",
+//     district: "North",
+//     area: "Nazimabad",
+//     description: "On my street",
+//     resonse: "Rejected",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/waste.jpeg",
+//     district: "East",
+//     area: "Korangi",
+//     description: "In Front of my house",
+//     resonse: "Approved",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/garbage.jpg",
+//     district: "South",
+//     area: "Malir",
+//     description: "On my street",
+//     resonse: "Processing",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/waste.jpeg",
+//     district: "East",
+//     area: "Korangi",
+//     description: "In Front of my house",
+//     resonse: "Approved",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/garbage.jpg",
+//     district: "South",
+//     area: "Malir",
+//     description: "On my street",
+//     resonse: "Processing",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/waste.jpeg",
+//     district: "East",
+//     area: "Korangi",
+//     description: "In Front of my house",
+//     resonse: "Approved",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/garbage.jpg",
+//     district: "South",
+//     area: "Malir",
+//     description: "In Front of my house",
+//     resonse: "Processing",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/waste.jpeg",
+//     district: "North",
+//     area: "Nazimabad",
+//     description: "On my street",
+//     resonse: "Rejected",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/garbage.jpg",
+//     district: "East",
+//     area: "Korangi",
+//     description: "In Front of my house",
+//     resonse: "Approved",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/waste.jpeg",
+//     district: "South",
+//     area: "Malir",
+//     description: "In Front of my house",
+//     resonse: "Processing",
+//     date: "12/20/2023",
+//   },
+//   {
+//     image: "/home/garbage.jpg",
+//     district: "East",
+//     area: "Korangi",
+//     description: "On my street",
+//     resonse: "Approved",
+//     date: "12/20/2023",
+//   },
+// ];
 
 const ComplainsTable = () => {
-  const [tableData, setTableData] = useState(productData);
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
   const paginate = usePagination();
 
+  
+  const district = 'south'; // Set your district here
+  const { data: complaints, isLoading, isError, error } = useGetComplaintsInDistrict(district);
+  console.log("shayan")
+  console.log(complaints)
+  console.log(data)
   const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(productData);
+    paginate(complaints);
+
 
   return (
     <div>

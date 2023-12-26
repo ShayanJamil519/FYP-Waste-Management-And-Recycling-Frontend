@@ -1,9 +1,12 @@
+"use client";
 import React from "react";
 import Modal from "../Modal";
+import { useRouter } from "next/navigation";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
 import ImageSlider from "../ImageSlider";
+import {useAddResponseToComplaint} from '../../../hooks/complain-hook';
 
 const Images = [
   "/home/hero__slider1.jpg",
@@ -16,6 +19,57 @@ const Images = [
 ];
 
 const EditComplainModal = ({ setOpenEditComplainModal }) => {
+
+  const router = useRouter();
+
+  const { addResponse, isLoading, isError, error } = useAddResponseToComplaint();
+
+  const handleAddResponse = async (complaintId, data) => {
+    try {
+      const response = await addResponse(complaintId, data);
+      
+    } catch (error) {
+      
+    }
+  };
+
+  const [info, setInfo] = useState({
+    time,
+    date,
+    comments
+  });
+
+  
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    console.log(name);
+    console.log(value);
+      setInfo({ ...info, [name]: value });
+    }
+
+  // const { mutate: addMutate } = complainEdit(JSON.stringify(data));
+  //   const handleSubmit = async (event) => {
+  //     event.preventDefault();
+  
+  //     addMutate(
+  //       {},
+  //       {
+  //         onSuccess: (response) => {
+  //           if (response?.data?.error) {
+  //             toast.error(response?.data?.error);
+  //           }
+  //           if (response?.data?.message) {
+  //             toast.success(response?.data?.message);
+  //             router.push("/");
+  //           }
+  //         },
+  //       }
+  //     );
+  //   };  
+
+  
+
+  
   return (
     <Modal onClose={setOpenEditComplainModal}>
       <div
@@ -30,45 +84,35 @@ const EditComplainModal = ({ setOpenEditComplainModal }) => {
           Please complete the form below, to request a quote, and we’ll be in
           touch. Or you can call us and our specialists will provide help!
         </p>
-        <form className="w-full mt-10 ">
+        <form className="w-full mt-10 " onSubmit={handleAddResponse}>
           <ImageSlider images={Images} />
 
           <div className="grid grid-cols-2 gap-5">
             <Input
-              label="District"
+              name="time"
+              label="Time"
               type="text"
+              value={info.time}
+              onChange={handleInputChange}
               placeholder="Please write you details"
             />
             <Input
-              label="Area"
-              type="text"
-              placeholder="Please write you details"
-            />
-            <Input
-              label="Response"
-              type="text"
-              placeholder="Please write you details"
-            />
-            <Input
+              name="date"
               label="Date"
               type="text"
+              value={info.date}
+              onChange={handleInputChange}
               placeholder="Please write you details"
             />
           </div>
 
           <TextArea
-            // value={textValue}
-            // onChange={handleTextChange}
+            name="comments"
+            onChange={handleInputChange}
+            value={info.comments}
             placeholder="Enter your text here..."
             rows={6}
-            label="Description"
-          />
-          <TextArea
-            // value={textValue}
-            // onChange={handleTextChange}
-            placeholder="Enter your text here..."
-            rows={6}
-            label="Optional"
+            label="Please write you details"
           />
 
           <button
