@@ -32,10 +32,10 @@ class ComplainService {
       );
       console.log("service")
       console.log(res.data.complaints)
-      return res.data.complaints;
-      // const complaints =res.data.complaints
-      // console.log(complaints)
-      // return complaints;
+      return res?.data?.complaints;
+      /*const complaints =res.data.complaints
+       console.log(complaints)
+       return complaints;*/
   }
   async addResponseToComplaint(complaintId, data) {
     try {

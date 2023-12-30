@@ -1,144 +1,28 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
-import { useEffect, useState } from "react";
 import EditComplainModal from "./EditComplainModal";
 import {useGetComplaintsInDistrict} from "../../../hooks/complain-hook";
-import { data } from "autoprefixer";
-// const productData = [
-//   {
-//     image: "/home/waste.jpeg",
-//     district: "South",
-//     area: "Malir",
-//     description: "In Front of my house",
-//     resonse: "Processing",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/garbage.jpg",
-//     district: "North",
-//     area: "Nazimabad",
-//     description: "On my street",
-//     resonse: "Rejected",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/waste.jpeg",
-//     district: "East",
-//     area: "Korangi",
-//     description: "In Front of my house",
-//     resonse: "Approved",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/garbage.jpg",
-//     district: "South",
-//     area: "Malir",
-//     description: "On my street",
-//     resonse: "Processing",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/waste.jpeg",
-//     district: "East",
-//     area: "Korangi",
-//     description: "In Front of my house",
-//     resonse: "Approved",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/garbage.jpg",
-//     district: "South",
-//     area: "Malir",
-//     description: "On my street",
-//     resonse: "Processing",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/waste.jpeg",
-//     district: "East",
-//     area: "Korangi",
-//     description: "In Front of my house",
-//     resonse: "Approved",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/garbage.jpg",
-//     district: "South",
-//     area: "Malir",
-//     description: "In Front of my house",
-//     resonse: "Processing",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/waste.jpeg",
-//     district: "North",
-//     area: "Nazimabad",
-//     description: "On my street",
-//     resonse: "Rejected",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/garbage.jpg",
-//     district: "East",
-//     area: "Korangi",
-//     description: "In Front of my house",
-//     resonse: "Approved",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/waste.jpeg",
-//     district: "South",
-//     area: "Malir",
-//     description: "In Front of my house",
-//     resonse: "Processing",
-//     date: "12/20/2023",
-//   },
-//   {
-//     image: "/home/garbage.jpg",
-//     district: "East",
-//     area: "Korangi",
-//     description: "On my street",
-//     resonse: "Approved",
-//     date: "12/20/2023",
-//   },
-// ];
+import axios from "axios";
+import apiUrl from "../../../utils/baseURL";
+import Cookies from "js-cookie";
 
-const ComplainsTable = () => {
+
+
+ const  ComplainsTable = () => {
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
-  const paginate = usePagination();
-  const district = 'south'; // Set your district here
-  const [complaints, setComplaints] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    console.log("hello")
-    const fetchData = async () => {
-      try {
-        console.log("helloJee")
-        const data = useGetComplaintsInDistrict(district);
-        setComplaints(data);
-        console.log(data)
-
-      } catch (error) {
-        setError(error);
-        console.log(error)
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [district]);
-
-
-  const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(data);
-
-
+  const district = 'south'; 
+   const {data} = useGetComplaintsInDistrict(district)
+   console.log("data")
+   console.log(data)
+   const paginate = usePagination();
+   const { currentPage, totalPages, visibleItems, goToPage } =
+   paginate(data);
+    
   return (
     <div>
       {/* Table */}
@@ -233,5 +117,6 @@ const ComplainsTable = () => {
     </div>
   );
 };
+
 
 export default ComplainsTable;
