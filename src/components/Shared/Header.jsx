@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import { useStateContext } from "@/app/StateContext";
 import Login from "./Login";
 import SignUp from "./Signup";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+
+import ProfileDropdown from "../Dashboard/ProfileDropdown";
 
 const headerLinks = [
   {
@@ -31,13 +35,30 @@ const headerLinks = [
 const Header = () => {
   const router = useRouter();
 
-  const { openLoginModal, setOpenLoginModal, openSignupModal } =
-    useStateContext();
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    setUser,
+    openLoginModal,
+    setOpenLoginModal,
+    openSignupModal,
+  } = useStateContext();
   const [openNavbar, setOpenNavbar] = useState(false);
 
   const handleNavbar = () => {
     setOpenNavbar(!openNavbar);
   };
+
+  useEffect(() => {
+    const token = Cookies.get("jwt");
+    if (token) {
+      setIsLoggedIn(true);
+      const decodedCookieValue = jwt.decode(token.substring(7));
+      setUser(decodedCookieValue);
+      console.log("decodedCookieValue");
+      console.log(decodedCookieValue);
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="bg-[#fff] font-poppins py-3 border-b-[1px] text-[#000] block z-50  sticky top-0 left-0 right-0 backdrop-saturate-200 backdrop-blur-2xl bg-opacity-90">
@@ -97,12 +118,16 @@ const Header = () => {
               <button className="hidden lg:block outline-none border-[1px] py-2 px-4 rounded-[40px] border-[#000] text-[#000]">
                 <Link href="/complain">Make a Complain</Link>
               </button>
-              <button
-                className="outline-none lg:text-base text-[14px] py-[5px] sm:py-2 px-3 sm:px-4  rounded-[40px] bg-[#32A632] text-[#fff]"
-                onClick={() => setOpenLoginModal(true)}
-              >
-                Login/Signup
-              </button>
+              {isLoggedIn ? (
+                <ProfileDropdown />
+              ) : (
+                <button
+                  className="outline-none lg:text-base text-[14px] py-[5px] sm:py-2 px-3 sm:px-4  rounded-[40px] bg-[#32A632] text-[#fff]"
+                  onClick={() => setOpenLoginModal(true)}
+                >
+                  Login/Signup
+                </button>
+              )}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/toggle__open.png"

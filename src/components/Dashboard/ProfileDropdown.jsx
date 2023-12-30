@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useStateContext } from "@/app/StateContext";
+import Cookies from "js-cookie";
 
 const profileLinks = [
   {
@@ -20,6 +22,7 @@ const profileLinks = [
 
 const ProfileDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { user, setIsLoggedIn } = useStateContext();
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -59,19 +62,15 @@ const ProfileDropdown = () => {
         href="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium ">Shayan Jamil</span>
-          <span className="block text-[10px] text-[#7a7a7a]">
-            Software Engineer
-          </span>
+          <span className="block text-sm font-medium ">{user?.name}</span>
+          <span className="block text-[10px] text-[#7a7a7a]">{user?.role}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <Image
-            width={112}
-            height={112}
-            src={"/home/contact__avatar.jpg"}
+          <img
+            src={user?.image}
             alt="User"
-            className="rounded-full"
+            className="rounded-full w-full h-full "
           />
         </span>
 
@@ -114,7 +113,13 @@ const ProfileDropdown = () => {
             </li>
           ))}
         </ul>
-        <button className="flex items-center gap-3 py-4 px-5 text-sm text-[#6a798f] font-medium duration-300 ease-in-out hover:bg-[#f1f1f193] lg:text-base">
+        <button
+          onClick={() => {
+            setIsLoggedIn(false);
+            Cookies.remove("jwt");
+          }}
+          className="flex items-center gap-3 py-4 px-5 text-sm text-[#6a798f] font-medium duration-300 ease-in-out hover:bg-[#f1f1f193] lg:text-base"
+        >
           <svg
             className="fill-current"
             width="22"

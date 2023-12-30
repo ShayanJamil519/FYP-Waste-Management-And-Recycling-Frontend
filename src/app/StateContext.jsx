@@ -7,10 +7,16 @@ const StateContext = createContext({});
 export function StateProvider({ children }) {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <StateContext.Provider
       value={{
+        user,
+        setUser,
+        isLoggedIn,
+        setIsLoggedIn,
         openLoginModal,
         setOpenLoginModal,
         openSignupModal,

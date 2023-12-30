@@ -8,17 +8,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Login = () => {
-  
-  const { setOpenSignupModal, setOpenLoginModal } = useStateContext();
+  const { setIsLoggedIn, setOpenSignupModal, setOpenLoginModal } =
+    useStateContext();
   const router = useRouter();
   const [userData, setUserData] = useState({
     name: "",
     password: "",
   });
 
-  const {
-    mutate: addMutate,
-  } = useUserLogin(JSON.stringify(userData));
+  const { mutate: addMutate } = useUserLogin(JSON.stringify(userData));
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -43,7 +41,8 @@ const Login = () => {
             console.log(response);
             toast.success(response?.data?.message);
             localStorage.setItem("email", userData.email);
-            router.back();
+            setOpenLoginModal(false);
+            setIsLoggedIn(true);
           }
         },
       }
