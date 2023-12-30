@@ -21,9 +21,7 @@ class ComplainService {
   }
 
   async getComplaintsInDistrict(district) {
-    // try {
-      console.log("service");
-      const response = await axios.get(
+      const res = await axios.get(
         `${apiUrl}/complaint/get-complaints-district/${district}`,
         {
           headers: {
@@ -32,13 +30,12 @@ class ComplainService {
           },
         }
       );
-      console.log("service");
-      console.log(response)
-      return response;
-    // }
-    //  catch (error) {
-    //   throw new Error(error.response.data.message || "Internal server error");
-    // }
+      console.log("service")
+      console.log(res.data.complaints)
+      return res.data.complaints;
+      // const complaints =res.data.complaints
+      // console.log(complaints)
+      // return complaints;
   }
   async addResponseToComplaint(complaintId, data) {
     try {

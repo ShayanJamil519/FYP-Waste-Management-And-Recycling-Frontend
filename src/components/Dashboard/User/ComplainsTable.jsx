@@ -3,7 +3,7 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditComplainModal from "./EditComplainModal";
 import {useGetComplaintsInDistrict} from "../../../hooks/complain-hook";
 import { data } from "autoprefixer";
@@ -109,15 +109,34 @@ import { data } from "autoprefixer";
 const ComplainsTable = () => {
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
   const paginate = usePagination();
-
-  
   const district = 'south'; // Set your district here
-  const { data: complaints, isLoading, isError, error } = useGetComplaintsInDistrict(district);
-  console.log("shayan")
-  console.log(complaints)
-  console.log(data)
+  const [complaints, setComplaints] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    console.log("hello")
+    const fetchData = async () => {
+      try {
+        console.log("helloJee")
+        const data = useGetComplaintsInDistrict(district);
+        setComplaints(data);
+        console.log(data)
+
+      } catch (error) {
+        setError(error);
+        console.log(error)
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [district]);
+
+
   const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(complaints);
+    paginate(data);
 
 
   return (

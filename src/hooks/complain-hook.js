@@ -38,7 +38,7 @@ const useAddResponseToComplaint = () => {
 
 
 const useGetComplaintsInDistrict = (district) => {
-console.log("SAsasasasa")
+console.log("hook")
 console.log(district)
 return useQuery(
   {  queryKey: ['user'],  queryFn:  ComplainService.getComplaintsInDistrict(district)
