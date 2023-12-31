@@ -43,6 +43,7 @@ const Login = () => {
             localStorage.setItem("email", userData.email);
             setOpenLoginModal(false);
             setIsLoggedIn(true);
+            router.back();
           }
         },
       }

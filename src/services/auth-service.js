@@ -1,24 +1,20 @@
 import axios from "axios";
 import apiUrl from "../utils/baseURL";
-import Cookies from 'js-cookie';
-const token = Cookies.get('jwt');
+import Cookies from "js-cookie";
+const token = Cookies.get("jwt");
 
 class AuthService {
   async getMyId() {
-    console.log("sasdf")
-    const res = await axios.get(
-      `${apiUrl}/get-UserId`,
-      {
-        headers: {
-          Authorization:token,
-          "Content-Type": "application/json",
-
-        },
-      }
-    );
-    console.log("authhOOK")
-    const userId = res.data.userId
-    console.log(userId)
+    console.log("sasdf");
+    const res = await axios.get(`${apiUrl}/get-UserId`, {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("authhOOK");
+    const userId = res.data.userId;
+    console.log(userId);
     return userId;
   }
   /**
@@ -42,13 +38,13 @@ class AuthService {
    */
 
   async LoginUser(userData) {
-    const res = await axios.post(`${apiUrl}/Login-district`, userData, {
+    const res = await axios.post(`${apiUrl}/Login`, userData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     const { token } = res.data;
-    Cookies.set('jwt', token, { expires: 3 });
+    Cookies.set("jwt", token, { expires: 3 });
     return res;
   }
 
@@ -57,47 +53,47 @@ class AuthService {
    * @returns
    */
 
-//   async forgotPasswordUser(email) {
-//     console.log(email);
-//     const res = await axios.put(
-//       `${apiUrl}/api/auth/forgotPassword`,
-//       { email },
-//       {
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-//     return res;
-//   }
+  //   async forgotPasswordUser(email) {
+  //     console.log(email);
+  //     const res = await axios.put(
+  //       `${apiUrl}/api/auth/forgotPassword`,
+  //       { email },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     return res;
+  //   }
 
-//   /**
-//    *resetPasswordUser
-//    * @returns
-//    */
+  //   /**
+  //    *resetPasswordUser
+  //    * @returns
+  //    */
 
-//   async resetPasswordUser(userData, token) {
-//     console.log(userData);
-//     const res = await axios.put(
-//       `${apiUrl}/api/auth/resetPassword/${token}`,
-//       userData,
-//       {
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-//     return res;
-//   }
+  //   async resetPasswordUser(userData, token) {
+  //     console.log(userData);
+  //     const res = await axios.put(
+  //       `${apiUrl}/api/auth/resetPassword/${token}`,
+  //       userData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     return res;
+  //   }
 
-//   async contactUs(data) {
-//     const res = await axios.post(`${apiUrl}/api/contact/contactUs`, data, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     return res;
-//   }
+  //   async contactUs(data) {
+  //     const res = await axios.post(`${apiUrl}/api/contact/contactUs`, data, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     return res;
+  //   }
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

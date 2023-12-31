@@ -1,4 +1,4 @@
-import Dashboard from "@/components/Dashboard/DistrictAdmin";
+import Dashboard from "@/components/Dashboard";
 
 const page = () => {
   return (

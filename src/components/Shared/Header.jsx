@@ -55,8 +55,6 @@ const Header = () => {
       setIsLoggedIn(true);
       const decodedCookieValue = jwt.decode(token.substring(7));
       setUser(decodedCookieValue);
-      console.log("decodedCookieValue");
-      console.log(decodedCookieValue);
     }
   }, [isLoggedIn]);
 

@@ -1,3 +1,32 @@
+import { RxDashboard } from "react-icons/rx";
+
+export const sidebarLinksDistrictAdmin = [
+  {
+    linkText: `Dashboard`,
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Complains`,
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Incentives`,
+    linkIcon: <RxDashboard />,
+  },
+
+  {
+    linkText: `Community Waste Movements`,
+    linkIcon: <RxDashboard />,
+  },
+];
+
+export const sidebarLinksRecyclingPointAdmin = [
+  {
+    linkText: `Dashboard`,
+    linkIcon: <RxDashboard />,
+  },
+];
+
 export const signupSliderImages = [
   {
     image: "/shared/signup_carousel_1.jpg",

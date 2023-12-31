@@ -6,6 +6,7 @@ import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useStateContext } from "@/app/StateContext";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const profileLinks = [
   {
@@ -23,6 +24,7 @@ const profileLinks = [
 const ProfileDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, setIsLoggedIn } = useStateContext();
+  const router = useRouter();
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -117,6 +119,7 @@ const ProfileDropdown = () => {
           onClick={() => {
             setIsLoggedIn(false);
             Cookies.remove("jwt");
+            router.push("/");
           }}
           className="flex items-center gap-3 py-4 px-5 text-sm text-[#6a798f] font-medium duration-300 ease-in-out hover:bg-[#f1f1f193] lg:text-base"
         >

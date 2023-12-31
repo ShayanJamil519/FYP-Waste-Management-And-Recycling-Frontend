@@ -8,12 +8,7 @@ import ChartOne from "./ChartOne";
 import CardDataStats from "./CardDataStats";
 import ChartTwo from "./ChartTwo";
 import ChartThree from "./ChartThree";
-import MapOne from "./MapOne";
 import TableOne from "./TableOne";
-import ChatCard from "./ChatCard";
-// const MapOne = dynamic(() => import("../Maps/MapOne"), {
-//   ssr: false,
-// });
 
 export const Home = () => {
   return (
@@ -61,16 +56,15 @@ export const Home = () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7 2xl:gap-7">
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7 2xl:gap">
         <ChartOne />
         <ChartTwo />
         <div className="col-span-12 xl:col-span-12 w-full">
           <ChartThree />
         </div>
-        <div className="col-span-12 xl:col-span-8">
+        <div className="col-span-12 xl:col-span-12">
           <TableOne />
         </div>
-        <ChatCard />
       </div>
     </div>
   );
