@@ -21,22 +21,19 @@ class ComplainService {
   }
 
   async getComplaintsInDistrict(district) {
-      const res = await axios.get(
-        `${apiUrl}/complaint/get-complaints-district/${district}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("service")
-      console.log(res.data.complaints)
-      return res?.data?.complaints;
-      /*const complaints =res.data.complaints
-       console.log(complaints)
-       return complaints;*/
+    const { data } = await axios.get(
+      `${apiUrl}/complaint/get-complaints-district/${district}`,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return data;
   }
+
   async addResponseToComplaint(complaintId, data) {
     try {
       const response = await axios.post(

@@ -5,31 +5,41 @@ import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import EditComplainModal from "./EditComplainModal";
-import {useGetComplaintsInDistrict} from "../../../hooks/complain-hook";
+import { useGetComplaintsInDistrict } from "../../../hooks/complain-hook";
 import axios from "axios";
 import apiUrl from "../../../utils/baseURL";
 import Cookies from "js-cookie";
 
-
-
- const  ComplainsTable = () => {
+const ComplainsTable = () => {
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
+  const paginate = usePagination();
 
-  const district = 'south'; 
-   const {data} = useGetComplaintsInDistrict(district)
-   console.log("data")
-   console.log(data)
-   const paginate = usePagination();
-   const { currentPage, totalPages, visibleItems, goToPage } =
-   paginate(data);
-    
+  const district = "south";
+  const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
+
+  console.log("data");
+  console.log(data?.complaints);
+
+  // Check loading and error states
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading complaints</div>;
+  }
+
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
+    data && data?.complaints
+  );
+
   return (
     <div>
       {/* Table */}
       <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
         <div className="py-4 px-4 md:px-6 xl:px-7.5">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Top Products
+            Top items
           </h4>
         </div>
 
@@ -56,48 +66,55 @@ import Cookies from "js-cookie";
 
         {/* Table Body */}
         <div className="h-[55vh] overflow-auto">
-          {visibleItems.map((product, key) => (
-            <div
-              className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
-              key={key}
-            >
-              <div className="col-span-2 flex items-center">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-20 h-20 rounded-md">
-                    <img src={product.image} alt="Product" />
+          {visibleItems &&
+            visibleItems.map((item, key) => (
+              <div
+                className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
+                key={key}
+              >
+                <div className="col-span-2 flex items-center">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <div className=" w-20 h-20 rounded-md">
+                      <img src={item?.image?.url} alt="item" />
+                    </div>
+                    <p className="text-sm text-black dark:text-white">
+                      {item?.district}
+                    </p>
                   </div>
+                </div>
+                <div className="hidden items-center sm:flex">
                   <p className="text-sm text-black dark:text-white">
-                    {product.district}
+                    {item?.area}
                   </p>
                 </div>
+                <div className=" flex items-center col-span-2">
+                  <p className="text-sm text-black dark:text-white ">
+                    {item?.description}
+                  </p>
+                </div>
+                <div className=" flex items-center">
+                  <p className="text-sm text-black dark:text-white">
+                    {item?.response.length > 0 ? (
+                      item?.response.map((_i, index) => (
+                        <span key={index}>{_i?.date}</span>
+                      ))
+                    ) : (
+                      <span>No Response Found</span>
+                    )}
+                  </p>
+                </div>
+                <div className=" flex items-center">
+                  <p className="text-sm text-meta-3">item.date</p>
+                </div>
+                <div className=" flex gap-3 justify-start items-center text-[20px]">
+                  <MdEdit
+                    className="cursor-pointer"
+                    onClick={() => setOpenEditComplainModal(true)}
+                  />
+                  <MdDelete className="cursor-pointer" />
+                </div>
               </div>
-              <div className="hidden items-center sm:flex">
-                <p className="text-sm text-black dark:text-white">
-                  {product.area}
-                </p>
-              </div>
-              <div className=" flex items-center col-span-2">
-                <p className="text-sm text-black dark:text-white ">
-                  {product.description}
-                </p>
-              </div>
-              <div className=" flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {product.resonse}
-                </p>
-              </div>
-              <div className=" flex items-center">
-                <p className="text-sm text-meta-3">{product.date}</p>
-              </div>
-              <div className=" flex gap-3 justify-start items-center text-[20px]">
-                <MdEdit
-                  className="cursor-pointer"
-                  onClick={() => setOpenEditComplainModal(true)}
-                />
-                <MdDelete className="cursor-pointer" />
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
       {/* Pagination */}
@@ -117,6 +134,5 @@ import Cookies from "js-cookie";
     </div>
   );
 };
-
 
 export default ComplainsTable;

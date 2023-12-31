@@ -151,7 +151,7 @@ const ChartOne = () => {
   useEffect(() => {
     const isWindowAvailable = () => typeof window !== "undefined";
 
-    if (!isWindowAvailable()) return <></>;
+    if (!isWindowAvailable()) return;
   }, []);
 
   return (
