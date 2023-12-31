@@ -6,79 +6,34 @@ import Select from "../CC/Select";
 import TextArea from "../CC/TextArea";
 import { useRouter } from "next/navigation";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { useUserId } from "../../hooks/auth-hook";
+
+import { useStateContext } from "@/app/StateContext";
 
 const ComplainForm = () => {
   const router = useRouter();
-  const  {data}   = useUserId();
-  console.log("abc")
-  console.log(data);
+  const { user} = useStateContext();
+  const savedLatitude = localStorage.getItem('latitude');
+  const savedLongitude = localStorage.getItem('longitude');
+  const latitudeAsNumber = parseFloat(savedLatitude);
+const longitudeAsNumber = parseFloat(savedLongitude);
+
+
   const [userData, setUserData] = useState({
-    userId: data,
+    userId: user?.userId,
     district: "",
     area: "",
     description: "",
     image: "",
+    latitude : latitudeAsNumber,
+    longitude :longitudeAsNumber
   });
 
-// const {userId,district,area,description,image} = userData;
 const { mutate: addMutate } = useComplain(JSON.stringify(userData));
 
-  // const handleInputChange = (event) => {
-  //   const { name, value, type } = event.target;
-  
-  //   if (type === "file") {
-  //     const reader = new FileReader();
-  
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setUserData((prevUserData) => ({
-  //           ...prevUserData,
-  //           [name]: reader.result,
-  //         }));
-  //       }
-  //     };
-  
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   } else {
-  //     setUserData((prevUserData) => ({
-  //       ...prevUserData,
-  //       [name]: value,
-  //     }));
-  //   }
-  // };
-  
-
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-
-  //   if (name === "image") {
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setUserData((prevUserData) => ({
-  //           ...prevUserData,
-  //           [name]: reader.result,
-  //         }));
-  //       }
-  //     };
-
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   } else {
-  //     setUserData((prevUserData) => ({
-  //       ...prevUserData,
-  //       [name]: value,
-  //     }));
-  //   }
-  // };
 
   const handleInputChange = (event) => {
 
     const { name, value } = event.target;
-    console.log("abc");
-    console.log(name);
-    console.log(value);
     if (name === "image") {
       const reader = new FileReader();
 
@@ -93,23 +48,6 @@ const { mutate: addMutate } = useComplain(JSON.stringify(userData));
       setUserData({ ...userData, [name]: value });
     }
   };
-
-  // const handleInputChange = (event) => {
-  //   if (event.target.name === 'image') {
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setUserData({ ...userData, image: reader.result });
-  //       }
-  //     };
-
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   } else {
-  //     const { name, value } = event.target;
-  //     setUserData({ ...userData, [name]: value });
-  //   }
-  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -129,6 +67,7 @@ const { mutate: addMutate } = useComplain(JSON.stringify(userData));
       }
     );
   };
+
 
   return (
     <div

@@ -7,8 +7,9 @@ import MapComponent from "@/components/Complain/mapComponent";
 
 const page = () => {
   const handleLocationSelect = (location) => {
-    // Use the selected location in your form or perform necessary actions
-    console.log('Selected Location:', location);
+
+    localStorage.setItem('latitude', location.lat);
+    localStorage.setItem('longitude', location.lng);
   };
   return (
     <>
