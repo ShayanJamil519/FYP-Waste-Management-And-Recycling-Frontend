@@ -25,6 +25,14 @@ export const sidebarLinksRecyclingPointAdmin = [
     linkText: `Dashboard`,
     linkIcon: <RxDashboard />,
   },
+  {
+    linkText: `Recycling Intake`,
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Recycling Output`,
+    linkIcon: <RxDashboard />,
+  },
 ];
 
 export const signupSliderImages = [

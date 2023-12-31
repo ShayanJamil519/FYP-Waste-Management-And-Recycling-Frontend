@@ -17,6 +17,8 @@ import { useStateContext } from "@/app/StateContext";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import DataLoader from "../Shared/DataLoader";
+import RecyclingIntake from "./RecyclingPointAdmin/RecyclingIntake";
+import RecyclingOutput from "./RecyclingPointAdmin/RecyclingOutput";
 
 const Dashboard = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -50,14 +52,18 @@ const Dashboard = () => {
       sidebarLinks = sidebarLinksDistrictAdmin;
       components = [
         <HomeDistrictAdmin key="HomeDistrictAdmin" />,
-        <ComplainsTable key="complains" />,
-        <IncentivesTable key="incentives" />,
-        <CommunityWasteMovements key="communityWasteMovements" />,
+        <ComplainsTable key="ComplainsTable" />,
+        <IncentivesTable key="IncentivesTable" />,
+        <CommunityWasteMovements key="CommunityWasteMovements" />,
       ];
       break;
     case "RecyclingPointAdmin":
       sidebarLinks = sidebarLinksRecyclingPointAdmin;
-      components = [<HomeRecyclingPointAdmin key="HomeRecyclingPointAdmin" />];
+      components = [
+        <HomeRecyclingPointAdmin key="HomeRecyclingPointAdmin" />,
+        <RecyclingIntake key="RecyclingIntake" />,
+        <RecyclingOutput key="RecyclingOutput" />,
+      ];
       break;
     // Add more cases for other roles if needed
     default:
