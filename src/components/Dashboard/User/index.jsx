@@ -7,6 +7,7 @@ import ProfileDropdown from "../ProfileDropdown";
 import ComplainsTable from "./ComplainsTable";
 import Home from "./Home";
 import IncentivesTable from "./IncentivesTable";
+import CommunityWasteMovements from "./CommunityWasteMovements";
 
 const sidebarLinks = [
   {
@@ -21,10 +22,15 @@ const sidebarLinks = [
     linkText: `Incentives`,
     linkIcon: <RxDashboard />,
   },
+
+  {
+    linkText: `Community Waste Movements`,
+    linkIcon: <RxDashboard />,
+  },
 ];
 
 const Dashboard = () => {
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState(3);
 
   return (
     <div className="w-full flex justify-start items-stretch ">
@@ -51,6 +57,7 @@ const Dashboard = () => {
           {currentTab === 0 && <Home />}
           {currentTab === 1 && <ComplainsTable />}
           {currentTab === 2 && <IncentivesTable />}
+          {currentTab === 3 && <CommunityWasteMovements />}
         </div>
       </div>
     </div>

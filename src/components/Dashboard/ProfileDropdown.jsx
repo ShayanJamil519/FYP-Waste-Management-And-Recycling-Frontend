@@ -96,7 +96,7 @@ const ProfileDropdown = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-[230px]  flex-col rounded-sm border  bg-white  ${
+        className={`absolute z-30 right-0 mt-4 flex w-[230px]  flex-col rounded-sm border  bg-white  ${
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >

@@ -5,7 +5,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className="flex items-center justify-center mt-4 font-poppins">
+    <div className="flex items-center justify-end mt-3 font-poppins">
       <button
         className="mr-2 py-[10px] pr-[11px] pl-[10px] text-[18px] text-[#fff] bg-[#296d8d] rounded-full"
         onClick={() => onPageChange(currentPage - 1)}

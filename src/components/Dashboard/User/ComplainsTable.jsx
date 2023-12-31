@@ -9,6 +9,7 @@ import { useGetComplaintsInDistrict } from "../../../hooks/complain-hook";
 import axios from "axios";
 import apiUrl from "../../../utils/baseURL";
 import Cookies from "js-cookie";
+import DataLoader from "@/components/Shared/DataLoader";
 
 const ComplainsTable = () => {
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
@@ -22,7 +23,11 @@ const ComplainsTable = () => {
 
   // Check loading and error states
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        <DataLoader />
+      </div>
+    );
   }
 
   if (isError) {
