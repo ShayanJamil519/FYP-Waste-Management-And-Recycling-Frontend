@@ -4,13 +4,16 @@ import { useStateContext } from "@/app/StateContext";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useUserLogin } from "../../hooks/auth-hook";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Login = () => {
   const { setIsLoggedIn, setOpenSignupModal, setOpenLoginModal } =
     useStateContext();
+
   const router = useRouter();
+  const pathname = usePathname();
+
   const [userData, setUserData] = useState({
     name: "",
     password: "",
@@ -43,7 +46,9 @@ const Login = () => {
             localStorage.setItem("email", userData.email);
             setOpenLoginModal(false);
             setIsLoggedIn(true);
-            router.back();
+            if (pathname !== "/") {
+              router.back();
+            }
           }
         },
       }
