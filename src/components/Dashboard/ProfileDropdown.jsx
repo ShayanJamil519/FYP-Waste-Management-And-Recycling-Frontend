@@ -118,7 +118,7 @@ const ProfileDropdown = () => {
         <button
           onClick={() => {
             setIsLoggedIn(false);
-            Cookies.remove("jwt");
+            typeof window !== "undefined" && Cookies.remove("jwt");
             router.push("/");
           }}
           className="flex items-center gap-3 py-4 px-5 text-sm text-[#6a798f] font-medium duration-300 ease-in-out hover:bg-[#f1f1f193] lg:text-base"

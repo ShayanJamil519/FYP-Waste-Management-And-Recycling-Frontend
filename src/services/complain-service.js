@@ -1,7 +1,8 @@
 import axios from "axios";
 import apiUrl from "../utils/baseURL";
 import Cookies from "js-cookie";
-const token = Cookies.get("jwt");
+
+const token = typeof window !== "undefined" && Cookies.get("jwt");
 
 class ComplainService {
   async complain(userData) {

@@ -6,9 +6,6 @@ import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import EditComplainModal from "./EditComplainModal";
 import { useGetComplaintsInDistrict } from "../../../hooks/complain-hook";
-import axios from "axios";
-import apiUrl from "../../../utils/baseURL";
-import Cookies from "js-cookie";
 import DataLoader from "@/components/Shared/DataLoader";
 
 const ComplainsTable = () => {
