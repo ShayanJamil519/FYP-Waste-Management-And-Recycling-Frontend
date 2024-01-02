@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = Cookies.get("jwt");
+    const token = typeof window !== "undefined" ? Cookies.get("jwt") : null;
     if (token) {
       const decodedCookieValue = jwt.decode(token.substring(7));
       setUser(decodedCookieValue);
