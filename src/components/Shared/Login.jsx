@@ -43,7 +43,7 @@ const Login = () => {
             console.log("abc");
             console.log(response);
             toast.success(response?.data?.message);
-            localStorage.setItem("email", userData.email);
+            // localStorage.setItem("email", userData.email);
             setOpenLoginModal(false);
             setIsLoggedIn(true);
             if (pathname !== "/") {
