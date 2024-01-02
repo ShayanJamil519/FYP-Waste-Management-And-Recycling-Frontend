@@ -1,22 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useComplain } from "../../hooks/complain-hook";
 import Input from "../CC/Input";
-import Select from "../CC/Select";
-import TextArea from "../CC/TextArea";
 import { useRouter } from "next/navigation";
 import { IoIosArrowRoundForward } from "react-icons/io";
-
 import { useStateContext } from "@/app/StateContext";
 
 const ComplainForm = () => {
   const router = useRouter();
-  const { user} = useStateContext();
-  const savedLatitude = localStorage.getItem('latitude');
-  const savedLongitude = localStorage.getItem('longitude');
-  const latitudeAsNumber = parseFloat(savedLatitude);
-const longitudeAsNumber = parseFloat(savedLongitude);
+  const { user } = useStateContext();
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
+  useEffect(() => {
+    const savedLatitude = localStorage.getItem("latitude");
+    setLatitude(savedLatitude);
+    const savedLongitude = localStorage.getItem("longitude");
+    setLongitude(savedLongitude);
+  }, []);
 
   const [userData, setUserData] = useState({
     userId: user?.userId,
@@ -24,15 +25,13 @@ const longitudeAsNumber = parseFloat(savedLongitude);
     area: "",
     description: "",
     image: "",
-    latitude : latitudeAsNumber,
-    longitude :longitudeAsNumber
+    latitude: latitude,
+    longitude: longitude,
   });
 
-const { mutate: addMutate } = useComplain(JSON.stringify(userData));
-
+  const { mutate: addMutate } = useComplain(JSON.stringify(userData));
 
   const handleInputChange = (event) => {
-
     const { name, value } = event.target;
     if (name === "image") {
       const reader = new FileReader();
@@ -67,7 +66,6 @@ const { mutate: addMutate } = useComplain(JSON.stringify(userData));
       }
     );
   };
-
 
   return (
     <div
