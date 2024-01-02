@@ -14,11 +14,6 @@ const options = {
   },
   colors: ["#3C50E0", "#80CAEE"],
   chart: {
-    // events: {
-    //   beforeMount: (chart) => {
-    //     chart.windowResizeHandler();
-    //   },
-    // },
     fontFamily: "Satoshi, sans-serif",
     height: 335,
     type: "area",
@@ -146,13 +141,6 @@ const ChartOne = () => {
   };
 
   handleReset;
-
-  // // NextJS Requirement
-  // useEffect(() => {
-  //   const isWindowAvailable = () => typeof window !== "undefined";
-
-  //   if (!isWindowAvailable()) return;
-  // }, []);
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7 pb-5 shadow-sm sm:px-7 xl:col-span-8">
