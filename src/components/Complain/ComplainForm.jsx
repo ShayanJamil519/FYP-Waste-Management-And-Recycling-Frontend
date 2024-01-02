@@ -25,8 +25,8 @@ const ComplainForm = () => {
     area: "",
     description: "",
     image: "",
-    latitude: latitude,
-    longitude: longitude,
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
   });
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
