@@ -15,9 +15,6 @@ const ComplainsTable = () => {
   const district = "south";
   const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
 
-  console.log("data");
-  console.log(data?.complaints);
-
   // Check loading and error states
   if (isLoading) {
     return (

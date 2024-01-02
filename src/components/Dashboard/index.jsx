@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Sidebar from "./Sidebar";
-
 import ProfileDropdown from "./ProfileDropdown";
 import ComplainsTable from "./DistrictAdmin/ComplainsTable";
 import { Home as HomeDistrictAdmin } from "./DistrictAdmin/Home";
@@ -70,9 +69,6 @@ const Dashboard = () => {
       // Default case or handle unknown roles
       break;
   }
-
-  console.log("sidebarLinks");
-  console.log(sidebarLinks);
 
   return (
     <div className="w-full flex justify-start items-stretch ">
