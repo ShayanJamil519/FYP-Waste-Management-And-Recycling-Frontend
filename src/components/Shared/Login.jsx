@@ -31,29 +31,22 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    addMutate(
-      {},
-      {
+      addMutate({}, {
         onSuccess: (response) => {
-          if (response?.data?.error) {
-            toast.error(response?.data?.error);
-          }
-          if (response?.data?.message) {
-            console.log("abc");
-            console.log(response);
             toast.success(response?.data?.message);
-            // localStorage.setItem("email", userData.email);
             setOpenLoginModal(false);
             setIsLoggedIn(true);
             if (pathname !== "/") {
               router.back();
             }
-          }
         },
-      }
-    );
-  };
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response.response.data.message);
+          toast.error(response.response.data.message);
+        }
+      });
+  }
 
   return (
     <div className="w-full  flex items-center justify-center fixed top-0 left-0 right-0 h-screen z-50 bg-black bg-opacity-80">

@@ -55,14 +55,14 @@ const ComplainForm = () => {
       {},
       {
         onSuccess: (response) => {
-          if (response?.data?.error) {
-            toast.error(response?.data?.error);
-          }
-          if (response?.data?.message) {
             toast.success(response?.data?.message);
             router.push("/");
-          }
         },
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response.response.data.message);
+          toast.error(response.response.data.message);
+        }
       }
     );
   };

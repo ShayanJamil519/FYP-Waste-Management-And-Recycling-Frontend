@@ -60,23 +60,18 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // if (userData.password !== confirmPassword) {
-    //   toast.error("Passwords doesn't match");
-    //   return;
-    // }
-
     addMutate(
       {},
       {
         onSuccess: (response) => {
-          if (response?.data?.error) {
-            toast.error(response?.data?.error);
-          }
-          if (response?.data?.message) {
             toast.success(response?.data?.message);
             router.push("/login");
-          }
         },
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response.response.data.message);
+          toast.error(response.response.data.message);
+        }
       }
     );
   };
