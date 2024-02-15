@@ -49,6 +49,8 @@ const ComplainForm = () => {
   };
 
   const handleSubmit = async (event) => {
+    console.log(userData.latitude)
+    console.log(userData.longitude)
     event.preventDefault();
 
     addMutate(

@@ -1,9 +1,67 @@
 import Input from "@/components/CC/Input";
-import TextArea from "@/components/CC/TextArea";
-import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useStateContext } from "@/app/StateContext";
+import { usePostWaste } from "../../../hooks/community-waste-movements";
 
 const CommunityWasteMovements = () => {
+  const router = useRouter();
+  const { user } = useStateContext();
+  
+  const [data, setData] = useState({
+    districtAdmin: user?.userId,
+    date: "",
+    notes: "",
+    totalAmount: "",
+    subdivision: "",
+    area: "",
+    image: "",
+  });
+
+  const { mutate: addMutate } = usePostWaste(JSON.stringify(data));
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "image") {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setData({ ...data, [name]: reader.result });
+        }
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      setData({ ...data, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(data.districtAdmin)
+    console.log(data.date)
+    console.log(data.notes)
+    console.log(data.totalAmount)
+    console.log(data.subdivision)
+    console.log(data.area)
+    console.log(data.image)
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+            toast.success(response?.data?.message);
+            router.push("/");
+        },
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response.response.data.message);
+          toast.error(response.response.data.message);
+        }
+      }
+    );
+  };
   return (
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
       <h1 className="font-bold text-3xl">Community Waste Movements</h1>
@@ -11,14 +69,19 @@ const CommunityWasteMovements = () => {
         Please complete the form below, to request a quote, and we’ll be in
         touch. Or you can call us and our specialists will provide help!
       </p>
-      <form className="w-full mt-10 ">
+      <form className="w-full mt-10 " onSubmit={handleSubmit}>
         {/* File Upload */}
         <div
           id="FileUpload"
           className="relative mb-5 block w-full text-[#64748b] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4  sm:py-7 bg-[#eff4fb]"
         >
-          <input
+          <Input
             type="file"
+            cursor="pointer"
+            // value={data.image}
+            label="image"
+            name="image"
+            onChange={handleInputChange}
             // accept="image/*"
             className="absolute inset-0 z-10 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
           />
@@ -61,47 +124,53 @@ const CommunityWasteMovements = () => {
 
         <div className="grid grid-cols-2 gap-5">
           <Input
-            label="District"
+            label="date"
             type="text"
             placeholder="Please write you details"
+            name="date"
+            onChange={handleInputChange}
+            value={data.date}
           />
           <Input
-            label="Area"
+            label="notes"
             type="text"
             placeholder="Please write you details"
+            name="notes"
+            onChange={handleInputChange}
+            value={data.notes}
           />
           <Input
-            label="Response"
+            label="totalAmount"
             type="text"
             placeholder="Please write you details"
+            name="totalAmount"
+            onChange={handleInputChange}
+            value={data.totalAmount}
           />
           <Input
-            label="Date"
+            label="subdivision"
             type="text"
             placeholder="Please write you details"
+            name="subdivision"
+            onChange={handleInputChange}
+            value={data.subdivision}
+          />
+          <Input
+            label="area"
+            type="text"
+            placeholder="Please write you details"
+            name="area"
+            onChange={handleInputChange}
+            value={data.area}
           />
         </div>
 
-        <TextArea
-          // value={textValue}
-          // onChange={handleTextChange}
-          placeholder="Enter your text here..."
-          rows={6}
-          label="Description"
-        />
-        <TextArea
-          // value={textValue}
-          // onChange={handleTextChange}
-          placeholder="Enter your text here..."
-          rows={6}
-          label="Optional"
-        />
 
         <button
           type="submit"
           className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
         >
-          Send Tokens
+          Submit
           <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
             <IoIosArrowRoundForward className="text-[27px] font-bold" />
           </span>{" "}

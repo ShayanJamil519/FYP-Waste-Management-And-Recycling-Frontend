@@ -1,9 +1,62 @@
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
-import React from "react";
+import React, { useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { useRouter } from "next/navigation";
+import { useOutputEntry } from "../../../hooks/recyclePointEntries";
+import { useStateContext } from "@/app/StateContext";
 
 const RecyclingOutput = () => {
+  const router = useRouter();
+  
+  const { user } = useStateContext();
+
+  const [data, setData] = useState({
+    inputEntryId: "",
+    recyclablePercentage: "",
+    plasticPercentage: "",
+    glassPercentage: "",
+    metalloidsPercentage: "",
+    marketValue: "",
+  });
+
+  const { mutate: addMutate } = useOutputEntry(JSON.stringify(data));
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "image") {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setData({ ...data, [name]: reader.result });
+        }
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      setData({ ...data, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    console.log(data.inputEntryId)
+    event.preventDefault();
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+          toast.success(response?.data?.message);
+          router.push("/");
+        },
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response.response.data.message);
+          toast.error(response.response.data.message);
+        },
+      }
+    );
+  };
   return (
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
       <h1 className="font-bold text-3xl">Recycling Output</h1>
@@ -11,15 +64,18 @@ const RecyclingOutput = () => {
         Please complete the form below, to request a quote, and we’ll be in
         touch. Or you can call us and our specialists will provide help!
       </p>
-      <form className="w-full mt-10 ">
+      <form className="w-full mt-10 " onSubmit={handleSubmit}>
         {/* File Upload */}
         <div
           id="FileUpload"
           className="relative mb-5 block w-full text-[#64748b] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4  sm:py-7 bg-[#eff4fb]"
         >
-          <input
+          <Input
             type="file"
             // accept="image/*"
+            label="image"
+            name="image"
+            onChange={handleInputChange}
             className="absolute inset-0 z-10 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
           />
           <div className="flex flex-col items-center justify-center space-y-3">
@@ -58,44 +114,57 @@ const RecyclingOutput = () => {
             <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
           </div>
         </div>
-
+  
         <div className="grid grid-cols-2 gap-5">
           <Input
-            label="District"
+            label="inputEntryId"
             type="text"
             placeholder="Please write you details"
+            name="inputEntryId"
+            onChange={handleInputChange}
+            value={data.inputEntryId}
           />
           <Input
-            label="Area"
+            label="recyclablePercentage"
             type="text"
             placeholder="Please write you details"
+            name="recyclablePercentage"
+            onChange={handleInputChange}
+            value={data.recyclablePercentage}
           />
           <Input
-            label="Response"
+            label="plasticPercentage"
             type="text"
             placeholder="Please write you details"
+            name="plasticPercentage"
+            onChange={handleInputChange}
+            value={data.plasticPercentage}
           />
           <Input
-            label="Date"
+            label="glassPercentage"
             type="text"
             placeholder="Please write you details"
+            name="glassPercentage"
+            onChange={handleInputChange}
+            value={data.glassPercentage}
+          />
+          <Input
+            label="metalloidsPercentage"
+            type="text"
+            placeholder="Please write you details"
+            name="metalloidsPercentage"
+            onChange={handleInputChange}
+            value={data.metalloidsPercentage}
+          />
+          <Input
+            label="marketValue"
+            type="text"
+            placeholder="Please write you details"
+            name="marketValue"
+            onChange={handleInputChange}
+            value={data.marketValue}
           />
         </div>
-
-        <TextArea
-          // value={textValue}
-          // onChange={handleTextChange}
-          placeholder="Enter your text here..."
-          rows={6}
-          label="Description"
-        />
-        <TextArea
-          // value={textValue}
-          // onChange={handleTextChange}
-          placeholder="Enter your text here..."
-          rows={6}
-          label="Optional"
-        />
 
         <button
           type="submit"

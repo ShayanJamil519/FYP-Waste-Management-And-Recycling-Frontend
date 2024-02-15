@@ -1,9 +1,57 @@
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
-import React from "react";
+import React, { useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { useRouter } from "next/navigation";
+import { useInputEntry } from "../../../hooks/recyclePointEntries";
 
 const RecyclingIntake = () => {
+  const router = useRouter();
+  
+  const [data, setData] = useState({ 
+    district: "",
+    quantityReceived: "",
+    sourceSubdivision: "",
+    area: "",
+  });
+
+  const { mutate: addMutate } = useInputEntry(JSON.stringify(data));
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "image") {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setData({ ...data, [name]: reader.result });
+        }
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      setData({ ...data, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+            toast.success(response?.data?.message);
+            router.push("/");
+        },
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response.response.data.message);
+          toast.error(response.response.data.message);
+        }
+      }
+    );
+  };
   return (
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
       <h1 className="font-bold text-3xl">Recycling Input</h1>
@@ -11,15 +59,19 @@ const RecyclingIntake = () => {
         Please complete the form below, to request a quote, and we’ll be in
         touch. Or you can call us and our specialists will provide help!
       </p>
-      <form className="w-full mt-10 ">
+      <form className="w-full mt-10 " onSubmit={handleSubmit}>
         {/* File Upload */}
         <div
           id="FileUpload"
           className="relative mb-5 block w-full text-[#64748b] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4  sm:py-7 bg-[#eff4fb]"
         >
-          <input
+          <Input
             type="file"
             // accept="image/*"
+            // value={data.image}
+            label="image"
+            name="image"
+            onChange={handleInputChange}
             className="absolute inset-0 z-10 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
           />
           <div className="flex flex-col items-center justify-center space-y-3">
@@ -60,42 +112,40 @@ const RecyclingIntake = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-5">
+        
           <Input
-            label="District"
+            label="district"
             type="text"
             placeholder="Please write you details"
+            name="district"
+            onChange={handleInputChange}
+            value={data.district}
           />
           <Input
-            label="Area"
+            label="quantityReceived"
             type="text"
             placeholder="Please write you details"
+            name="quantityReceived"
+            onChange={handleInputChange}
+            value={data.quantityReceived}
           />
           <Input
-            label="Response"
+            label="sourceSubdivision"
             type="text"
             placeholder="Please write you details"
+            name="sourceSubdivision"
+            onChange={handleInputChange}
+            value={data.sourceSubdivision}
           />
           <Input
-            label="Date"
+            label="area"
             type="text"
             placeholder="Please write you details"
+            name="area"
+            onChange={handleInputChange}
+            value={data.area}
           />
         </div>
-
-        <TextArea
-          // value={textValue}
-          // onChange={handleTextChange}
-          placeholder="Enter your text here..."
-          rows={6}
-          label="Description"
-        />
-        <TextArea
-          // value={textValue}
-          // onChange={handleTextChange}
-          placeholder="Enter your text here..."
-          rows={6}
-          label="Optional"
-        />
 
         <button
           type="submit"
