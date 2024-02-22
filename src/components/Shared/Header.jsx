@@ -121,7 +121,8 @@ const Header = () => {
               ) : (
                 <button
                   className="outline-none lg:text-base text-[14px] py-[5px] sm:py-2 px-3 sm:px-4  rounded-[40px] bg-[#32A632] text-[#fff]"
-                  onClick={() => setOpenLoginModal(true)}
+                  // onClick={() => setOpenLoginModal(true)}
+                  onClick={() => router.push("/login")}
                 >
                   Login/Signup
                 </button>
