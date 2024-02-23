@@ -75,7 +75,7 @@ const SignUp = () => {
   return (
     <div className=" flex items-center justify-center w-full ">
       <div className="w-full  bg-[#32A632] flex rounded-[15px] sm:rounded-[20px] flex-col lg:flex-row ">
-        <div className="lg:w-1/2 sm:p-unset  flex items-center justify-center rounded-[15px] sm:rounded-[20px] w-full mx-auto relative ">
+        <div className="lg:w-[45%] sm:p-unset  flex items-center justify-center rounded-[15px] sm:rounded-[20px] w-full mx-auto relative ">
           <Swiper
             modules={[Navigation, Pagination, A11y, Autoplay]}
             slidesPerView={1}
@@ -101,11 +101,11 @@ const SignUp = () => {
           </Swiper>
         </div>
 
-        <div className="lg:w-1/2 border-solid  bg-white px-6 rounded-[15px] sm:rounded-[20px] pt-1 pb-5 w-full">
-          <p className="text-[#32A632] font-satisfy text-[12px] sm:text-[16px] lg:text-2xl mt-1 sm:my-0 lg:mb-3">
+        <div className="lg:w-[55%] border-solid  bg-white px-6 rounded-[15px] sm:rounded-[20px] pt-5 pb-5 w-full">
+          <p className="text-[#32A632] font-satisfy text-[12px] sm:text-[16px] lg:text-xl ">
             Welcome
           </p>
-          <h2 className="font-extrabold text-[20px]  lg:text-3xl">
+          <h2 className="font-extrabold font-paralucent text-[20px]  lg:text-3xl">
             Sign up with Us
           </h2>
           <div className="flex mt-1 sm:mt-1 lg:mt-6">
@@ -161,7 +161,7 @@ const SignUp = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="w-full">
-            <div className="grid grid-cols-2 gap-5 mt-1 lg:mt-4">
+            <div className="grid grid-cols-2 gap-4 mt-1 lg:mt-4">
               <input
                 type="text"
                 placeholder="Enter Your name"
@@ -186,13 +186,23 @@ const SignUp = () => {
                 onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
+
+              <input
+                type="text"
+                placeholder="area"
+                name="area"
+                // required
+                onChange={handleInputChange}
+                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
+              />
+
               <input
                 type="text"
                 placeholder="ethAddress"
                 name="ethAddress"
                 // required
                 onChange={handleInputChange}
-                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
+                className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
               <input
                 type="text"
@@ -210,14 +220,7 @@ const SignUp = () => {
                 onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
-              <input
-                type="text"
-                placeholder="area"
-                name="area"
-                // required
-                onChange={handleInputChange}
-                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
-              />
+
               <input
                 type="url"
                 placeholder="avatar"

@@ -4,13 +4,12 @@ const page = () => {
   return (
     <div
       style={{
-        background: "url(/assets/Shared/login__bg.jpg) center center/cover",
+        background:
+          "linear-gradient( 135deg, rgba(0, 0, 0, 0.7) 45%, rgba(0, 0, 0, 0.2)), url('/shared/auth__bg1.png') no-repeat center center/cover",
       }}
       className="min-h-[90vh] px-32 py-20  w-full "
     >
-      <div className="">
-        <Signup />
-      </div>
+      <Signup />
     </div>
   );
 };
