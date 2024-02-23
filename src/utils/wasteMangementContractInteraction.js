@@ -1,6 +1,6 @@
-const ethers = require("ethers");
-const smartContract = require("../constants/wasteManagementConstants");
-const { convertDateToTimestamp } = require("./helper");
+import ethers from "ethers";
+import smartContract from "../constants/wasteManagementConstants";
+import { convertDateToTimestamp } from "./helper";
 
 const provider = new ethers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
@@ -10,7 +10,7 @@ const WasteManagementContract = new ethers.Contract(
   signer
 );
 
-class WastManagementContractInteraction {
+class WasteManagementContractInteraction {
   static async RecordWasteCollection(date, totalAmount, area, notes) {
     return WasteManagementContract.recordWasteCollection(
       convertDateToTimestamp(date),
@@ -74,4 +74,4 @@ class WastManagementContractInteraction {
   }
 }
 
-module.exports = WastManagementContractInteraction;
+export default WasteManagementContractInteraction;

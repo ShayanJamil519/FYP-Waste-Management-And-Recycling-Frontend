@@ -55,8 +55,8 @@ const Login = () => {
     <div className=" flex items-center justify-center w-full h-full ">
       <div className="  bg-white rounded-xl  ">
         <div className="w-full mx-auto border-2 rounded-xl">
-          <div className="px-4 lg:px-10">
-            <h2 className="font-extrabold text-[20px] lg:text-3xl lg:my-6">
+          <div className="px-4 lg:px-8">
+            <h2 className="font-paralucent text-center text-[20px] lg:text-3xl lg:my-4">
               Login
             </h2>
             <div className="flex mt-3 sm:mt-1 lg:mt-6">

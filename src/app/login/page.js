@@ -4,9 +4,10 @@ const page = () => {
   return (
     <div
       style={{
-        background: "url(/assets/Shared/login__bg.jpg) center center/cover",
+        background:
+          "linear-gradient( 135deg, rgba(0, 0, 0, 0.7) 45%, rgba(0, 0, 0, 0.2)), url('/shared/auth__bg1.png') no-repeat center center/cover",
       }}
-      className="min-h-[90vh] px-32  w-full grid lg:grid-cols-2 justify-items-center place-items-start md:place-items-center"
+      className="min-h-[88.5vh] px-32 gap-12  w-full grid lg:grid-cols-2 justify-items-center place-items-start md:place-items-center"
     >
       {/* Left */}
       <div className="col-span-1 ">
@@ -15,15 +16,18 @@ const page = () => {
 
       {/* Right */}
       <div className="col-span-1">
-        <div className=" ">
-          <h1 className="text-4xl font-bold uppercase mb-5 text-[#000] ">
-            Welcome <br /> Back!
+        <div>
+          <h1 className="text-4xl font-paralucent font-bold uppercase mb-5 text-[#fff]">
+            Empowering Sustainability
           </h1>
-          <p className="text-[#000]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
-            accusantium ducimus eligendi possimus, praesentium dolorem maxime
-            dicta dolore quo soluta provident quisquam impedit amet! Dicta quod
-            iste beatae ea assumenda.
+          <p className="text-[#fff]">
+            Join us in our mission to make the world a cleaner, greener place.
+            Our platform is designed to educate, inspire, and enable individuals
+            and organizations to contribute effectively to waste management and
+            recycling efforts. Together, we can reduce waste, conserve
+            resources, and make a lasting impact on our planet. Sign in to
+            access personalized tips, track your recycling efforts, and become
+            part of a community dedicated to environmental stewardship.
           </p>
         </div>
       </div>
