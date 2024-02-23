@@ -1,10 +1,5 @@
 "use client";
-// import Link from "next/link";
-// import { IoIosArrowBack } from "react-icons/io";
-// import RequestLoader from "../shared/RequestLoader";
-// import { useQuery } from 'react-query';
-// import axios from "axios";
-// import { useMutation } from "@tanstack/react-query";
+
 import { useUserSignup } from "../../hooks/auth-hook";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
@@ -24,9 +19,12 @@ import "swiper/css/scrollbar";
 import SwiperCore from "swiper";
 import { signupSliderImages } from "@/app/data";
 import Link from "next/link";
+import { CgCross } from "react-icons/cg";
+import { FaUpload } from "react-icons/fa6";
+import { RxCross1 } from "react-icons/rx";
 
 const SignUp = () => {
-  const { setOpenSignupModal, setOpenLoginModal } = useStateContext();
+  const [avatar, setAvatar] = useState(null);
   const router = useRouter();
 
   // const [confirmPassword, setConfirmPassword] = useState("");
@@ -70,6 +68,19 @@ const SignUp = () => {
         },
       }
     );
+  };
+
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setAvatar(URL.createObjectURL(file));
+      // Update userData state if necessary, e.g., if you're sending the avatar to the backend.
+    }
+  };
+
+  const removeAvatar = () => {
+    setAvatar(null);
+    // Update userData state if necessary
   };
 
   return (
@@ -161,7 +172,44 @@ const SignUp = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="w-full">
-            <div className="grid grid-cols-2 gap-4 mt-1 lg:mt-4">
+            <div className="my-3">
+              {avatar ? (
+                <div className="">
+                  <div className="w-24 h-24 mx-auto relative">
+                    <img
+                      src={avatar}
+                      alt="Avatar"
+                      className="rounded-full w-full h-full  "
+                    />
+                    <button
+                      onClick={removeAvatar}
+                      className="absolute  top-0 right-0 p-[5px] bg-gray-200 rounded-full"
+                    >
+                      <RxCross1 className="text-[#000] text-[14px] " />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <label htmlFor="avatar-upload" className="cursor-pointer">
+                  <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
+                    <FaUpload className="text-2xl" />
+                    <p>Upload your image</p>
+                    <p className="text-xs mt-2">
+                      Click to browse your image here
+                    </p>
+                  </div>
+                </label>
+              )}
+              <input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                className="hidden"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 ">
               <input
                 type="text"
                 placeholder="Enter Your name"
