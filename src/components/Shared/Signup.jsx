@@ -2,10 +2,9 @@
 
 import { useUserSignup } from "../../hooks/auth-hook";
 import { toast } from "react-toastify";
-import { FaTimes } from "react-icons/fa";
-import { useStateContext } from "@/app/StateContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 // slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -16,10 +15,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import SwiperCore from "swiper";
 import { signupSliderImages } from "@/app/data";
 import Link from "next/link";
-import { CgCross } from "react-icons/cg";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 
@@ -269,13 +266,21 @@ const SignUp = () => {
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
 
-              <input
+              {/* <input
                 type="url"
                 placeholder="avatar"
                 name="avatar"
                 // required
                 onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
+              /> */}
+
+              <Select
+                name="avatar"
+                options={["Male", "Female"]}
+                // value={values.gender}
+                onChange={handleInputChange}
+                placeholder="Select Gender"
               />
             </div>
             <div className="grid place-items-center mt-4">
@@ -304,3 +309,59 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const Select = ({ options, onChange, value, name, placeholder, error }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Wrapper function to integrate with Formik
+  const handleSelect = (option) => {
+    const changeEvent = {
+      target: {
+        name: name,
+        value: option,
+      },
+    };
+    onChange(changeEvent);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative w-full">
+      <div className="">
+        <button
+          type="button"
+          className="inline-flex justify-between w-full rounded-xl bg-[#D4D4D433] text-sm p-3 font-medium"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {value ? (
+            <span className="text-[#000]">{value}</span>
+          ) : (
+            <span className={` ${error ? "text-[#ffb8b8]" : "text-[#9ca3af]"}`}>
+              {placeholder}
+            </span>
+          )}
+          {isOpen ? (
+            <IoIosArrowUp className="text-[22px] text-[#9ca3af] m-0" />
+          ) : (
+            <IoIosArrowDown className="text-[22px] text-[#9ca3af] m-0" />
+          )}
+        </button>
+      </div>
+      {isOpen && (
+        <div className="origin-top-right absolute right-0  w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+          <div className="py-1">
+            {options.map((option) => (
+              <button
+                key={option}
+                className="block w-full text-left px-4 py-2 text-sm text-[#6c7571] hover:bg-gray-100 hover:text-gray-900"
+                onClick={() => handleSelect(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
