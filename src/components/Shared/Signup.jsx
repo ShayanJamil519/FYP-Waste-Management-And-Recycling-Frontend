@@ -21,9 +21,8 @@ import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 
 const SignUp = () => {
-  const [avatar, setAvatar] = useState(null);
   const router = useRouter();
-
+  const [avatar,setAvatar]=useState(null);
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [userData, setUserData] = useState({
     name: "",
@@ -33,7 +32,7 @@ const SignUp = () => {
     district: "",
     subDivision: "",
     area: "",
-    avatar: "",
+    avatar:"",
   });
 
   const { mutate: addMutate } = useUserSignup(JSON.stringify(userData));
@@ -41,7 +40,7 @@ const SignUp = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     console.log(name);
-    console.log("abc");
+    console.log("handleInput");
     setUserData({
       ...userData,
       [name]: value,
@@ -68,12 +67,44 @@ const SignUp = () => {
   };
 
   const handleAvatarChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setAvatar(URL.createObjectURL(file));
-      // Update userData state if necessary, e.g., if you're sending the avatar to the backend.
+
+
+
+
+
+    console.log("handleAvatar");
+    const { name, value } = event.target;
+    if (name === "avatar") {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        console.log("handleAvatar22");
+        if (reader.readyState === 2) {
+          setUserData({ ...userData, [name]: reader.result });
+          setAvatar(reader.result);
+        }
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      setUserData({ ...userData, [name]: value });
     }
   };
+    // const { name, value } = event.target.files[0];
+  //   const file = event.target.files[0];
+  //   console.log(file)
+  //   if (file) {
+  
+  //     setUserData({
+  //       ...userData,
+  //       avatar:URL.createObjectURL(file),
+  //     });
+  //     // Update userData state if necessary, e.g., if you're sending the avatar to the backend.
+  //   }
+  //   else{
+  //     console.log("Chandio");
+  //   }
+  // };
 
   const removeAvatar = () => {
     setAvatar(null);
@@ -199,6 +230,7 @@ const SignUp = () => {
               )}
               <input
                 id="avatar-upload"
+                name="avatar"
                 type="file"
                 accept="image/*"
                 onChange={handleAvatarChange}
@@ -275,13 +307,12 @@ const SignUp = () => {
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               /> */}
 
-              <Select
-                name="avatar"
+              {/* <Select
+                name="gender"
                 options={["Male", "Female"]}
-                // value={values.gender}
                 onChange={handleInputChange}
                 placeholder="Select Gender"
-              />
+              /> */}
             </div>
             <div className="grid place-items-center mt-4">
               <button
