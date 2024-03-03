@@ -1,5 +1,5 @@
 export const smartContract = {
-  address: "0x80f54dfecc052e2103ade4d018a4857539ab8f57",
+  address: "0xadFc2cf30a7Fc5Cc92681F323f95C980A63B8434",
   abi: [
     { inputs: [], stateMutability: "nonpayable", type: "constructor" },
     {
@@ -14,17 +14,23 @@ export const smartContract = {
         {
           indexed: false,
           internalType: "uint256",
+          name: "date",
+          type: "uint256",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
           name: "quantityReceived",
           type: "uint256",
         },
         {
           indexed: false,
           internalType: "string",
-          name: "area",
+          name: "_area",
           type: "string",
         },
       ],
-      name: "InputOutputRecorded",
+      name: "InputEntryRecorded",
       type: "event",
     },
     {
@@ -69,6 +75,37 @@ export const smartContract = {
         },
         {
           indexed: false,
+          internalType: "uint256",
+          name: "date",
+          type: "uint256",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "recyclablePercentage",
+          type: "uint256",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "marketValue",
+          type: "uint256",
+        },
+      ],
+      name: "OutputEntryRecorded",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "id",
+          type: "uint256",
+        },
+        {
+          indexed: false,
           internalType: "address",
           name: "districtAdmin",
           type: "address",
@@ -90,6 +127,48 @@ export const smartContract = {
       type: "event",
     },
     {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "id",
+          type: "uint256",
+        },
+        {
+          indexed: false,
+          internalType: "address",
+          name: "admin",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "string",
+          name: "ipfsHash",
+          type: "string",
+        },
+        {
+          indexed: false,
+          internalType: "string",
+          name: "reportType",
+          type: "string",
+        },
+      ],
+      name: "WeeklyReportAdded",
+      type: "event",
+    },
+    {
+      inputs: [
+        { internalType: "uint256", name: "_date", type: "uint256" },
+        { internalType: "string", name: "_ipfsHash", type: "string" },
+        { internalType: "string", name: "_reportType", type: "string" },
+      ],
+      name: "addWeeklyReport",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
       inputs: [
         { internalType: "address", name: "_user", type: "address" },
         {
@@ -104,20 +183,8 @@ export const smartContract = {
       type: "function",
     },
     {
-      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "districtAdminReports",
-      outputs: [
-        { internalType: "uint256", name: "id", type: "uint256" },
-        { internalType: "address", name: "admin", type: "address" },
-        { internalType: "string", name: "ipfsHash", type: "string" },
-        { internalType: "uint256", name: "date", type: "uint256" },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
-      name: "getDistrictAdminReport",
+      inputs: [{ internalType: "string", name: "_reportType", type: "string" }],
+      name: "getAllReportsByType",
       outputs: [
         {
           components: [
@@ -125,10 +192,11 @@ export const smartContract = {
             { internalType: "address", name: "admin", type: "address" },
             { internalType: "string", name: "ipfsHash", type: "string" },
             { internalType: "uint256", name: "date", type: "uint256" },
+            { internalType: "string", name: "reportType", type: "string" },
           ],
-          internalType: "struct WasteManagementSystem.WeeklyReport",
+          internalType: "struct WasteManagementSystem.WeeklyReport[]",
           name: "",
-          type: "tuple",
+          type: "tuple[]",
         },
       ],
       stateMutability: "view",
@@ -136,45 +204,26 @@ export const smartContract = {
     },
     {
       inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
-      name: "getInputOutputEntry",
+      name: "getInputEntry",
       outputs: [
         {
           components: [
             { internalType: "uint256", name: "id", type: "uint256" },
             { internalType: "uint256", name: "inputDate", type: "uint256" },
-            { internalType: "uint256", name: "outputDate", type: "uint256" },
             {
               internalType: "uint256",
               name: "quantityReceived",
               type: "uint256",
             },
+            { internalType: "string", name: "district", type: "string" },
             {
-              internalType: "uint256",
-              name: "recyclablePercentage",
-              type: "uint256",
+              internalType: "string",
+              name: "sourceSubdivision",
+              type: "string",
             },
             { internalType: "string", name: "area", type: "string" },
           ],
-          internalType: "struct WasteManagementSystem.InputOutputEntry",
-          name: "",
-          type: "tuple",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
-      name: "getLandfillAdminReport",
-      outputs: [
-        {
-          components: [
-            { internalType: "uint256", name: "id", type: "uint256" },
-            { internalType: "address", name: "admin", type: "address" },
-            { internalType: "string", name: "ipfsHash", type: "string" },
-            { internalType: "uint256", name: "date", type: "uint256" },
-          ],
-          internalType: "struct WasteManagementSystem.WeeklyReport",
+          internalType: "struct WasteManagementSystem.InputEntry",
           name: "",
           type: "tuple",
         },
@@ -208,16 +257,35 @@ export const smartContract = {
     },
     {
       inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
-      name: "getRecyclablePointAdminReport",
+      name: "getOutputEntry",
       outputs: [
         {
           components: [
             { internalType: "uint256", name: "id", type: "uint256" },
-            { internalType: "address", name: "admin", type: "address" },
-            { internalType: "string", name: "ipfsHash", type: "string" },
-            { internalType: "uint256", name: "date", type: "uint256" },
+            { internalType: "uint256", name: "outputDate", type: "uint256" },
+            {
+              internalType: "uint256",
+              name: "recyclablePercentage",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "plasticPercentage",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "glassPercentage",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "metalloidsPercentage",
+              type: "uint256",
+            },
+            { internalType: "uint256", name: "marketValue", type: "uint256" },
           ],
-          internalType: "struct WasteManagementSystem.WeeklyReport",
+          internalType: "struct WasteManagementSystem.OutputEntry",
           name: "",
           type: "tuple",
         },
@@ -247,31 +315,35 @@ export const smartContract = {
       type: "function",
     },
     {
-      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "inputOutputEntries",
+      inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
+      name: "getWeeklyReport",
       outputs: [
-        { internalType: "uint256", name: "id", type: "uint256" },
-        { internalType: "uint256", name: "inputDate", type: "uint256" },
-        { internalType: "uint256", name: "outputDate", type: "uint256" },
-        { internalType: "uint256", name: "quantityReceived", type: "uint256" },
         {
-          internalType: "uint256",
-          name: "recyclablePercentage",
-          type: "uint256",
+          components: [
+            { internalType: "uint256", name: "id", type: "uint256" },
+            { internalType: "address", name: "admin", type: "address" },
+            { internalType: "string", name: "ipfsHash", type: "string" },
+            { internalType: "uint256", name: "date", type: "uint256" },
+            { internalType: "string", name: "reportType", type: "string" },
+          ],
+          internalType: "struct WasteManagementSystem.WeeklyReport",
+          name: "",
+          type: "tuple",
         },
-        { internalType: "string", name: "area", type: "string" },
       ],
       stateMutability: "view",
       type: "function",
     },
     {
       inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "landfillAdminReports",
+      name: "inputEntries",
       outputs: [
         { internalType: "uint256", name: "id", type: "uint256" },
-        { internalType: "address", name: "admin", type: "address" },
-        { internalType: "string", name: "ipfsHash", type: "string" },
-        { internalType: "uint256", name: "date", type: "uint256" },
+        { internalType: "uint256", name: "inputDate", type: "uint256" },
+        { internalType: "uint256", name: "quantityReceived", type: "uint256" },
+        { internalType: "string", name: "district", type: "string" },
+        { internalType: "string", name: "sourceSubdivision", type: "string" },
+        { internalType: "string", name: "area", type: "string" },
       ],
       stateMutability: "view",
       type: "function",
@@ -290,6 +362,29 @@ export const smartContract = {
       type: "function",
     },
     {
+      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      name: "outputEntries",
+      outputs: [
+        { internalType: "uint256", name: "id", type: "uint256" },
+        { internalType: "uint256", name: "outputDate", type: "uint256" },
+        {
+          internalType: "uint256",
+          name: "recyclablePercentage",
+          type: "uint256",
+        },
+        { internalType: "uint256", name: "plasticPercentage", type: "uint256" },
+        { internalType: "uint256", name: "glassPercentage", type: "uint256" },
+        {
+          internalType: "uint256",
+          name: "metalloidsPercentage",
+          type: "uint256",
+        },
+        { internalType: "uint256", name: "marketValue", type: "uint256" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
       inputs: [],
       name: "owner",
       outputs: [{ internalType: "address", name: "", type: "address" }],
@@ -299,16 +394,12 @@ export const smartContract = {
     {
       inputs: [
         { internalType: "uint256", name: "_inputDate", type: "uint256" },
-        { internalType: "uint256", name: "_outputDate", type: "uint256" },
         { internalType: "uint256", name: "_quantityReceived", type: "uint256" },
-        {
-          internalType: "uint256",
-          name: "_recyclablePercentage",
-          type: "uint256",
-        },
+        { internalType: "string", name: "_district", type: "string" },
+        { internalType: "string", name: "_sourceSubdivision", type: "string" },
         { internalType: "string", name: "_area", type: "string" },
       ],
-      name: "recordInputOutput",
+      name: "recordInputEntry",
       outputs: [],
       stateMutability: "nonpayable",
       type: "function",
@@ -327,6 +418,32 @@ export const smartContract = {
     },
     {
       inputs: [
+        { internalType: "uint256", name: "_outputDate", type: "uint256" },
+        {
+          internalType: "uint256",
+          name: "recyclablePercentage",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "_plasticPercentage",
+          type: "uint256",
+        },
+        { internalType: "uint256", name: "_glassPercentage", type: "uint256" },
+        {
+          internalType: "uint256",
+          name: "_metalloidsPercentage",
+          type: "uint256",
+        },
+        { internalType: "uint256", name: "_marketValue", type: "uint256" },
+      ],
+      name: "recordOutputEntry",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
         { internalType: "uint256", name: "_date", type: "uint256" },
         { internalType: "uint256", name: "_totalAmount", type: "uint256" },
         { internalType: "string", name: "_area", type: "string" },
@@ -335,18 +452,6 @@ export const smartContract = {
       name: "recordWasteCollection",
       outputs: [],
       stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "recyclablePointAdminReports",
-      outputs: [
-        { internalType: "uint256", name: "id", type: "uint256" },
-        { internalType: "address", name: "admin", type: "address" },
-        { internalType: "string", name: "ipfsHash", type: "string" },
-        { internalType: "uint256", name: "date", type: "uint256" },
-      ],
-      stateMutability: "view",
       type: "function",
     },
     {
@@ -383,6 +488,19 @@ export const smartContract = {
         { internalType: "uint256", name: "totalAmount", type: "uint256" },
         { internalType: "string", name: "area", type: "string" },
         { internalType: "string", name: "notes", type: "string" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      name: "weeklyReports",
+      outputs: [
+        { internalType: "uint256", name: "id", type: "uint256" },
+        { internalType: "address", name: "admin", type: "address" },
+        { internalType: "string", name: "ipfsHash", type: "string" },
+        { internalType: "uint256", name: "date", type: "uint256" },
+        { internalType: "string", name: "reportType", type: "string" },
       ],
       stateMutability: "view",
       type: "function",

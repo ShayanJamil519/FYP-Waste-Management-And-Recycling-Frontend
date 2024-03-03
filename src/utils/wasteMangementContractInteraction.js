@@ -1,59 +1,113 @@
-import ethers from "ethers";
-import smartContract from "../constants/wasteManagementConstants";
+import { ethers } from "ethers";
+import { smartContract } from "../constants/wasteManagementConstants";
 import { convertDateToTimestamp } from "./helper";
 
-const provider = new ethers.Web3Provider(window.ethereum);
-const signer = provider.getSigner();
-const WasteManagementContract = new ethers.Contract(
-  smartContract.address,
-  smartContract.abi,
-  signer
-);
+let provider;
+let signer;
+let WasteManagementContract;
+
+if (typeof window !== "undefined") {
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  signer = provider.getSigner();
+  WasteManagementContract = new ethers.Contract(
+    smartContract.address,
+    smartContract.abi,
+    signer
+  );
+}
 
 class WasteManagementContractInteraction {
+  // Checking Confirm and Reject Transactions
+  static async processTransaction(txPromise) {
+    const tx = await txPromise;
+    const receipt = await tx.wait();
+
+    if (receipt.status === 0) {
+      throw new Error("Transaction was cancelled.");
+    }
+
+    return tx;
+  }
+
   static async RecordWasteCollection(date, totalAmount, area, notes) {
-    return WasteManagementContract.recordWasteCollection(
-      convertDateToTimestamp(date),
-      totalAmount,
-      area,
-      notes
+    return this.processTransaction(
+      WasteManagementContract.recordWasteCollection(
+        convertDateToTimestamp(date),
+        totalAmount,
+        area,
+        notes
+      )
     );
   }
 
-  static async RecordInputOutput(
+  static async RecordInputEntry(
     inputDate,
-    outputDate,
     quantityReceived,
-    recyclablePercentage,
+    district,
+    sourceSubdivision,
     area
   ) {
-    return WasteManagementContract.recordInputOutput(
-      convertDateToTimestamp(inputDate),
-      convertDateToTimestamp(outputDate),
-      quantityReceived,
-      recyclablePercentage,
-      area
+    return this.processTransaction(
+      WasteManagementContract.recordInputEntry(
+        convertDateToTimestamp(inputDate),
+        quantityReceived,
+        district,
+        sourceSubdivision,
+        area
+      )
+    );
+  }
+
+  static async RecordOutputEntry(
+    outputDate,
+    recyclablePercentage,
+    plasticPercentage,
+    glassPercentage,
+    metalloidsPercentage,
+    marketValue
+  ) {
+    return this.processTransaction(
+      WasteManagementContract.recordOutputEntry(
+        convertDateToTimestamp(outputDate),
+        recyclablePercentage,
+        plasticPercentage,
+        glassPercentage,
+        metalloidsPercentage,
+        marketValue
+      )
     );
   }
 
   static async RecordLandFillEntry(date, quantityDisposed, area, landfillSite) {
-    return WasteManagementContract.recordLandfillEntry(
-      convertDateToTimestamp(date),
-      quantityDisposed,
-      area,
-      landfillSite
+    return this.processTransaction(
+      WasteManagementContract.recordLandfillEntry(
+        convertDateToTimestamp(date),
+        quantityDisposed,
+        area,
+        landfillSite
+      )
+    );
+  }
+
+  static async AddWeeklyReport(date, ipfsHash, reportType) {
+    return this.processTransaction(
+      WasteManagementContract.addWeeklyReport(
+        convertDateToTimestamp(date),
+        ipfsHash,
+        reportType
+      )
     );
   }
 
   static async AssignUserRole(userAddress, role) {
-    return WasteManagementContract.assignUserRole(userAddress, role);
+    return this.processTransaction(
+      WasteManagementContract.assignUserRole(userAddress, role)
+    );
   }
 
   static async UpdateWasteCollectionEntry(id, totalAmount, notes) {
-    return WasteManagementContract.updateWasteCollectionEntry(
-      id,
-      totalAmount,
-      notes
+    return this.processTransaction(
+      WasteManagementContract.updateWasteCollectionEntry(id, totalAmount, notes)
     );
   }
 
@@ -61,16 +115,12 @@ class WasteManagementContractInteraction {
     return WasteManagementContract.getWasteCollectionEntry(id);
   }
 
-  static async GetDistrictAdminReport(id) {
-    return WasteManagementContract.getDistrictAdminReport(id);
+  static async GetWeeklyReport(id) {
+    return WasteManagementContract.getWeeklyReport(id);
   }
 
-  static async GetRecyclablePointAdminReport(id) {
-    return WasteManagementContract.getRecyclablePointAdminReport(id);
-  }
-
-  static async GetLandfillAdminReport(id) {
-    return WasteManagementContract.getLandfillAdminReport(id);
+  static async GetAllReportsByType(reportType) {
+    return WasteManagementContract.getAllReportsByType(reportType);
   }
 }
 

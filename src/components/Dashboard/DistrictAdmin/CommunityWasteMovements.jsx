@@ -5,14 +5,23 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useStateContext } from "@/app/StateContext";
 import { usePostWaste } from "../../../hooks/community-waste-movements";
+<<<<<<< HEAD
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
+=======
+import WasteManagementContractInteraction from "@/utils/wasteMangementContractInteraction";
+import { toast } from "react-toastify";
+>>>>>>> 62c9f2180adb65b8a70b369bb2b014dd950d646d
 
 const CommunityWasteMovements = () => {
   const router = useRouter();
   const { user } = useStateContext();
+<<<<<<< HEAD
   
   const [image, setImage] = useState(null);
+=======
+
+>>>>>>> 62c9f2180adb65b8a70b369bb2b014dd950d646d
   const [data, setData] = useState({
     districtAdmin: user?.userId,
     date: "",
@@ -78,28 +87,41 @@ const CommunityWasteMovements = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(data.districtAdmin)
-    console.log(data.date)
-    console.log(data.notes)
-    console.log(data.totalAmount)
-    console.log(data.subdivision)
-    console.log(data.area)
-    console.log(data.image)
-    addMutate(
-      {},
-      {
-        onSuccess: (response) => {
+
+    try {
+      await WasteManagementContractInteraction.RecordWasteCollection(
+        data.date,
+        data.totalAmount,
+        data.area,
+        data.notes
+      );
+
+      // If the transaction is successful, call the addMutate function
+      addMutate(
+        {},
+        {
+          onSuccess: (response) => {
             toast.success(response?.data?.message);
+<<<<<<< HEAD
             router.push("/");
         },
         onError: (response) => {
           console.error("An error occurred:");
           console.log(response);
           toast.error(response.message);
+=======
+          },
+          onError: (response) => {
+            toast.error(response.response.data.message);
+          },
+>>>>>>> 62c9f2180adb65b8a70b369bb2b014dd950d646d
         }
-      }
-    );
+      );
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
+
   return (
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
       <h1 className="font-bold text-3xl">Community Waste Movements</h1>
@@ -116,6 +138,7 @@ const CommunityWasteMovements = () => {
           {/* <Input
             type="file"
             cursor="pointer"
+            required
             // value={data.image}
             label="image"
             name="image"
@@ -198,11 +221,12 @@ const CommunityWasteMovements = () => {
         <div className="grid grid-cols-2 gap-5">
           <Input
             label="date"
-            type="text"
+            type="date"
             placeholder="Please write you details"
             name="date"
             onChange={handleInputChange}
             value={data.date}
+            required
           />
           <Input
             label="notes"
@@ -211,6 +235,7 @@ const CommunityWasteMovements = () => {
             name="notes"
             onChange={handleInputChange}
             value={data.notes}
+            required
           />
           <Input
             label="totalAmount"
@@ -219,6 +244,7 @@ const CommunityWasteMovements = () => {
             name="totalAmount"
             onChange={handleInputChange}
             value={data.totalAmount}
+            required
           />
           <Input
             label="subdivision"
@@ -227,6 +253,7 @@ const CommunityWasteMovements = () => {
             name="subdivision"
             onChange={handleInputChange}
             value={data.subdivision}
+            required
           />
           <Input
             label="area"
@@ -235,9 +262,9 @@ const CommunityWasteMovements = () => {
             name="area"
             onChange={handleInputChange}
             value={data.area}
+            required
           />
         </div>
-
 
         <button
           type="submit"

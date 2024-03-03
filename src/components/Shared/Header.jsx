@@ -25,11 +25,6 @@ const headerLinks = [
     linkText: "Services",
     linkTo: "/services",
   },
-
-  {
-    linkText: "Dashboard",
-    linkTo: "/dashboard",
-  },
 ];
 
 const Header = () => {
