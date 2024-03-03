@@ -5,23 +5,17 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useStateContext } from "@/app/StateContext";
 import { usePostWaste } from "../../../hooks/community-waste-movements";
-<<<<<<< HEAD
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
-=======
 import WasteManagementContractInteraction from "@/utils/wasteMangementContractInteraction";
 import { toast } from "react-toastify";
->>>>>>> 62c9f2180adb65b8a70b369bb2b014dd950d646d
 
 const CommunityWasteMovements = () => {
   const router = useRouter();
   const { user } = useStateContext();
-<<<<<<< HEAD
   
   const [image, setImage] = useState(null);
-=======
 
->>>>>>> 62c9f2180adb65b8a70b369bb2b014dd950d646d
   const [data, setData] = useState({
     districtAdmin: user?.userId,
     date: "",
