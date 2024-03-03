@@ -4,11 +4,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
+import { RxDashboard } from "react-icons/rx";
 import { useStateContext } from "@/app/StateContext";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 const profileLinks = [
+  {
+    linkText: "Dashboard",
+    linkTo: "/dashboard",
+    icon: <RxDashboard />,
+  },
   {
     linkText: "My Profile",
     linkTo: "#",
@@ -104,7 +110,7 @@ const ProfileDropdown = () => {
       >
         <ul className="flex flex-col border-b  py-5 text-[#6a798f]">
           {profileLinks.map((item, index) => (
-            <li key={index}>
+            <li key={index} onClick={() => setDropdownOpen(false)}>
               <Link
                 href={item.linkTo}
                 className="flex items-center gap-3 py-3 px-5 text-sm font-medium duration-300 ease-in-out hover:bg-[#f1f1f193] lg:text-[16px]"
