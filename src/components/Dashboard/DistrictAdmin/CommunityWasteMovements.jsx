@@ -2,13 +2,17 @@ import Input from "@/components/CC/Input";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { useStateContext } from "@/app/StateContext";
 import { usePostWaste } from "../../../hooks/community-waste-movements";
+import { FaUpload } from "react-icons/fa6";
+import { RxCross1 } from "react-icons/rx";
 
 const CommunityWasteMovements = () => {
   const router = useRouter();
   const { user } = useStateContext();
   
+  const [image, setImage] = useState(null);
   const [data, setData] = useState({
     districtAdmin: user?.userId,
     date: "",
@@ -21,14 +25,43 @@ const CommunityWasteMovements = () => {
 
   const { mutate: addMutate } = usePostWaste(JSON.stringify(data));
 
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if (name === "image") {
+  //     const reader = new FileReader();
+
+  //     reader.onload = () => {
+  //       if (reader.readyState === 2) {
+  //         setData({ ...data, [name]: reader.result });
+  //       }
+  //     };
+
+  //     reader.readAsDataURL(event.target.files[0]);
+  //   } else {
+  //     setData({ ...data, [name]: value });
+  //   }
+  // };
   const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    console.log(name);
+    console.log("handleInput");
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
+  const handleAvatarChange = (event) => {
+    console.log("handleImage");
     const { name, value } = event.target;
     if (name === "image") {
       const reader = new FileReader();
 
       reader.onload = () => {
+        console.log("handleImage22");
         if (reader.readyState === 2) {
           setData({ ...data, [name]: reader.result });
+          setImage(reader.result);
         }
       };
 
@@ -36,6 +69,11 @@ const CommunityWasteMovements = () => {
     } else {
       setData({ ...data, [name]: value });
     }
+  };
+
+  const removeAvatar = () => {
+    setImage(null);
+    // Update userData state if necessary
   };
 
   const handleSubmit = async (event) => {
@@ -56,8 +94,8 @@ const CommunityWasteMovements = () => {
         },
         onError: (response) => {
           console.error("An error occurred:");
-          console.log(response.response.data.message);
-          toast.error(response.response.data.message);
+          console.log(response);
+          toast.error(response.message);
         }
       }
     );
@@ -71,11 +109,11 @@ const CommunityWasteMovements = () => {
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
         {/* File Upload */}
-        <div
+        {/* <div
           id="FileUpload"
           className="relative mb-5 block w-full text-[#64748b] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4  sm:py-7 bg-[#eff4fb]"
-        >
-          <Input
+        > */}
+          {/* <Input
             type="file"
             cursor="pointer"
             // value={data.image}
@@ -84,8 +122,8 @@ const CommunityWasteMovements = () => {
             onChange={handleInputChange}
             // accept="image/*"
             className="absolute inset-0 z-10 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
-          />
-          <div className="flex flex-col items-center justify-center space-y-3">
+          /> */}
+          {/* <div className="flex flex-col items-center justify-center space-y-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-full border bg-[#fff] ">
               <svg
                 width="16"
@@ -120,6 +158,41 @@ const CommunityWasteMovements = () => {
             </p>
             <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
           </div>
+        </div> */}
+                <div className="my-3">
+          {image ? (
+            <div className="">
+              <div className="w-24 h-24 mx-auto relative">
+                <img
+                  src={image}
+                  alt="Image"
+                  className="rounded-full w-full h-full  "
+                />
+                <button
+                  onClick={removeAvatar}
+                  className="absolute  top-0 right-0 p-[5px] bg-gray-200 rounded-full"
+                >
+                  <RxCross1 className="text-[#000] text-[14px] " />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <label htmlFor="avatar-upload" className="cursor-pointer">
+              <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
+                <FaUpload className="text-2xl" />
+                <p>Upload your image</p>
+                <p className="text-xs mt-2">Click to browse your image here</p>
+              </div>
+            </label>
+          )}
+          <input
+            id="avatar-upload"
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleAvatarChange}
+            className="hidden"
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-5">

@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import { useComplain } from "../../hooks/complain-hook";
 import Input from "../CC/Input";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useStateContext } from "@/app/StateContext";
+import { FaUpload } from "react-icons/fa6";
+import { RxCross1 } from "react-icons/rx";
 
 const ComplainForm = () => {
   const router = useRouter();
+  const [image, setImage] = useState(null);
   const { user } = useStateContext();
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -24,21 +28,71 @@ const ComplainForm = () => {
     district: "",
     area: "",
     description: "",
-    image: "",
     latitude: parseFloat(latitude),
     longitude: parseFloat(longitude),
+    image: "",
   });
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
 
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if (name === "image") {
+  //     const reader = new FileReader();
+
+  //     reader.onload = () => {
+  //       if (reader.readyState === 2) {
+  //         setUserData({ ...userData, [name]: reader.result });
+  //       }
+  //     };
+
+  //     reader.readAsDataURL(event.target.files[0]);
+  //   } else {
+  //     setUserData({ ...userData, [name]: value });
+  //   }
+  // };
   const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    console.log(name);
+    console.log("handleInput");
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    console.log(userData.latitude);
+    console.log(userData.longitude);
+    event.preventDefault();
+
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+          toast.success(response?.data?.message);
+          router.push("/");
+        },
+        onError: (response) => {
+          console.error("An error occurred bro:");
+          console.log(response);
+          toast.error(response.message);
+        },
+      }
+    );
+  };
+
+  const handleAvatarChange = (event) => {
+    console.log("handleImage");
     const { name, value } = event.target;
     if (name === "image") {
       const reader = new FileReader();
 
       reader.onload = () => {
+        console.log("handleImage22");
         if (reader.readyState === 2) {
           setUserData({ ...userData, [name]: reader.result });
+          setImage(reader.result);
         }
       };
 
@@ -48,25 +102,9 @@ const ComplainForm = () => {
     }
   };
 
-  const handleSubmit = async (event) => {
-    console.log(userData.latitude)
-    console.log(userData.longitude)
-    event.preventDefault();
-
-    addMutate(
-      {},
-      {
-        onSuccess: (response) => {
-            toast.success(response?.data?.message);
-            router.push("/");
-        },
-        onError: (response) => {
-          console.error("An error occurred:");
-          console.log(response.response.data.message);
-          toast.error(response.response.data.message);
-        }
-      }
-    );
+  const removeAvatar = () => {
+    setImage(null);
+    // Update userData state if necessary
   };
 
   return (
@@ -82,6 +120,41 @@ const ComplainForm = () => {
         touch. Or you can call us and our specialists will provide help!
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
+        <div className="my-3">
+          {image ? (
+            <div className="">
+              <div className="w-24 h-24 mx-auto relative">
+                <img
+                  src={image}
+                  alt="Image"
+                  className="rounded-full w-full h-full  "
+                />
+                <button
+                  onClick={removeAvatar}
+                  className="absolute  top-0 right-0 p-[5px] bg-gray-200 rounded-full"
+                >
+                  <RxCross1 className="text-[#000] text-[14px] " />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <label htmlFor="avatar-upload" className="cursor-pointer">
+              <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
+                <FaUpload className="text-2xl" />
+                <p>Upload your image</p>
+                <p className="text-xs mt-2">Click to browse your image here</p>
+              </div>
+            </label>
+          )}
+          <input
+            id="avatar-upload"
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleAvatarChange}
+            className="hidden"
+          />
+        </div>
         <div className="grid grid-cols-2 gap-5">
           <Input
             name="userId"
@@ -105,14 +178,6 @@ const ComplainForm = () => {
             type="text"
             value={userData.area}
             placeholder="Please write you details"
-            onChange={handleInputChange}
-          />
-          <Input
-            cursor="pointer"
-            type="file"
-            // value={userData.image}
-            label="image"
-            name="image"
             onChange={handleInputChange}
           />
           <Input

@@ -68,10 +68,6 @@ const SignUp = () => {
 
   const handleAvatarChange = (event) => {
 
-
-
-
-
     console.log("handleAvatar");
     const { name, value } = event.target;
     if (name === "avatar") {
