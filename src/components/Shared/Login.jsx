@@ -6,8 +6,10 @@ import { toast } from "react-toastify";
 import { useUserLogin } from "../../hooks/auth-hook";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { FaSpinner } from 'react-icons/fa';
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { setIsLoggedIn, setOpenSignupModal, setOpenLoginModal } =
     useStateContext();
 
@@ -31,6 +33,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     addMutate(
       {},
       {
@@ -41,11 +44,13 @@ const Login = () => {
           if (pathname !== "/") {
             router.back();
           }
+          setIsLoading(false);
         },
         onError: (response) => {
           console.error("An error occurred:");
           console.log(response.response.data.message);
           toast.error(response.response.data.message);
+          setIsLoading(false);
         },
       }
     );
@@ -129,13 +134,30 @@ const Login = () => {
                   className="text-[10px]  py-3 lg:text-base px-2 md:px-4 w-full rounded-lg outline-none mt-3 bg-[#EAEAEA]"
                 />
               </div>
-              <div className="grid place-items-center mt-6">
+              {/* <div className="grid place-items-center mt-6">
                 <button
                   type="submit"
-                  className="bg-[#32A632] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24"
+                  disabled={isLoading}
+                  className={`bg-[#32A632] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  Login
+                  {isLoading && (
+                    <FaSpinner className="animate-spin absolute left-0 right-0 mx-auto" /> // Show spinner if isLoading is true
+                  )}
+                  {!isLoading && 'Login'}
                 </button>
+              </div> */}
+              <div className="grid place-items-center mt-6">
+                {isLoading ? (
+                  <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className={`bg-[#32A632] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24`}
+                  >
+                    Login
+                  </button>
+                )}
               </div>
             </form>
             <p className="text-center my-4 sm:mt-7 font-semibold  text-[10px] lg:text-sm">

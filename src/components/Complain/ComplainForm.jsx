@@ -8,12 +8,16 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import { useStateContext } from "@/app/StateContext";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
+import { FaSpinner } from "react-icons/fa";
 
 const ComplainForm = () => {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
   const { user } = useStateContext();
   const [latitude, setLatitude] = useState(null);
+  const districtOptions = ["District 1", "District 2", "District 3"];
   const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
@@ -61,22 +65,32 @@ const ComplainForm = () => {
     });
   };
 
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = async (event) => {
     console.log(userData.latitude);
     console.log(userData.longitude);
     event.preventDefault();
-
+    setIsLoading(true);
     addMutate(
       {},
       {
         onSuccess: (response) => {
           toast.success(response?.data?.message);
           router.push("/");
+          setIsLoading(false);
         },
         onError: (response) => {
           console.error("An error occurred bro:");
           console.log(response);
           toast.error(response.message);
+          setIsLoading(false);
         },
       }
     );
@@ -164,14 +178,31 @@ const ComplainForm = () => {
             placeholder="Please write you details"
             onChange={handleInputChange}
           />
-          <Input
+          {/* <Input
             name="district"
             label="Enter Your Destrict"
             type="text"
             value={userData.district}
             placeholder="Please write you details"
             onChange={handleInputChange}
-          />
+          /> */}
+          <div>
+            <label htmlFor="district-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your District</label>
+            <select
+              id="district-select"
+              name="district"
+              value={userData.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select>
+          </div>
           <Input
             name="area"
             label="Enter Your Area"
@@ -188,22 +219,27 @@ const ComplainForm = () => {
             label="Your Query"
           />
         </div>
-
-        <button
-          type="submit"
-          className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-        >
-          Submit Complain
-          <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
-            <IoIosArrowRoundForward className="text-[27px] font-bold" />
-          </span>{" "}
-          <style jsx>{`
-            button:hover span {
-              background-color: #fff;
-              color: #257830;
-            }
-          `}</style>
-        </button>
+        <div className="grid place-items-center mt-6">
+          {isLoading ? (
+            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+          ) : (
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Submit Complain
+              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

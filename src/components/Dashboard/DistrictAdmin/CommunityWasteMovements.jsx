@@ -8,12 +8,14 @@ import { usePostWaste } from "../../../hooks/community-waste-movements";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import WasteManagementContractInteraction from "@/utils/wasteMangementContractInteraction";
-import { toast } from "react-toastify";
+
+import { FaSpinner } from "react-icons/fa";
 
 const CommunityWasteMovements = () => {
   const router = useRouter();
+  const subDivisionOptions = ["Division 1", "Division 2", "Division 3"];
   const { user } = useStateContext();
-  
+  const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
 
   const [data, setData] = useState({
@@ -54,6 +56,14 @@ const CommunityWasteMovements = () => {
     });
   };
 
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
   const handleAvatarChange = (event) => {
     console.log("handleImage");
     const { name, value } = event.target;
@@ -81,7 +91,7 @@ const CommunityWasteMovements = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setIsLoading(true);
     try {
       await WasteManagementContractInteraction.RecordWasteCollection(
         data.date,
@@ -96,23 +106,17 @@ const CommunityWasteMovements = () => {
         {
           onSuccess: (response) => {
             toast.success(response?.data?.message);
-<<<<<<< HEAD
-            router.push("/");
-        },
-        onError: (response) => {
-          console.error("An error occurred:");
-          console.log(response);
-          toast.error(response.message);
-=======
+            setIsLoading(false);
           },
           onError: (response) => {
             toast.error(response.response.data.message);
+            setIsLoading(false);
           },
->>>>>>> 62c9f2180adb65b8a70b369bb2b014dd950d646d
         }
       );
     } catch (error) {
       toast.error(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -129,7 +133,7 @@ const CommunityWasteMovements = () => {
           id="FileUpload"
           className="relative mb-5 block w-full text-[#64748b] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4  sm:py-7 bg-[#eff4fb]"
         > */}
-          {/* <Input
+        {/* <Input
             type="file"
             cursor="pointer"
             required
@@ -140,7 +144,7 @@ const CommunityWasteMovements = () => {
             // accept="image/*"
             className="absolute inset-0 z-10 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
           /> */}
-          {/* <div className="flex flex-col items-center justify-center space-y-3">
+        {/* <div className="flex flex-col items-center justify-center space-y-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-full border bg-[#fff] ">
               <svg
                 width="16"
@@ -176,7 +180,7 @@ const CommunityWasteMovements = () => {
             <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
           </div>
         </div> */}
-                <div className="my-3">
+        <div className="my-3">
           {image ? (
             <div className="">
               <div className="w-24 h-24 mx-auto relative">
@@ -240,7 +244,7 @@ const CommunityWasteMovements = () => {
             value={data.totalAmount}
             required
           />
-          <Input
+          {/* <Input
             label="subdivision"
             type="text"
             placeholder="Please write you details"
@@ -248,7 +252,24 @@ const CommunityWasteMovements = () => {
             onChange={handleInputChange}
             value={data.subdivision}
             required
-          />
+          /> */}
+          <div>
+            <label htmlFor="subdivision-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your SubDivision</label>
+            <select
+              id="subdivision-select"
+              name="subdivision"
+              value={data.subdivision}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select SubDivision</option>
+              {subDivisionOptions.map((subdivision, index) => (
+                <option key={index} value={subdivision}>
+                  {subdivision}
+                </option>
+              ))}
+            </select>
+          </div>
           <Input
             label="area"
             type="text"
@@ -259,22 +280,27 @@ const CommunityWasteMovements = () => {
             required
           />
         </div>
-
-        <button
-          type="submit"
-          className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-        >
-          Submit
-          <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
-            <IoIosArrowRoundForward className="text-[27px] font-bold" />
-          </span>{" "}
-          <style jsx>{`
-            button:hover span {
-              background-color: #fff;
-              color: #257830;
-            }
-          `}</style>
-        </button>
+        <div className="grid place-items-center mt-6">
+          {isLoading ? (
+            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+          ) : (
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Submit
+              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

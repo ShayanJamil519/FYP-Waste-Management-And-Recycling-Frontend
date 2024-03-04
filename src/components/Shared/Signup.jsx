@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+import { FaSpinner } from "react-icons/fa";
+
 // slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,7 +24,10 @@ import { RxCross1 } from "react-icons/rx";
 
 const SignUp = () => {
   const router = useRouter();
-  const [avatar,setAvatar]=useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const districtOptions = ["DistrictA", "DistrictB", "DistrictC"];
+  const subDivisionOptions = ["DivisionA", "DivisionB", "DivisionC"];
+  const [avatar, setAvatar] = useState(null);
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [userData, setUserData] = useState({
     name: "",
@@ -32,7 +37,7 @@ const SignUp = () => {
     district: "",
     subDivision: "",
     area: "",
-    avatar:"",
+    avatar: "",
   });
 
   const { mutate: addMutate } = useUserSignup(JSON.stringify(userData));
@@ -47,27 +52,36 @@ const SignUp = () => {
     });
   };
 
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setIsLoading(true);
     addMutate(
       {},
       {
         onSuccess: (response) => {
           toast.success(response?.data?.message);
           router.push("/login");
+          setIsLoading(false);
         },
         onError: (response) => {
           console.error("An error occurred:");
           console.log(response.response.data.message);
           toast.error(response.response.data.message);
+          setIsLoading(false);
         },
       }
     );
   };
 
   const handleAvatarChange = (event) => {
-
     console.log("handleAvatar");
     const { name, value } = event.target;
     if (name === "avatar") {
@@ -86,11 +100,11 @@ const SignUp = () => {
       setUserData({ ...userData, [name]: value });
     }
   };
-    // const { name, value } = event.target.files[0];
+  // const { name, value } = event.target.files[0];
   //   const file = event.target.files[0];
   //   console.log(file)
   //   if (file) {
-  
+
   //     setUserData({
   //       ...userData,
   //       avatar:URL.createObjectURL(file),
@@ -277,7 +291,7 @@ const SignUp = () => {
                 onChange={handleInputChange}
                 className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
-              <input
+              {/* <input
                 type="text"
                 placeholder="district"
                 name="district"
@@ -292,7 +306,40 @@ const SignUp = () => {
                 // required
                 onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
-              />
+              /> */}
+
+              <div>
+                <select
+                  id="district-select"
+                  name="district"
+                  value={userData.district}
+                  onChange={handleSelectChange}
+                  className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
+                >
+                  <option value="">Select District</option>
+                  {districtOptions.map((district, index) => (
+                    <option key={index} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <select
+                  id="subDivision-select"
+                  name="subDivision"
+                  value={userData.subDivision}
+                  onChange={handleSelectChange}
+                  className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
+                >
+                  <option value="">Select SubDivision</option>
+                  {subDivisionOptions.map((subDivision, index) => (
+                    <option key={index} value={subDivision}>
+                      {subDivision}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               {/* <input
                 type="url"
@@ -310,13 +357,18 @@ const SignUp = () => {
                 placeholder="Select Gender"
               /> */}
             </div>
-            <div className="grid place-items-center mt-4">
-              <button
-                type="submit"
-                className="bg-[#32A632] text-white rounded-full py-2 px-24 text-[10px] lg:text-lg"
-              >
-                Sign up
-              </button>
+            <div className="grid place-items-center mt-6">
+              {isLoading ? (
+                <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+              ) : (
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`bg-[#32A632] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24`}
+                >
+                  Sign Up
+                </button>
+              )}
             </div>
           </form>
 
