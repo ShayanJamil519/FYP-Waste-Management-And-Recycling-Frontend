@@ -19,6 +19,9 @@ const MapComponent = () => {
 
   const handleConfirmLocation = () => {
     if (selectedLocation) {
+      console.log("LOCATION")
+      console.log(selectedLocation.lat)
+      console.log(selectedLocation.lng)
       localStorage.setItem("latitude", selectedLocation.lat);
       localStorage.setItem("longitude", selectedLocation.lng);
     }

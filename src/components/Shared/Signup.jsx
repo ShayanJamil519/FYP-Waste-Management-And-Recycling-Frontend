@@ -25,8 +25,8 @@ import { RxCross1 } from "react-icons/rx";
 const SignUp = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const districtOptions = ["DistrictA", "DistrictB", "DistrictC"];
-  const subDivisionOptions = ["DivisionA", "DivisionB", "DivisionC"];
+  const districtOptions = ["malir", "DistrictB", "DistrictC"];
+  const subDivisionOptions = ["airport", "DivisionB", "DivisionC"];
   const [avatar, setAvatar] = useState(null);
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [userData, setUserData] = useState({
@@ -73,8 +73,9 @@ const SignUp = () => {
         },
         onError: (response) => {
           console.error("An error occurred:");
-          console.log(response.response.data.message);
-          toast.error(response.response.data.message);
+          console.log(response);
+          console.log(response.response);
+          toast.error(response.message);
           setIsLoading(false);
         },
       }
@@ -240,6 +241,7 @@ const SignUp = () => {
               )}
               <input
                 id="avatar-upload"
+                required
                 name="avatar"
                 type="file"
                 accept="image/*"
@@ -278,7 +280,7 @@ const SignUp = () => {
                 type="text"
                 placeholder="area"
                 name="area"
-                // required
+                required
                 onChange={handleInputChange}
                 className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
@@ -287,7 +289,7 @@ const SignUp = () => {
                 type="text"
                 placeholder="ethAddress"
                 name="ethAddress"
-                // required
+                required
                 onChange={handleInputChange}
                 className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
@@ -312,6 +314,7 @@ const SignUp = () => {
                 <select
                   id="district-select"
                   name="district"
+                  required
                   value={userData.district}
                   onChange={handleSelectChange}
                   className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
@@ -327,6 +330,7 @@ const SignUp = () => {
               <div>
                 <select
                   id="subDivision-select"
+                  required
                   name="subDivision"
                   value={userData.subDivision}
                   onChange={handleSelectChange}

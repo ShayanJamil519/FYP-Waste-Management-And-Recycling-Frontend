@@ -44,6 +44,7 @@ class AuthService {
         "Content-Type": "application/json",
       },
     });
+    console.log(res.data)
     const { token } = res.data;
     typeof window !== "undefined" && Cookies.set("jwt", token, { expires: 3 });
     return res;

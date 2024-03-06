@@ -48,6 +48,7 @@ const Login = () => {
         },
         onError: (response) => {
           console.error("An error occurred:");
+          console.log(response);
           console.log(response.response.data.message);
           toast.error(response.response.data.message);
           setIsLoading(false);
