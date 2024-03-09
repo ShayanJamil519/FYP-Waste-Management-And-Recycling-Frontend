@@ -25,6 +25,9 @@ const ComplainForm = () => {
     setLatitude(savedLatitude);
     const savedLongitude = localStorage.getItem("longitude");
     setLongitude(savedLongitude);
+    console.log("PRINTTT")
+    console.log(savedLatitude)
+    console.log(savedLongitude)
   }, []);
 
   const [userData, setUserData] = useState({
@@ -32,10 +35,23 @@ const ComplainForm = () => {
     district: "",
     area: "",
     description: "",
-    latitude: parseFloat(latitude),
-    longitude: parseFloat(longitude),
+    latitude: parseFloat(localStorage.getItem("latitude")),
+    longitude: parseFloat(localStorage.getItem("longitude")),
     image: "",
   });
+
+  // const resetForm = () => {
+  //   setUserData({
+  //     userId: user?.userId,
+  //     district: "",
+  //     area: "",
+  //     description: "",
+  //     latitude: parseFloat(latitude),
+  //     longitude: parseFloat(longitude),
+  //     image: "",
+  //   });
+  //   setImage(null); // Reset the image state if necessary
+  // };
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
 
@@ -71,6 +87,8 @@ const ComplainForm = () => {
       ...userData,
       [name]: value,
     });
+    console.log("list")
+    console.log(userData)
   };
 
   const handleSubmit = async (event) => {
@@ -162,6 +180,7 @@ const ComplainForm = () => {
           )}
           <input
             id="avatar-upload"
+            required
             name="image"
             type="file"
             accept="image/*"
@@ -187,10 +206,16 @@ const ComplainForm = () => {
             onChange={handleInputChange}
           /> */}
           <div>
-            <label htmlFor="district-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your District</label>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your District
+            </label>
             <select
               id="district-select"
               name="district"
+              required
               value={userData.district}
               onChange={handleSelectChange}
               className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
@@ -224,6 +249,7 @@ const ComplainForm = () => {
             <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
           ) : (
             <button
+              // onClick={resetForm}
               type="submit"
               className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
             >

@@ -209,6 +209,7 @@ const CommunityWasteMovements = () => {
           <input
             id="avatar-upload"
             name="image"
+            required
             type="file"
             accept="image/*"
             onChange={handleAvatarChange}
@@ -258,6 +259,7 @@ const CommunityWasteMovements = () => {
             <select
               id="subdivision-select"
               name="subdivision"
+              required
               value={data.subdivision}
               onChange={handleSelectChange}
               className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "

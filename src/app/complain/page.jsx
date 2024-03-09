@@ -1,8 +1,22 @@
 "use client";
 import Action from "@/components/Complain/Action";
-import ComplainForm from "@/components/Complain/ComplainForm";
+import dynamic from "next/dynamic";
+
+const ComplainForm = dynamic(
+  () => import("@/components/Complain/ComplainForm"),
+  {
+    ssr: false,
+  }
+);
+
+const MapComponent = dynamic(
+  () => import("@/components/Complain/mapComponent"),
+  {
+    ssr: false,
+  }
+);
+
 import Hero from "@/components/Shared/Hero";
-import MapComponent from "@/components/Complain/mapComponent";
 
 const page = () => {
   return (

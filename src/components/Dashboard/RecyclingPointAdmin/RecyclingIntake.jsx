@@ -11,6 +11,9 @@ import { RxCross1 } from "react-icons/rx";
 
 const RecyclingIntake = () => {
   const router = useRouter();
+  
+  const districtOptions = ["District 1", "District 2", "District 3"];
+  const sourceSubdivisionOptions = ["Division 1", "Division 2", "Division 3"];
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [data, setData] = useState({ 
@@ -44,6 +47,14 @@ const RecyclingIntake = () => {
     const { name, value } = event.target;
     console.log(name);
     console.log("handleInput");
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target;
     setData({
       ...data,
       [name]: value,
@@ -134,6 +145,7 @@ const RecyclingIntake = () => {
           <input
             id="avatar-upload"
             name="image"
+            required
             type="file"
             accept="image/*"
             onChange={handleAvatarChange}
@@ -143,14 +155,24 @@ const RecyclingIntake = () => {
 
         <div className="grid grid-cols-2 gap-5">
         
-          <Input
-            label="district"
-            type="text"
-            placeholder="Please write you details"
-            name="district"
-            onChange={handleInputChange}
-            value={data.district}
-          />
+        <div>
+            <label htmlFor="district-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your District</label>
+            <select
+              id="district-select"
+              name="district"
+              required
+              value={data.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select>
+          </div>
           <Input
             label="quantityReceived"
             type="text"
@@ -159,14 +181,24 @@ const RecyclingIntake = () => {
             onChange={handleInputChange}
             value={data.quantityReceived}
           />
-          <Input
-            label="sourceSubdivision"
-            type="text"
-            placeholder="Please write you details"
-            name="sourceSubdivision"
-            onChange={handleInputChange}
-            value={data.sourceSubdivision}
-          />
+          <div>
+            <label htmlFor="sourceSubdivision-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your SubDivision</label>
+            <select
+              id="sourceSubdivision-select"
+              name="sourceSubdivision"
+              required
+              value={data.sourceSubdivision}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select SubDivision</option>
+              {sourceSubdivisionOptions.map((sourceSubdivision, index) => (
+                <option key={index} value={sourceSubdivision}>
+                  {sourceSubdivision}
+                </option>
+              ))}
+            </select>
+          </div>
           <Input
             label="area"
             type="text"

@@ -139,6 +139,7 @@ const RecyclingOutput = () => {
             name="image"
             type="file"
             accept="image/*"
+            required
             onChange={handleAvatarChange}
             className="hidden"
           />
