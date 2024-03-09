@@ -1,16 +1,12 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import AuthService from "../services/auth-service";
 
-
-
 const useUserId = () => {
   // return useQuery(["/get-UserId"], () =>
   //   AuthService.getMyId()
   // );
-  return useQuery({  queryKey: ['user'],  queryFn: () => AuthService.getMyId()
-  })
+  return useQuery({ queryKey: ["user"], queryFn: () => AuthService.getMyId() });
 };
-
 
 // const useUserId = () => {
 //   const queryClient = useQueryClient();

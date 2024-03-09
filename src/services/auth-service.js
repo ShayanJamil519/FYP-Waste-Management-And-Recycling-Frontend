@@ -24,12 +24,14 @@ class AuthService {
    */
 
   async signUpUser(userData) {
-    console.log("Hello");
     const res = await axios.post(`${apiUrl}/register-user`, userData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    console.log("res-----------------");
+    console.log(res);
     return res;
   }
 
@@ -44,7 +46,7 @@ class AuthService {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data)
+    console.log(res.data);
     const { token } = res.data;
     typeof window !== "undefined" && Cookies.set("jwt", token, { expires: 3 });
     return res;
