@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useUserLogin } from "../../hooks/auth-hook";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from "react-icons/fa";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +41,7 @@ const Login = () => {
           toast.success(response?.data?.message);
           setOpenLoginModal(false);
           setIsLoggedIn(true);
-          if (pathname !== "/") {
+          if (pathname !== "/" || pathname !== "/signup") {
             router.back();
           }
           setIsLoading(false);

@@ -35,6 +35,21 @@ export const sidebarLinksRecyclingPointAdmin = [
   },
 ];
 
+export const sidebarLinksLandfillAdmin = [
+  {
+    linkText: `Dashboard`,
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Landfill Entry`,
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `All Entries`,
+    linkIcon: <RxDashboard />,
+  },
+];
+
 export const signupSliderImages = [
   {
     image: "/shared/signup_carousel_1.jpg",

@@ -10,6 +10,7 @@ import CommunityWasteMovements from "./DistrictAdmin/CommunityWasteMovements";
 import { Home as HomeRecyclingPointAdmin } from "./RecyclingPointAdmin/Home";
 import {
   sidebarLinksDistrictAdmin,
+  sidebarLinksLandfillAdmin,
   sidebarLinksRecyclingPointAdmin,
 } from "@/app/data";
 import { useStateContext } from "@/app/StateContext";
@@ -18,6 +19,9 @@ import jwt from "jsonwebtoken";
 import DataLoader from "../Shared/DataLoader";
 import RecyclingIntake from "./RecyclingPointAdmin/RecyclingIntake";
 import RecyclingOutput from "./RecyclingPointAdmin/RecyclingOutput";
+import LandfillEntry from "./LandfillAdmin/LandfillEntry";
+import { Home as HomeLandfillAdmin } from "./LandfillAdmin/Home";
+import LandfillEntriesTable from "./LandfillAdmin/LandfillEntriesTable";
 
 const Dashboard = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -65,8 +69,12 @@ const Dashboard = () => {
       ];
       break;
     case "LandfillAdmin":
-      sidebarLinks = sidebarLinksRecyclingPointAdmin;
-      components = [<HomeRecyclingPointAdmin key="HomeRecyclingPointAdmin" />];
+      sidebarLinks = sidebarLinksLandfillAdmin;
+      components = [
+        <HomeLandfillAdmin key="HomeLandfillAdmin" />,
+        <LandfillEntry key="LandfillEntry" />,
+        <LandfillEntriesTable key="LandfillEntriesTable" />,
+      ];
 
     default:
       // Default case or handle unknown roles

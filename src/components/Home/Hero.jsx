@@ -45,7 +45,7 @@ const Hero = () => {
         className="w-[full] px-10 flex justify-start items-center"
       >
         <motion.div
-          className="w-[55%] text-[#fff]"
+          className="w-[60%] text-[#fff]"
           variants={variants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -54,7 +54,9 @@ const Hero = () => {
             Accountable Waste Management And Recycling !
           </h1>
           <p className="font-semibold font-poppins my-7">
-          Empowering citizens with transparent and immutable data, our software utilizes blockchain to hold government authorities accountable for efficient waste management
+            Empowering citizens with transparent and immutable data, our <br />
+            software utilizes blockchain to hold government authorities <br />
+            accountable for efficient waste management
           </p>
           {/* Buttons Container */}
           <div className="font-poppins flex justify-start items-center gap-10 text-[15px] font-semibold">
