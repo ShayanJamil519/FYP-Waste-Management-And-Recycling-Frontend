@@ -64,7 +64,10 @@ const Dashboard = () => {
         <RecyclingOutput key="RecyclingOutput" />,
       ];
       break;
-    // Add more cases for other roles if needed
+    case "LandfillAdmin":
+      sidebarLinks = sidebarLinksRecyclingPointAdmin;
+      components = [<HomeRecyclingPointAdmin key="HomeRecyclingPointAdmin" />];
+
     default:
       // Default case or handle unknown roles
       break;
