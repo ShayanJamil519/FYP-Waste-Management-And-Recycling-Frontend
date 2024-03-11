@@ -1,3 +1,4 @@
+"use client";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";

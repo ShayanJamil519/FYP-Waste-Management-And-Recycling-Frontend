@@ -1,3 +1,4 @@
+"use client";
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
 import React, { useState } from "react";

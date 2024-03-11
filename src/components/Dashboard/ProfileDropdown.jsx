@@ -9,31 +9,15 @@ import { useStateContext } from "@/app/StateContext";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const profileLinks = [
-  {
-    linkText: "Dashboard",
-    linkTo: "/dashboard",
-    icon: <RxDashboard />,
-  },
-  {
-    linkText: "My Profile",
-    linkTo: "#",
-    icon: <CiUser />,
-  },
-  {
-    linkText: "Account Settings",
-    linkTo: "#",
-    icon: <IoSettingsOutline />,
-  },
-];
-
 const ProfileDropdown = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { user, setIsLoggedIn } = useStateContext();
-  const router = useRouter();
+  let navigateTo;
 
+  const router = useRouter();
   const trigger = useRef(null);
   const dropdown = useRef(null);
+
+  const { user, setIsLoggedIn } = useStateContext();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   // close on click outside
   useEffect(() => {
@@ -51,15 +35,40 @@ const ProfileDropdown = () => {
     return () => document.removeEventListener("click", clickHandler);
   });
 
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }) => {
-      if (!dropdownOpen || keyCode !== 27) return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
+  switch (user?.role) {
+    case "DistrictAdmin":
+      navigateTo = "district-admin";
+
+      break;
+    case "RecyclingPointAdmin":
+      navigateTo = "recycling-point-admin";
+      break;
+
+    case "LandfillAdmin":
+      navigateTo = "landfill-admin";
+
+    default:
+      // Default case or handle unknown roles
+      break;
+  }
+
+  const profileLinks = [
+    {
+      linkText: "Dashboard",
+      linkTo: `/dashboard/${navigateTo}`,
+      icon: <RxDashboard />,
+    },
+    {
+      linkText: "My Profile",
+      linkTo: "#",
+      icon: <CiUser />,
+    },
+    {
+      linkText: "Account Settings",
+      linkTo: "#",
+      icon: <IoSettingsOutline />,
+    },
+  ];
 
   return (
     <div className="relative font-poppins">

@@ -1,19 +1,25 @@
-"use client";
+import dynamic from "next/dynamic";
 import { IoEyeOutline } from "react-icons/io5";
 import { CgShoppingCart } from "react-icons/cg";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsPeople } from "react-icons/bs";
-import ChartOne from "./ChartOne";
 
 import CardDataStats from "./CardDataStats";
-import ChartTwo from "./ChartTwo";
-import ChartThree from "./ChartThree";
-import MapOne from "./MapOne";
+
+const ChartOne = dynamic(() => import("./ChartOne"), {
+  ssr: false,
+});
+
+const ChartTwo = dynamic(() => import("./ChartTwo"), {
+  ssr: false,
+});
+
+const ChartThree = dynamic(() => import("./ChartThree"), {
+  ssr: false,
+});
+
 import TableOne from "./TableOne";
 import ChatCard from "./ChatCard";
-// const MapOne = dynamic(() => import("../Maps/MapOne"), {
-//   ssr: false,
-// });
 
 export const Home = () => {
   return (
@@ -63,6 +69,7 @@ export const Home = () => {
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7 2xl:gap-7">
         <ChartOne />
+
         <ChartTwo />
         <div className="col-span-12 xl:col-span-12 w-full">
           <ChartThree />

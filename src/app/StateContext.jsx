@@ -9,6 +9,7 @@ export function StateProvider({ children }) {
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentDashboardTab, setCurrentDashboardTab] = useState("Dashboard");
 
   return (
     <StateContext.Provider
@@ -21,6 +22,8 @@ export function StateProvider({ children }) {
         setOpenLoginModal,
         openSignupModal,
         setOpenSignupModal,
+        currentDashboardTab,
+        setCurrentDashboardTab,
       }}
     >
       {children}

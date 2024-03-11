@@ -1,9 +1,9 @@
+"use client";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
-import EditComplainModal from "./EditComplainModal";
 import ReviewIncentiveModal from "./ReviewIncentiveModal";
 
 const productData = [

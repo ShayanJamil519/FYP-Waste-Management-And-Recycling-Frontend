@@ -1,3 +1,4 @@
+"use client";
 import Input from "@/components/CC/Input";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useRouter } from "next/navigation";
@@ -11,7 +12,7 @@ import WasteManagementContractInteraction from "@/utils/wasteMangementContractIn
 
 import { FaSpinner } from "react-icons/fa";
 
-const LandfillEntry = () => {
+const LandfillIntake = () => {
   const router = useRouter();
   const subDivisionOptions = ["Division 1", "Division 2", "Division 3"];
   const { user } = useStateContext();
@@ -313,4 +314,4 @@ const LandfillEntry = () => {
   );
 };
 
-export default LandfillEntry;
+export default LandfillIntake;

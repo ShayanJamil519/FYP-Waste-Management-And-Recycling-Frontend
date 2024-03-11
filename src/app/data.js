@@ -3,19 +3,23 @@ import { RxDashboard } from "react-icons/rx";
 export const sidebarLinksDistrictAdmin = [
   {
     linkText: `Dashboard`,
+    linkTo: "/dashboard/district-admin",
     linkIcon: <RxDashboard />,
   },
   {
     linkText: `Complains`,
+    linkTo: "/dashboard/district-admin/all-complaints",
     linkIcon: <RxDashboard />,
   },
   {
     linkText: `Incentives`,
+    linkTo: "/dashboard/district-admin/all-incentives",
     linkIcon: <RxDashboard />,
   },
 
   {
     linkText: `Community Waste Movements`,
+    linkTo: "/dashboard/district-admin/community-waste-movements",
     linkIcon: <RxDashboard />,
   },
 ];
@@ -23,14 +27,17 @@ export const sidebarLinksDistrictAdmin = [
 export const sidebarLinksRecyclingPointAdmin = [
   {
     linkText: `Dashboard`,
+    linkTo: "/dashboard/recycling-point-admin",
     linkIcon: <RxDashboard />,
   },
   {
     linkText: `Recycling Intake`,
+    linkTo: "/dashboard/recycling-point-admin/recycling-intake",
     linkIcon: <RxDashboard />,
   },
   {
     linkText: `Recycling Output`,
+    linkTo: "/dashboard/recycling-point-admin/recycling-output",
     linkIcon: <RxDashboard />,
   },
 ];
@@ -38,14 +45,17 @@ export const sidebarLinksRecyclingPointAdmin = [
 export const sidebarLinksLandfillAdmin = [
   {
     linkText: `Dashboard`,
+    linkTo: "/dashboard/landfill-admin",
     linkIcon: <RxDashboard />,
   },
   {
-    linkText: `Landfill Entry`,
+    linkText: `Landfill Intake`,
+    linkTo: "/dashboard/landfill-admin/landfill-intake",
     linkIcon: <RxDashboard />,
   },
   {
-    linkText: `All Entries`,
+    linkText: `Landfill Entries`,
+    linkTo: "/dashboard/landfill-admin/landfill-entries",
     linkIcon: <RxDashboard />,
   },
 ];

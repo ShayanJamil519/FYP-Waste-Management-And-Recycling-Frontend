@@ -1,10 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+
+import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
-// const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-//   ssr: false,
-// });
 
 const options = {
   legend: {

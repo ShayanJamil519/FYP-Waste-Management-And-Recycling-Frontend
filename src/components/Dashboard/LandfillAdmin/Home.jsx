@@ -3,12 +3,21 @@ import { IoEyeOutline } from "react-icons/io5";
 import { CgShoppingCart } from "react-icons/cg";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsPeople } from "react-icons/bs";
-import ChartOne from "./ChartOne";
 
+const ChartOne = dynamic(() => import("./ChartOne"), {
+  ssr: false,
+});
+
+const ChartTwo = dynamic(() => import("./ChartTwo"), {
+  ssr: false,
+});
+
+const ChartThree = dynamic(() => import("./ChartThree"), {
+  ssr: false,
+});
 import CardDataStats from "./CardDataStats";
-import ChartTwo from "./ChartTwo";
-import ChartThree from "./ChartThree";
 import TableOne from "./TableOne";
+import dynamic from "next/dynamic";
 
 export const Home = () => {
   return (

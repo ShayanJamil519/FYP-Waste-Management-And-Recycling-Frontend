@@ -1,3 +1,5 @@
+"use client";
+
 import Input from "@/components/CC/Input";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useRouter } from "next/navigation";
@@ -255,7 +257,12 @@ const CommunityWasteMovements = () => {
             required
           /> */}
           <div>
-            <label htmlFor="subdivision-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your SubDivision</label>
+            <label
+              htmlFor="subdivision-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your SubDivision
+            </label>
             <select
               id="subdivision-select"
               name="subdivision"

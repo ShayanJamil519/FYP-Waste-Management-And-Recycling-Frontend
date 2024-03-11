@@ -1,3 +1,4 @@
+"use client";
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
 import React, { useState } from "react";
@@ -11,12 +12,12 @@ import { RxCross1 } from "react-icons/rx";
 
 const RecyclingIntake = () => {
   const router = useRouter();
-  
+
   const districtOptions = ["District 1", "District 2", "District 3"];
   const sourceSubdivisionOptions = ["Division 1", "Division 2", "Division 3"];
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
-  const [data, setData] = useState({ 
+  const [data, setData] = useState({
     district: "",
     quantityReceived: "",
     sourceSubdivision: "",
@@ -154,9 +155,13 @@ const RecyclingIntake = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-5">
-        
-        <div>
-            <label htmlFor="district-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your District</label>
+          <div>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your District
+            </label>
             <select
               id="district-select"
               name="district"
@@ -182,7 +187,12 @@ const RecyclingIntake = () => {
             value={data.quantityReceived}
           />
           <div>
-            <label htmlFor="sourceSubdivision-select" className="font-semibold text-sm text-[#202725] mb-1">Select Your SubDivision</label>
+            <label
+              htmlFor="sourceSubdivision-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your SubDivision
+            </label>
             <select
               id="sourceSubdivision-select"
               name="sourceSubdivision"
@@ -212,22 +222,22 @@ const RecyclingIntake = () => {
           {isLoading ? (
             <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
           ) : (
-        <button
-          type="submit"
-          className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-        >
-          Send Input
-          <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
-            <IoIosArrowRoundForward className="text-[27px] font-bold" />
-          </span>{" "}
-          <style jsx>{`
-            button:hover span {
-              background-color: #fff;
-              color: #257830;
-            }
-          `}</style>
-        </button>
-        )}
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Send Input
+              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
         </div>
       </form>
     </div>

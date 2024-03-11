@@ -1,12 +1,16 @@
 "use client";
 import React, { useRef, useState } from "react";
 import Link from "next/link";
+import { useStateContext } from "@/app/StateContext";
+import { usePathname } from "next/navigation";
 
-const Sidebar = ({ currentTab, setCurrentTab, sidebarLinks }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
+const Sidebar = ({ sidebarLinks }) => {
   const trigger = useRef(null);
   const sidebar = useRef(null);
+  const pathname = usePathname();
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { currentDashboardTab, setCurrentDashboardTab } = useStateContext();
 
   return (
     <aside
@@ -55,16 +59,17 @@ const Sidebar = ({ currentTab, setCurrentTab, sidebarLinks }) => {
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
               {sidebarLinks.map((item, index) => (
-                <div
-                  onClick={() => setCurrentTab(index)}
+                <Link
+                  href={item.linkTo}
                   key={index}
+                  // className={` ${"bg-[#f1f1f138]"}  cursor-pointer relative flex items-center gap-2.5 rounded-md py-2 px-4 font-medium duration-300 ease-in-out hover:bg-[#f1f1f138] `}
                   className={` ${
-                    currentTab === index && "bg-[#f1f1f138]"
+                    pathname === item.linkTo && "bg-[#f1f1f138]"
                   }  cursor-pointer relative flex items-center gap-2.5 rounded-md py-2 px-4 font-medium duration-300 ease-in-out hover:bg-[#f1f1f138] `}
                 >
                   <span className="text-[20px]">{item.linkIcon}</span>{" "}
                   <span> {item.linkText}</span>
-                </div>
+                </Link>
               ))}
             </ul>
           </div>
