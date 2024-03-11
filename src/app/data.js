@@ -40,6 +40,17 @@ export const sidebarLinksRecyclingPointAdmin = [
     linkTo: "/dashboard/recycling-point-admin/recycling-output",
     linkIcon: <RxDashboard />,
   },
+
+  {
+    linkText: `Input Entries`,
+    linkTo: "/dashboard/recycling-point-admin/recycling-input-entries",
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Output Entries`,
+    linkTo: "/dashboard/recycling-point-admin/recycling-output-entries",
+    linkIcon: <RxDashboard />,
+  },
 ];
 
 export const sidebarLinksLandfillAdmin = [
