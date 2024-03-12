@@ -8,6 +8,7 @@ import { useOutputEntry } from "../../../hooks/recyclePointEntries";
 import { useStateContext } from "@/app/StateContext";
 import { FaSpinner } from "react-icons/fa";
 import { toast } from "react-toastify";
+import WasteManagementContractInteraction from "@/utils/wasteMangementContractInteraction";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 
@@ -57,23 +58,36 @@ const RecyclingOutput = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    addMutate(
-      {},
-      {
-        onSuccess: (response) => {
-          toast.success(response?.data?.message);
-          router.push("/");
-          setIsLoading(false);
-        },
-        onError: (response) => {
-          console.error("An error occurred:");
-          console.log(response);
-          toast.error(response.message);
-          setIsLoading(false);
-        },
-      }
-    );
+    try {
+      const outputDate = Date.now();
+      setIsLoading(true);
+      await WasteManagementContractInteraction.RecordOutputEntry(
+        outputDate,
+        data.recyclablePercentage,
+        data.plasticPercentage,
+        data.glassPercentage,
+        data.metalloidsPercentage,
+        data.marketValue
+      );
+      addMutate(
+        {},
+        {
+          onSuccess: (response) => {
+            toast.success(response?.data?.message);
+            setIsLoading(false);
+          },
+          onError: (response) => {
+            console.error("An error occurred:");
+            console.log(response);
+            toast.error(response.message);
+            setIsLoading(false);
+          },
+        }
+      );
+    } catch (error) {
+      toast.error(error.message);
+      setIsLoading(false);
+    }
   };
 
   const handleAvatarChange = (event) => {

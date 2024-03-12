@@ -94,11 +94,11 @@ const LandfillIntake = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      await WasteManagementContractInteraction.RecordWasteCollection(
+      await WasteManagementContractInteraction.RecordLandFillEntry(
         data.date,
-        data.totalAmount,
+        data.quantityDisposed,
         data.area,
-        data.notes
+        data.landfillSite
       );
 
       // If the transaction is successful, call the addMutate function
