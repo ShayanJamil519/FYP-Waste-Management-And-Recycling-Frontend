@@ -8,6 +8,7 @@ import DataLoader from "../Shared/DataLoader";
 import PageLoader from "../Shared/PageLoader";
 import Sidebar from "./Sidebar";
 import {
+  sidebarLinksAdmin,
   sidebarLinksDistrictAdmin,
   sidebarLinksLandfillAdmin,
   sidebarLinksRecyclingPointAdmin,
@@ -44,6 +45,11 @@ export default function LayoutWrapperDashboard({ children }) {
 
     case "LandfillAdmin":
       sidebarLinks = sidebarLinksLandfillAdmin;
+      break;
+
+    case "admin":
+      sidebarLinks = sidebarLinksAdmin;
+      break;
 
     default:
       // Default case or handle unknown roles

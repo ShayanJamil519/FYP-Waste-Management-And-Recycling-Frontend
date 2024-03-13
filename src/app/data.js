@@ -78,30 +78,30 @@ export const sidebarLinksAdmin = [
     linkIcon: <RxDashboard />,
   },
   {
-    linkText: `Complains`,
+    linkText: `New Landfill`,
     linkTo: "/dashboard/admin/new-landfill",
     linkIcon: <RxDashboard />,
   },
   {
-    linkText: `Incentives`,
+    linkText: `New Recycling Point`,
     linkTo: "/dashboard/admin/new-recycling-point",
     linkIcon: <RxDashboard />,
   },
 
   {
-    linkText: `Community Waste Movements`,
+    linkText: `All Landfills`,
     linkTo: "/dashboard/admin/all-landfills",
     linkIcon: <RxDashboard />,
   },
 
   {
-    linkText: `Community Waste Movements`,
+    linkText: `All Recycling Points`,
     linkTo: "/dashboard/admin/all-recycling-points",
     linkIcon: <RxDashboard />,
   },
 
   {
-    linkText: `Community Waste Movements`,
+    linkText: `All Users`,
     linkTo: "/dashboard/admin/all-users",
     linkIcon: <RxDashboard />,
   },
