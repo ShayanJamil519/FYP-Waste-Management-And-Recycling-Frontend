@@ -71,6 +71,42 @@ export const sidebarLinksLandfillAdmin = [
   },
 ];
 
+export const sidebarLinksAdmin = [
+  {
+    linkText: `Dashboard`,
+    linkTo: "/dashboard/admin",
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Complains`,
+    linkTo: "/dashboard/admin/new-landfill",
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Incentives`,
+    linkTo: "/dashboard/admin/new-recycling-point",
+    linkIcon: <RxDashboard />,
+  },
+
+  {
+    linkText: `Community Waste Movements`,
+    linkTo: "/dashboard/admin/all-landfills",
+    linkIcon: <RxDashboard />,
+  },
+
+  {
+    linkText: `Community Waste Movements`,
+    linkTo: "/dashboard/admin/all-recycling-points",
+    linkIcon: <RxDashboard />,
+  },
+
+  {
+    linkText: `Community Waste Movements`,
+    linkTo: "/dashboard/admin/all-users",
+    linkIcon: <RxDashboard />,
+  },
+];
+
 export const signupSliderImages = [
   {
     image: "/shared/signup_carousel_1.jpg",

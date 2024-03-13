@@ -47,6 +47,13 @@ const ProfileDropdown = () => {
     case "LandfillAdmin":
       navigateTo = "landfill-admin";
 
+      break;
+
+    case "admin":
+      navigateTo = "admin";
+
+      break;
+
     default:
       // Default case or handle unknown roles
       break;
