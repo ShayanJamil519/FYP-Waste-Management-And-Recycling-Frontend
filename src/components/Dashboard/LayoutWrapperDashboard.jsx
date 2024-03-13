@@ -3,9 +3,8 @@
 import { useStateContext } from "@/app/StateContext";
 import Link from "next/link";
 import jwt from "jsonwebtoken";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DataLoader from "../Shared/DataLoader";
-import PageLoader from "../Shared/PageLoader";
 import Sidebar from "./Sidebar";
 import {
   sidebarLinksAdmin,
@@ -65,26 +64,24 @@ export default function LayoutWrapperDashboard({ children }) {
   }
 
   return (
-    <Suspense fallback={<PageLoader />}>
-      <div className="w-full flex justify-start items-stretch ">
-        <Sidebar sidebarLinks={sidebarLinks} />
-        <div className="bg-[#f1f5f9] w-full overflow-y-auto h-screen">
-          {/* Header */}
-          <div className="w-full bg-[#fff] px-8 py-3  flex justify-between items-center">
-            <h1 className="font-poppins  font-semibold">
-              <Link href="/" className="text-lg font-poppins mr-2">
-                Home {` > `}
-              </Link>
-              <span className="font-normal  capitalize text-[15px]">
-                {" "}
-                {pathname.split("/").pop()}
-              </span>
-            </h1>
-            <ProfileDropdown />
-          </div>
-          <div className="px-7 py-5">{children}</div>
+    <div className="w-full flex justify-start items-stretch ">
+      <Sidebar sidebarLinks={sidebarLinks} />
+      <div className="bg-[#f1f5f9] w-full overflow-y-auto h-screen">
+        {/* Header */}
+        <div className="w-full bg-[#fff] px-8 py-3  flex justify-between items-center">
+          <h1 className="font-poppins  font-semibold">
+            <Link href="/" className="text-lg font-poppins mr-2">
+              Home {` > `}
+            </Link>
+            <span className="font-normal  capitalize text-[15px]">
+              {" "}
+              {pathname.split("/").pop()}
+            </span>
+          </h1>
+          <ProfileDropdown />
         </div>
+        <div className="px-7 py-5">{children}</div>
       </div>
-    </Suspense>
+    </div>
   );
 }
