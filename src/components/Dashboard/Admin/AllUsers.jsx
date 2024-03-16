@@ -5,6 +5,8 @@ import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import EditUserModal from "./EditUserModal";
+import { useGetAllUsers } from "../../../hooks/auth-hook";
+import DataLoader from "@/components/Shared/DataLoader";
 
 const productData = [
   {
@@ -15,94 +17,6 @@ const productData = [
     resonse: "Processing",
     date: "12/20/2023",
   },
-  {
-    image: "/home/garbage.jpg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "South",
-    area: "Malir",
-    description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "South",
-    area: "Malir",
-    description: "On my street",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Rejected",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Processing",
-    date: "12/20/2023",
-  },
-  {
-    image: "/home/garbage.jpg",
-    district: "East",
-    area: "Korangi",
-    description: "On my street",
-    resonse: "Approved",
-    date: "12/20/2023",
-  },
 ];
 
 const AllUsers = () => {
@@ -110,8 +24,24 @@ const AllUsers = () => {
   const [openEditUserModal, setOpenEditUserModal] = useState(false);
   const paginate = usePagination();
 
-  const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(productData);
+  const { data, isLoading, isError } = useGetAllUsers();
+    console.log(data)
+    // Check loading and error states
+    if (isLoading) {
+      return (
+        <div className="w-full h-[70vh] flex justify-center items-center">
+          <DataLoader />
+        </div>
+      );
+    }
+  
+    if (isError) {
+      return <div>Error loading complaints</div>;
+    }
+  
+    const { currentPage, totalPages, visibleItems, goToPage } = paginate(
+      data && data?.users
+    );
 
   return (
     <div>
@@ -154,7 +84,7 @@ const AllUsers = () => {
               <div className="col-span-3 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className=" w-20 h-20 rounded-md">
-                    <img src={product.image} alt="Product" />
+                    <img src={product.avatar.url} alt="Product" />
                   </div>
                   <p className="text-sm text-black dark:text-white">
                     {product.district}
@@ -168,16 +98,17 @@ const AllUsers = () => {
               </div>
               <div className=" flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  {product.description}
+                  {product.email}
                 </p>
               </div>
               <div className=" flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  {product.resonse}
+                  {product.ethAddress
+}
                 </p>
               </div>
               <div className=" flex items-center">
-                <p className="text-sm text-meta-3">{product.date}</p>
+                <p className="text-sm text-meta-3">{product.name}</p>
               </div>
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit

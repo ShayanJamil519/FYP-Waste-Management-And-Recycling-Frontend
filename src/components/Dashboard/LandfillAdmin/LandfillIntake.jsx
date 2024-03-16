@@ -15,6 +15,8 @@ import { FaSpinner } from "react-icons/fa";
 const LandfillIntake = () => {
   const router = useRouter();
   const subDivisionOptions = ["Division 1", "Division 2", "Division 3"];
+  
+  const districtOptions = ["District 1", "District 2", "District 3"];
   const { user } = useStateContext();
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -274,6 +276,29 @@ const LandfillIntake = () => {
               {subDivisionOptions.map((subdivision, index) => (
                 <option key={index} value={subdivision}>
                   {subdivision}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your District
+            </label>
+            <select
+              id="district-select"
+              name="district"
+              required
+              value={data.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
                 </option>
               ))}
             </select>

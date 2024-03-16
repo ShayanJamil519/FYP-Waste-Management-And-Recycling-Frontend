@@ -50,6 +50,11 @@ const useUserLogin = (userData) => {
   );
 };
 
+const useGetAllUsers = () => {
+  console.log("DAAAAAAAATA222")
+  return useQuery(["allUsers"],
+  AuthService.getAllUsers);
+};
 // const useUserForgotPassword = (email) => {
 //   const queryClient = useQueryClient();
 //   return useMutation(
@@ -96,6 +101,7 @@ export {
   useUserSignup,
   useUserLogin,
   useUserId,
+  useGetAllUsers,
   // useUserForgotPassword,
   // useUserResetPassword,
   // useContactUs,

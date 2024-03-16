@@ -5,6 +5,26 @@ import Cookies from "js-cookie";
 const token = typeof window !== "undefined" && Cookies.get("jwt");
 
 class AuthService {
+
+  async getAllUsers() {
+    try {
+      console.log("DAAAAAAAATA333")
+      const {data} = await axios.get(`${apiUrl}/get-all-users
+      `, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("DAAAAAAAATA444")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
   async getMyId() {
     console.log("sasdf");
     const res = await axios.get(`${apiUrl}/get-UserId`, {

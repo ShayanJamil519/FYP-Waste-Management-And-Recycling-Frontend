@@ -6,31 +6,29 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useStateContext } from "@/app/StateContext";
-import { usePostWaste } from "../../../hooks/community-waste-movements";
+import { useNewLandfill } from "../../../hooks/landfillEntries";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
-import WasteManagementContractInteraction from "@/utils/wasteMangementContractInteraction";
 
 import { FaSpinner } from "react-icons/fa";
 
 const NewLandFill = () => {
   const router = useRouter();
   const subDivisionOptions = ["Division 1", "Division 2", "Division 3"];
+  const districtOptions = ["District 1", "District 2", "District 3"];
   const { user } = useStateContext();
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
 
   const [data, setData] = useState({
-    districtAdmin: user?.userId,
-    date: "",
-    notes: "",
-    totalAmount: "",
+    name: "",
+    admin: user?.userId,
+    district: "",
     subdivision: "",
-    area: "",
     image: "",
   });
 
-  const { mutate: addMutate } = usePostWaste(JSON.stringify(data));
+  const { mutate: addMutate } = useNewLandfill(JSON.stringify(data));
 
   // const handleInputChange = (event) => {
   //   const { name, value } = event.target;
@@ -95,14 +93,8 @@ const NewLandFill = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      await WasteManagementContractInteraction.RecordWasteCollection(
-        data.date,
-        data.totalAmount,
-        data.area,
-        data.notes
-      );
+    
 
-      // If the transaction is successful, call the addMutate function
       addMutate(
         {},
         {
@@ -221,41 +213,14 @@ const NewLandFill = () => {
 
         <div className="grid grid-cols-2 gap-5">
           <Input
-            label="date"
-            type="date"
-            placeholder="Please write you details"
-            name="date"
-            onChange={handleInputChange}
-            value={data.date}
-            required
-          />
-          <Input
-            label="notes"
+            label="name"
             type="text"
             placeholder="Please write you details"
-            name="notes"
+            name="name"
             onChange={handleInputChange}
-            value={data.notes}
+            value={data.name}
             required
           />
-          <Input
-            label="totalAmount"
-            type="text"
-            placeholder="Please write you details"
-            name="totalAmount"
-            onChange={handleInputChange}
-            value={data.totalAmount}
-            required
-          />
-          {/* <Input
-            label="subdivision"
-            type="text"
-            placeholder="Please write you details"
-            name="subdivision"
-            onChange={handleInputChange}
-            value={data.subdivision}
-            required
-          /> */}
           <div>
             <label
               htmlFor="subdivision-select"
@@ -279,15 +244,29 @@ const NewLandFill = () => {
               ))}
             </select>
           </div>
-          <Input
-            label="area"
-            type="text"
-            placeholder="Please write you details"
-            name="area"
-            onChange={handleInputChange}
-            value={data.area}
-            required
-          />
+          <div>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your District
+            </label>
+            <select
+              id="district-select"
+              name="district"
+              required
+              value={data.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="grid place-items-center mt-6">
           {isLoading ? (

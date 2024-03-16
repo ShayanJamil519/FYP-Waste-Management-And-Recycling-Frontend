@@ -6,95 +6,15 @@ import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import RecyclingInputEntryModal from "./RecyclingPointModal";
 import RecyclingPointModal from "./RecyclingPointModal";
-
+import { useGetAllRecyclingPoints } from "../../../hooks/recyclePointEntries";
+import DataLoader from "@/components/Shared/DataLoader";
 const productData = [
   {
-    district: "South",
-    area: "Malir",
-    description: "Polygon",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "North",
-    area: "Nazimabad",
-    description: "Ethereum",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "Ethereum",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "Ethereum",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "Polygon",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "Polygon",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "Polygon",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "On my street",
-    resonse: "Approved",
-    date: "100",
+    district: "",
+    area: "",
+    description: "",
+    resonse: "",
+    date: "",
   },
 ];
 
@@ -104,8 +24,24 @@ const AllRecyclingPointsTable = () => {
 
   const paginate = usePagination();
 
-  const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(productData);
+  const { data, isLoading, isError } = useGetAllRecyclingPoints();
+  console.log(data);
+  // Check loading and error states
+  if (isLoading) {
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        <DataLoader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div>Error loading complaints</div>;
+  }
+
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
+    data && data?.recyclingPoints
+  );
 
   return (
     <div>
@@ -122,13 +58,13 @@ const AllRecyclingPointsTable = () => {
             <p className="font-medium">District</p>
           </div>
           <div className=" hidden items-center sm:flex">
-            <p className="font-medium">Area</p>
+            <p className="font-medium">Name</p>
           </div>
           <div className=" flex items-center col-span-2">
-            <p className="font-medium">Chain</p>
+            <p className="font-medium">ID</p>
           </div>
           <div className=" flex items-center">
-            <p className="font-medium">Token</p>
+            <p className="font-medium">Image</p>
           </div>
           <div className=" flex items-center">
             <p className="font-medium">Amount</p>
@@ -154,22 +90,24 @@ const AllRecyclingPointsTable = () => {
               </div>
               <div className="hidden items-center sm:flex">
                 <p className="text-sm text-black dark:text-white">
-                  {product.area}
+                  {product.name}
                 </p>
               </div>
               <div className=" flex items-center col-span-2">
                 <p className="text-sm text-black dark:text-white ">
-                  {product.description}
+                  {product._id}
                 </p>
               </div>
-              <div className=" flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {product.resonse}
-                </p>
+              <div className="col-span-2 flex items-center">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <div className=" w-20 h-20 rounded-md">
+                    <img src={product?.image?.url} alt="item" />
+                  </div>
+                </div>
               </div>
-              <div className=" flex items-center">
+              {/* <div className=" flex items-center">
                 <p className="text-sm text-meta-3">{product.date}</p>
-              </div>
+              </div> */}
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit
                   className="cursor-pointer"

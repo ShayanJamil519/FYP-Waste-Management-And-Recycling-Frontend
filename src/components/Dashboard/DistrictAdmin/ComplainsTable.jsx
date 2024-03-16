@@ -104,7 +104,7 @@ const ComplainsTable = () => {
                   </p>
                 </div>
                 <div className=" flex items-center">
-                  <p className="text-sm text-meta-3">item.date</p>
+                  <p className="text-sm text-meta-3">{item.date}</p>
                 </div>
                 <div className=" flex gap-3 justify-start items-center text-[20px]">
                   <MdEdit

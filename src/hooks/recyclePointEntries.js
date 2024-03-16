@@ -15,19 +15,43 @@ const useInputEntry = (data) => {
   );
 };
 
+const useNewRecyclingPoint = (data) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return RecyclingEntry.newRecyclingPoint(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("signup");
+      },
+    }
+  );
+};
 
 const useOutputEntry = (data) => {
-    const queryClient = useQueryClient();
-    return useMutation(
-      () => {
-        return RecyclingEntry.outputEntry(data);
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return RecyclingEntry.outputEntry(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("signup");
       },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries("signup");
-        },
-      }
-    );
-  };
+    }
+  );
+};
 
-export { useInputEntry, useOutputEntry };
+const useGetAllRecyclingPoints = () => {
+  console.log("DAAAAAAAATA222")
+  return useQuery(["allRecyclingPoints"],
+  RecyclingEntry.getAllRecyclingPoints);
+};
+
+export {
+  useInputEntry,
+  useOutputEntry,
+  useNewRecyclingPoint,
+  useGetAllRecyclingPoints,
+};
