@@ -9,7 +9,19 @@ import { useStateContext } from "@/app/StateContext";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
+import '@tensorflow/tfjs-backend-cpu';
+import * as tf from '@tensorflow/tfjs-core';
 
+import * as tflite from '@tensorflow/tfjs-tflite';
+
+const MODEL_PATH = '/model/waste.tflite';
+const classLabels = {
+  0: "Open Litter",
+  1: "Overflow Dustbin",
+  2: "Plastic Waste",
+  3: "Biodegradable Waste",
+  4: "Medical Waste"
+};
 const ComplainForm = () => {
   const router = useRouter();
 
@@ -73,8 +85,6 @@ const ComplainForm = () => {
   // };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(name);
-    console.log("handleInput");
     setUserData({
       ...userData,
       [name]: value,
@@ -87,13 +97,13 @@ const ComplainForm = () => {
       ...userData,
       [name]: value,
     });
-    console.log("list")
-    console.log(userData)
   };
 
   const handleSubmit = async (event) => {
-    console.log(userData.latitude);
-    console.log(userData.longitude);
+  console.log("image here")
+  console.log(image)
+
+  //const processedImage = tf.cast(tf.expandDims(resizedImage), 'int32');
     event.preventDefault();
     setIsLoading(true);
     addMutate(
@@ -120,15 +130,48 @@ const ComplainForm = () => {
     if (name === "image") {
       const reader = new FileReader();
 
-      reader.onload = () => {
-        console.log("handleImage22");
-        if (reader.readyState === 2) {
-          setUserData({ ...userData, [name]: reader.result });
-          setImage(reader.result);
-        }
-      };
+reader.onload = () => {
+  const img = new Image();
+  img.onload = async () => {
+    try {
+      const tensor = tf.browser.fromPixels(img);
+      const resizedImage = tf.image.resizeBilinear(tensor, [448, 448]);
+     const objectDetector = await tflite.loadTFLiteModel(MODEL_PATH);
+      const input = tf.cast(tf.expandDims(resizedImage), 'int32');
+    
+      // Get the output tensors.
+      let result = await objectDetector.predict(input);
+      let boxes = Array.from(await result[Object.keys(result)[0]].data());
+    let classes = Array.from(await result[Object.keys(result)[1]].data())
+    let scores = Array.from(await result[Object.keys(result)[2]].data())
+    let n = Array.from(await result[Object.keys(result)[3]].data())
+      console.log(result)
+      console.log("classes")
+      console.log(classes)
+      const detections = [];
 
-      reader.readAsDataURL(event.target.files[0]);
+      for (let i = 0; i < n; i++) {
+          const boundingBox = boxes.slice(i*4, (i+1)*4);
+          const classIndex = classes[i];
+          const className = classLabels[classIndex];
+          const score = scores[i];
+          detections.push({ boundingBox, className, score, index: i });
+      }
+  
+      // Sort the results in the order of confidence to get top results.
+      detections.sort((a, b) => b.score - a.score);
+      console.log(detections)
+  
+    } catch (error) {
+      console.error("Error while processing image:", error);
+    }
+  };
+  img.src = reader.result;
+  setUserData({ ...userData, [name]: reader.result });
+  setImage(reader.result);
+};
+
+reader.readAsDataURL(event.target.files[0]);
     } else {
       setUserData({ ...userData, [name]: value });
     }
