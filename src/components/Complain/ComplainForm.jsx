@@ -23,6 +23,7 @@ const classLabels = {
   4: "Medical Waste"
 };
 const ComplainForm = () => {
+  tflite.setWasmPath('tflite_wasm/');
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
