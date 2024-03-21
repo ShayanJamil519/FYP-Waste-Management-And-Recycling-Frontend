@@ -39,7 +39,7 @@ class LandfillEntry {
     }
   };
 
-  async useNewLandfill(data) {
+  async useNewLandfilll(data) {
     console.log("HelloJee");
     console.log(apiUrl);
     console.log(data);
