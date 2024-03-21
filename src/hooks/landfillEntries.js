@@ -3,6 +3,20 @@ import LandfillEntry from "../services/landfillEntries";
 import AuthService from "../services/auth-service";
 
 
+const useInputEntry = (data) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return LandfillEntry.inputEntry(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("signup");
+      },
+    }
+  );
+};
+
 const useNewLandfill = (data) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -25,4 +39,4 @@ const useGetAllLandfills = () => {
 
 
 
-export { useNewLandfill, useGetAllLandfills };
+export { useNewLandfill, useGetAllLandfills , useInputEntry};

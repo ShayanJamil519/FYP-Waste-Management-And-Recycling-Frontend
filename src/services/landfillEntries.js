@@ -5,7 +5,22 @@ import Cookies from "js-cookie";
 const token = typeof window !== "undefined" && Cookies.get("jwt");
 
 class LandfillEntry {
-
+  async inputEntry(data) {
+    console.log("HelloJee");
+    console.log(apiUrl);
+    console.log(data);
+    const res = await axios.post(
+      `${apiUrl}/landfill/create-input-entry`,
+      data,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  }
 
   async getAllLandfills() {
     try {

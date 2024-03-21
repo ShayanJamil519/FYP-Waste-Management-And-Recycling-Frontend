@@ -112,7 +112,7 @@ const RecyclingIntake = () => {
 
       reader.readAsDataURL(event.target.files[0]);
     } else {
-      setUserData({ ...userData, [name]: value });
+      setUserData({ ...data, [name]: value });
     }
   };
 
