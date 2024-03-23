@@ -51,8 +51,11 @@ const ProfileDropdown = () => {
 
     case "admin":
       navigateTo = "admin";
-
       break;
+
+    case "user":
+        navigateTo = "user/home";
+        break;
 
     default:
       // Default case or handle unknown roles

@@ -1,6 +1,10 @@
 import { RxDashboard } from "react-icons/rx";
+import { useRouter } from 'next/router';
+
+
 
 export const sidebarLinksDistrictAdmin = [
+  
   {
     linkText: `Dashboard`,
     linkTo: "/dashboard/district-admin",
@@ -23,6 +27,24 @@ export const sidebarLinksDistrictAdmin = [
     linkIcon: <RxDashboard />,
   },
 ];
+
+export const generateSidebarLinksUser = (id) => {
+  const sidebarLinks = [
+    
+    {
+      linkText: `Home`,
+      linkTo: "/dashboard/user/home",
+      linkIcon: <RxDashboard />,
+    },
+    {
+      linkText: `Replies`,
+      linkTo: `/dashboard/user/${id}/replies`, 
+      linkIcon: <RxDashboard />,
+    },
+  ];
+
+  return sidebarLinks;
+};
 
 export const sidebarLinksRecyclingPointAdmin = [
   {
