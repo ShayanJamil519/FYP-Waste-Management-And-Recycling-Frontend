@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
@@ -8,12 +8,15 @@ import usePagination from "@/utils/usePagination";
 import EditComplainModal from "./EditComplainModal";
 import { useGetComplaintsInDistrict } from "../../../hooks/complain-hook";
 import DataLoader from "@/components/Shared/DataLoader";
+import UploadReportButton from "@/components/Shared/UploadReportButton";
 
 const ComplainsTable = () => {
-  const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
-  const paginate = usePagination();
-
   const district = "south";
+  const paginate = usePagination();
+  const tableRef = useRef();
+
+  const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
+
   const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
 
   // Check loading and error states
@@ -36,11 +39,18 @@ const ComplainsTable = () => {
   return (
     <div>
       {/* Table */}
-      <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
-        <div className="py-4 px-4 md:px-6 xl:px-7.5">
+      <div
+        ref={tableRef}
+        className="rounded-sm border border-stroke bg-white shadow-default  font-poppins "
+      >
+        <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Top items
           </h4>
+          <UploadReportButton
+            tableRef={tableRef}
+            reportType="districtAdminComplaints"
+          />
         </div>
 
         <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">

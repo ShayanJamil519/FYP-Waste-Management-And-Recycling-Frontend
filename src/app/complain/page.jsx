@@ -25,8 +25,10 @@ const page = () => {
 
       <div className="my-32 mx-10 bg-[#fff] min-h-[50vh] flex justify-center items-stretch gap-10">
         <Action />
-        <ComplainForm />
-        <MapComponent />
+        <div className="w-full">
+          <ComplainForm />
+          <MapComponent />
+        </div>
       </div>
     </>
   );
