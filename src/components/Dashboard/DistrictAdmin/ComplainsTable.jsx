@@ -20,9 +20,31 @@ const ComplainsTable = () => {
   const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
 
 
+
+  const truncateDescription = (description, maxLength) => {
+    if (description.length <= maxLength) {
+        return description;
+    } else {
+        // Find the last space before maxLength
+        let lastSpaceIndex = description.lastIndexOf(' ', maxLength);
+        // Truncate the description and add ellipsis
+        return description.substring(0, lastSpaceIndex) + '...';
+    }
+}
+
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+
   const handleDeleteComplaint = async (complaintId) => {
     try {
-      
+
       await deleteComplaintMutation.mutateAsync(complaintId);
       // Handle success, e.g., show a success message or update state
     } catch (error) {
@@ -72,7 +94,10 @@ const ComplainsTable = () => {
         </div>
 
         <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
-          <div className="col-span-2 flex items-center">
+          <div className="col-span-1 flex items-center">
+            <p className="font-medium">Image</p>
+          </div>
+          <div className="col-span-1 flex items-center">
             <p className="font-medium">District</p>
           </div>
           <div className=" hidden items-center sm:flex">
@@ -100,24 +125,29 @@ const ComplainsTable = () => {
                 className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
                 key={key}
               >
-                <div className="col-span-2 flex items-center">
+                <div className="col-span-1 flex items-center">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                     <div className=" w-20 h-20 rounded-md">
                       <img src={item?.image?.url} alt="item" />
                     </div>
-                    <p className="text-sm text-black dark:text-white">
+                    {/* <p className="text-sm text-black dark:text-white">
                       {item?.district}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
                 <div className="hidden items-center sm:flex">
+                <p className="text-sm text-black dark:text-white">
+                      {item?.district}
+                    </p>
+                </div>
+                <div className="hidden items-center sm:flex">
                   <p className="text-sm text-black dark:text-white">
-                    {item?.area}
+                    {truncateDescription(item?.area,10)}
                   </p>
                 </div>
                 <div className=" flex items-center col-span-2">
                   <p className="text-sm text-black dark:text-white ">
-                    {item?.description}
+                    {truncateDescription(item?.description,12)}
                   </p>
                 </div>
                 <div className=" flex items-center">
@@ -127,12 +157,12 @@ const ComplainsTable = () => {
                         <span key={index}>{_i?.date}</span>
                       ))
                     ) : (
-                      <span>No Response Found</span>
+                      <span>{truncateDescription("No Response Found",12)}</span>
                     )}
                   </p>
                 </div>
                 <div className=" flex items-center">
-                  <p className="text-sm text-meta-3">{item.date}</p>
+                  <p className="text-sm text-meta-3">{formatDate(item.date)}</p>
                 </div>
                 <div className=" flex gap-3 justify-start items-center text-[20px]">
                   <MdEdit
