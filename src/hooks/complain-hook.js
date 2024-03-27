@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import ComplainService from "../services/complain-service";
 import AuthService from "../services/auth-service";
-import { useMutation } from 'react-query';
 
 const useComplain = (userData) => {
   const queryClient = useQueryClient();
@@ -47,6 +46,7 @@ const useGetComplaintsInDistrict = (district) => {
 };
 
 const useDeleteComplaint = () => {
+  console.log("HOOK")
   return useMutation((complaintId) => ComplainService.deleteComplaintById(complaintId));
 };
 

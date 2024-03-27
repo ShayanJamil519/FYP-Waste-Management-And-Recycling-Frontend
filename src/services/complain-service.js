@@ -37,11 +37,13 @@ class ComplainService {
 
   async deleteComplaintById(complaintId) {
     try {
+      console.log("service")
       const response = await axios.delete(
-        `${apiUrl}/complaints/delete-complaint/${complaintId}`,
+        `${apiUrl}/complaint/delete-complaint/${complaintId}`,
         {
           headers: {
             Authorization: token,
+            "Content-Type": "application/json",
           },
         }
       );

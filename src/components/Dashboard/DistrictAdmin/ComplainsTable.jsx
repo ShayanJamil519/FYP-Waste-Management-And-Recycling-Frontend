@@ -22,6 +22,7 @@ const ComplainsTable = () => {
 
   const handleDeleteComplaint = async (complaintId) => {
     try {
+      
       await deleteComplaintMutation.mutateAsync(complaintId);
       // Handle success, e.g., show a success message or update state
     } catch (error) {
