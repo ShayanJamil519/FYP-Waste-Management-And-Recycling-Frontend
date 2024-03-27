@@ -35,11 +35,39 @@ class ComplainService {
     return data;
   }
 
+  async deleteComplaintById(complaintId) {
+    try {
+      const response = await axios.delete(
+        `${apiUrl}/complaints/delete-complaint/${complaintId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw (
+        error.response.data.message ||
+        "Something went wrong while deleting the complaint."
+      );
+    }
+  }
+
   async addResponseToComplaint(complaintId, data) {
     try {
+      console.log("IDDDDDDDDDDDDD");
+      console.log(complaintId);
+      console.log(data);
       const response = await axios.post(
         `${apiUrl}/complaint/add-response-to-a-complaint/${complaintId}`,
-        data
+        data,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {

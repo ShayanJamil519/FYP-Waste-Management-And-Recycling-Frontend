@@ -1,6 +1,8 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import ComplainService from "../services/complain-service";
 import AuthService from "../services/auth-service";
+import { useMutation } from 'react-query';
+
 const useComplain = (userData) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -14,6 +16,7 @@ const useComplain = (userData) => {
     }
   );
 };
+
 
 const useAddResponseToComplaint = () => {
   const mutation = useMutation(({ complaintId, data }) =>
@@ -43,4 +46,13 @@ const useGetComplaintsInDistrict = (district) => {
   );
 };
 
-export { useComplain, useAddResponseToComplaint, useGetComplaintsInDistrict };
+const useDeleteComplaint = () => {
+  return useMutation((complaintId) => ComplainService.deleteComplaintById(complaintId));
+};
+
+export {
+  useComplain,
+  useAddResponseToComplaint,
+  useGetComplaintsInDistrict,
+  useDeleteComplaint,
+};

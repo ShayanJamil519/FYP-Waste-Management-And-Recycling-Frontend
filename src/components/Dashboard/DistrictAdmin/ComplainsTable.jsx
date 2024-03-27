@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import EditComplainModal from "./EditComplainModal";
-import { useGetComplaintsInDistrict } from "../../../hooks/complain-hook";
+import { useGetComplaintsInDistrict, useDeleteComplaint } from "../../../hooks/complain-hook";
 import DataLoader from "@/components/Shared/DataLoader";
 import UploadReportButton from "@/components/Shared/UploadReportButton";
 
@@ -14,11 +14,28 @@ const ComplainsTable = () => {
   const district = "south";
   const paginate = usePagination();
   const tableRef = useRef();
-
+  const deleteComplaintMutation = useDeleteComplaint();
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
-
+  const [selectedComplaintId, setSelectedComplaintId] = useState(null);
   const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
 
+
+  const handleDeleteComplaint = async (complaintId) => {
+    try {
+      await deleteComplaintMutation.mutateAsync(complaintId);
+      // Handle success, e.g., show a success message or update state
+    } catch (error) {
+      // Handle error, e.g., display error message
+    }
+  };
+
+  const handleEditComplaint = (complaintId) => {
+    console.log("Itemmmmmmmmmmmmmm")
+    console.log(visibleItems)
+    setOpenEditComplainModal(true);
+    setSelectedComplaintId(complaintId);
+    // You can use the complaintId here or pass it to the modal component
+  };
   // Check loading and error states
   if (isLoading) {
     return (
@@ -119,9 +136,13 @@ const ComplainsTable = () => {
                 <div className=" flex gap-3 justify-start items-center text-[20px]">
                   <MdEdit
                     className="cursor-pointer"
-                    onClick={() => setOpenEditComplainModal(true)}
+                    onClick={() => handleEditComplaint(item._id)}
+                    // onClick={() => setOpenEditComplainModal(true)}
                   />
-                  <MdDelete className="cursor-pointer" />
+                  <MdDelete 
+                  className="cursor-pointer"
+                  onClick={() => handleDeleteComplaint(item._id)} 
+                  />
                 </div>
               </div>
             ))}
@@ -139,6 +160,7 @@ const ComplainsTable = () => {
       {openEditComplainModal && (
         <EditComplainModal
           setOpenEditComplainModal={setOpenEditComplainModal}
+          complaintId={selectedComplaintId}
         />
       )}
     </div>
