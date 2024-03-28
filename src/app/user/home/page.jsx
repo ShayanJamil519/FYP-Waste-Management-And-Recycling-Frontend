@@ -1,24 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import '../../../index.css';
-import { useCreateThread } from "../../../hooks/thread-hook";
+import { useCreateThread , useGetAllThreads } from "../../../hooks/thread-hook";
 import { useStateContext } from "@/app/StateContext";
 import { toast } from "react-toastify";
 import { usePathname, useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
+import Likes from "@/utils/Likes";
+import Comments from "@/utils/Comments";
 
 
 const Page = () => {
     const [thread, setThread] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [threadList, setThreadList] = useState([]);
     const { user, setUser } = useStateContext();
+    const router = useRouter();
+    const pathname = usePathname();
+
+
     const [userData, setUserData] = useState({
         userId: user?._id,
         title: "",
       });
-
+      
       const { mutate: addMutate } = useCreateThread(JSON.stringify(userData));
+      const { data, isError } = useGetAllThreads();
 
+      useEffect(() => {
+        const checkUser = () => {
+          setThreadList(data);
+        };
+        checkUser();
+    }, [data]);
       const handleInputChange = (event) => {
         const { name, value } = event.target;
         setUserData({
@@ -35,8 +49,9 @@ const Page = () => {
           {},
           {
             onSuccess: (response) => {
+              console.log(response)
               toast.success(response?.data?.message);
-              
+              setThreadList(response?.data?.threads);
               setIsLoading(false);
             },
             onError: (response) => {
@@ -71,6 +86,21 @@ const Page = () => {
                 )}
                     
                 </form>
+
+                <div className='thread__container'>
+                {threadList?.map((thread) => (
+                    <div className='thread__item' key={thread._id}>
+                        <p>{thread.title}</p>
+                        <div className='react__container'>
+                            <Likes numberOfLikes={thread.likes.length} threadId={thread._id} />
+                            <Comments
+                                numberOfComments={thread.replies.length}
+                                threadId={thread._id}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </div>
             </main>
         </>
     );

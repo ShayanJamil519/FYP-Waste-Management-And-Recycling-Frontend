@@ -19,10 +19,27 @@ class ThreadEntry {
     );
     return res;
   }
-  async getAllRecyclingPoints() {
+  async getAllThreads() {
     try {
-      console.log("DAAAAAAAATA333")
-      const {data} = await axios.get(`${apiUrl}/recycling/get-all-recycling-points`, {
+
+      const {data} = await axios.get(`${apiUrl}/thread/get-threads`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("data")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  async getThread(threadId) {
+    try {
+      console.log("sadsda")
+      console.log(threadId)
+      const {data} = await axios.get(`${apiUrl}/thread/get-thread/${threadId}`, {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
@@ -34,22 +51,65 @@ class ThreadEntry {
       throw error;
     }
   };
-
-  async newRecyclingPoint(data) {
-
-    const res = await axios.post(
-      `${apiUrl}/recycling/create-recycling-point`,
-      data,
-      {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return res;
+  async likeById(threadId, data) {
+    try {
+      //console.log(data);
+      const response = await axios.post(`${apiUrl}/thread/like/${threadId}`,
+      data ,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error)
+      throw new Error("Internal server error");
+    }
   }
 
+  async addReply(threadId, data) {
+    try {
+      const response = await axios.post(`${apiUrl}/thread/add-reply-to-a-thread/${threadId}`,
+      data ,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error)
+      throw new Error("Internal server error");
+    }
+  }
+
+  /*async likeById(threadId) {
+    try {
+      console.log("service")
+      console.log(threadId)
+      const response = await axios.post(
+        `${apiUrl}/thread/like/${threadId}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response)
+      return response.data;
+    } catch (error) {
+      throw (
+        error.response.data.message ||
+        "Something went wrong while liking the thread."
+      );
+    }
+  }*/
   async outputEntry(data) {
 
     const res = await axios.post(
