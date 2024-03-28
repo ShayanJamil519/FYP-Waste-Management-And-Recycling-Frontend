@@ -5,35 +5,64 @@ import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import LandfillEntryModal from "./LandfillEntryModal";
-import { useGetAllLandfills } from "@/hooks/landfillEntries";
+import {
+  useGetAllLandfills,
+  useDeleteLandfill,
+} from "@/hooks/landfillEntries";
 import DataLoader from "@/components/Shared/DataLoader";
 
-
-
 const AllLandfillsTable = () => {
+  const [selectedId, setSelectedId] = useState(null);
+  const deleteLandfillMutation = useDeleteLandfill();
   const [openLandfillEntryModal, setOpenLandfillEntryModal] = useState(false);
   const paginate = usePagination();
+  const { data, isLoading, isError } = useGetAllLandfills();
+  console.log(data);
 
-
-
-    const { data, isLoading, isError } = useGetAllLandfills();
-    console.log(data)
-    // Check loading and error states
-    if (isLoading) {
-      return (
-        <div className="w-full h-[70vh] flex justify-center items-center">
-          <DataLoader />
-        </div>
-      );
+  const truncateDescription = (description, maxLength) => {
+    if (description.length <= maxLength) {
+      return description;
+    } else {
+      // Find the last space before maxLength
+      let lastSpaceIndex = description.lastIndexOf(" ", maxLength);
+      // Truncate the description and add ellipsis
+      return description.substring(0, lastSpaceIndex) + "...";
     }
-  
-    if (isError) {
-      return <div>Error loading complaints</div>;
+  };
+
+
+  const handleDeleteLandfill = async (id) => {
+    try {
+      await deleteLandfillMutation.mutateAsync(id);
+      // Handle success, e.g., show a success message or update state
+    } catch (error) {
+      // Handle error, e.g., display error message
     }
-  
-    const { currentPage, totalPages, visibleItems, goToPage } = paginate(
-      data && data?.landfillPoints
-    );  
+  };
+
+  const handleEditLandfill = (id) => {
+    console.log("Itemmmmmmmmmmmmmm");
+    // console.log(visibleItems);
+    setOpenLandfillEntryModal(true);
+    setSelectedId(id);
+    // You can use the complaintId here or pass it to the modal component
+  };
+  // Check loading and error states
+  if (isLoading) {
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        <DataLoader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div>Error loading Landfills</div>;
+  }
+
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
+    data && data?.landfillPoints
+  );
 
   return (
     <div>
@@ -87,7 +116,7 @@ const AllLandfillsTable = () => {
               </div>
               <div className=" flex items-center col-span-2">
                 <p className="text-sm text-black dark:text-white ">
-                  {product._id}
+                  {truncateDescription(product._id,12)}
                 </p>
               </div>
               <div className=" flex items-center">
@@ -96,21 +125,24 @@ const AllLandfillsTable = () => {
                 </p>
               </div>
               <div className="col-span-2 flex items-center">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                    <div className=" w-20 h-20 rounded-md">
-                      <img src={product?.image?.url} alt="item" />
-                    </div>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <div className=" w-20 h-20 rounded-md">
+                    <img src={product?.image?.url} alt="item" />
                   </div>
                 </div>
+              </div>
               {/* <div className=" flex items-center">
                 <p className="text-sm text-meta-3">{product.email}</p>
               </div> */}
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit
                   className="cursor-pointer"
-                  onClick={() => setOpenLandfillEntryModal(true)}
+                  onClick={() => handleEditLandfill(product._id)}
                 />
-                <MdDelete className="cursor-pointer" />
+                <MdDelete
+                  className="cursor-pointer"
+                  onClick={() => handleDeleteLandfill(product._id)}
+                />
               </div>
             </div>
           ))}
@@ -128,6 +160,7 @@ const AllLandfillsTable = () => {
       {openLandfillEntryModal && (
         <LandfillEntryModal
           setOpenLandfillEntryModal={setOpenLandfillEntryModal}
+          id={selectedId}
         />
       )}
     </div>

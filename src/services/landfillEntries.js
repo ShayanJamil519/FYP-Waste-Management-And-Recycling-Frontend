@@ -22,6 +22,48 @@ class LandfillEntry {
     return res;
   }
 
+  async addResponseToLandfill(id, data) {
+    try {
+      console.log("IDDDDDDDDDDDDD");
+      console.log(id);
+      console.log(data);
+      const response = await axios.post(
+        `${apiUrl}/landfill/add-response-to-a-landfill/${id}`,
+        data,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message || "Internal server error");
+    }
+  }
+
+  async deleteLandfillById(id) {
+    try {
+      console.log("service")
+      const response = await axios.delete(
+        `${apiUrl}/landfill/delete-landfill-point/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw (
+        error.response.data.message ||
+        "Something went wrong while deleting the Landfill."
+      );
+    }
+  }
+
   async getAllLandfills() {
     try {
       console.log("DAAAAAAAATA333")

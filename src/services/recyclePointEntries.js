@@ -19,6 +19,51 @@ class RecyclingEntry {
     );
     return res;
   }
+
+  async addResponseToRecyclingPoint(id, data) {
+    try {
+      console.log("IDDDDDDDDDDDDD");
+      console.log(id);
+      console.log(data);
+      const response = await axios.post(
+        `${apiUrl}/recycling/add-response-to-a-recyclingPoint/${id}`,
+        data,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message || "Internal server error");
+    }
+  }
+
+  async deleteRecyclingPointById(id) {
+    try {
+      console.log("service")
+      const response = await axios.delete(
+        `${apiUrl}/recycling/delete-recycling-point/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw (
+        error.response.data.message ||
+        "Something went wrong while deleting the Recycling Point."
+      );
+    }
+  }
+
+
+
   async getAllRecyclingPoints() {
     try {
       const {data} = await axios.get(`${apiUrl}/recycling/get-all-recycling-points`, {

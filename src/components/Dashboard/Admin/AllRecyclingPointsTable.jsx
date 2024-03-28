@@ -4,27 +4,48 @@ import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
-import RecyclingInputEntryModal from "./RecyclingPointModal";
 import RecyclingPointModal from "./RecyclingPointModal";
-import { useGetAllRecyclingPoints } from "../../../hooks/recyclePointEntries";
+import {
+  useGetAllRecyclingPoints,
+  useDeleteRecyclingPoint,
+} from "../../../hooks/recyclePointEntries";
 import DataLoader from "@/components/Shared/DataLoader";
-const productData = [
-  {
-    district: "",
-    area: "",
-    description: "",
-    resonse: "",
-    date: "",
-  },
-];
 
 const AllRecyclingPointsTable = () => {
-  const [tableData, setTableData] = useState(productData);
+  const [selectedId, setSelectedId] = useState(null);
+  const deleteRecyclingMutation = useDeleteRecyclingPoint();
   const [openRecyclingPointModal, setOpenRecyclingPointModal] = useState(false);
-
   const paginate = usePagination();
-
   const { data, isLoading, isError } = useGetAllRecyclingPoints();
+
+  const truncateDescription = (description, maxLength) => {
+    if (description.length <= maxLength) {
+      return description;
+    } else {
+      // Find the last space before maxLength
+      let lastSpaceIndex = description.lastIndexOf(" ", maxLength);
+      // Truncate the description and add ellipsis
+      return description.substring(0, lastSpaceIndex) + "...";
+    }
+  };
+
+  const handleDeleteRecyclingPoint = async (id) => {
+    try {
+      await deleteRecyclingMutation.mutateAsync(id);
+      // Handle success, e.g., show a success message or update state
+    } catch (error) {
+      // Handle error, e.g., display error message
+    }
+  };
+
+  const handleEditRecyclingPoint = (id) => {
+    console.log("Itemmmmmmmmmmmmmm");
+    // console.log(visibleItems);
+    setOpenLandfillEntryModal(true);
+    setSelectedId(id);
+    // You can use the complaintId here or pass it to the modal component
+  };
+
   console.log(data);
   // Check loading and error states
   if (isLoading) {
@@ -36,7 +57,7 @@ const AllRecyclingPointsTable = () => {
   }
 
   if (isError) {
-    return <div>Error loading complaints</div>;
+    return <div>Error loading Recycling Points</div>;
   }
 
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(
@@ -95,7 +116,7 @@ const AllRecyclingPointsTable = () => {
               </div>
               <div className=" flex items-center col-span-2">
                 <p className="text-sm text-black dark:text-white ">
-                  {product._id}
+                  {truncateDescription(product._id, 12)}
                 </p>
               </div>
               <div className="col-span-2 flex items-center">
@@ -111,9 +132,13 @@ const AllRecyclingPointsTable = () => {
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit
                   className="cursor-pointer"
-                  onClick={() => setOpenRecyclingPointModal(true)}
+                  // onClick={() => setOpenRecyclingPointModal(true)}
+                  onClick={() => handleEditRecyclingPoint(product._id)}
                 />
-                <MdDelete className="cursor-pointer" />
+                <MdDelete
+                  className="cursor-pointer"
+                  onClick={() => handleDeleteRecyclingPoint(product._id)}
+                />
               </div>
             </div>
           ))}
@@ -131,6 +156,7 @@ const AllRecyclingPointsTable = () => {
       {openRecyclingPointModal && (
         <RecyclingPointModal
           setOpenRecyclingPointModal={setOpenRecyclingPointModal}
+          id={selectedId}
         />
       )}
     </div>

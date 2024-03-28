@@ -3,6 +3,12 @@ import LandfillEntry from "../services/landfillEntries";
 import AuthService from "../services/auth-service";
 
 
+const useDeleteLandfill = () => {
+  console.log("HOOK")
+  return useMutation((id) => LandfillEntry.deleteLandfillById(id));
+};
+
+
 const useInputEntry = (data) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -31,6 +37,29 @@ const useNewLandfill = (data) => {
   );
 };
 
+const useAddResponseToLandfill = () => {
+  const mutation = useMutation(({ id, data }) =>
+    LandfillEntry.addResponseToLandfill(id, data)
+  );
+
+  const addResponse = async (id, data) => {
+    try {
+      const response = await mutation.mutateAsync({ id, data });
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {
+    addResponse,
+    isLoading: mutation.isLoading,
+    isError: mutation.isError,
+    error: mutation.error,
+  };
+};
+
+
 const useGetAllLandfills = () => {
   console.log("DAAAAAAAATA222")
   return useQuery(["allLandfills"],
@@ -39,4 +68,4 @@ const useGetAllLandfills = () => {
 
 
 
-export { useNewLandfill, useGetAllLandfills , useInputEntry};
+export { useNewLandfill, useGetAllLandfills , useInputEntry, useDeleteLandfill, useAddResponseToLandfill};
