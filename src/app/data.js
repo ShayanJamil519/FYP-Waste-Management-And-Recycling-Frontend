@@ -168,6 +168,28 @@ export const howItWorksHomeListData = [
   },
 ];
 
+export const testimonialsData = [
+  {
+    name: "Lamar Owens",
+    title: "CEO",
+
+    image: "/shared/testimonials__1.jpg",
+    text: "I felt really comfortable and trust them. They have a lot of security measures in place. Pretty cheap for such great peace of mind!",
+  },
+  {
+    name: "Jessica Pearson",
+    title: "Marketing Director",
+    image: "/shared/testimonials__1.jpg",
+    text: "The service was exceptional! The staff was attentive and professional. Highly recommend to anyone looking for top-notch service.",
+  },
+  {
+    name: "Chris Wong",
+    title: "Freelance Developer",
+    image: "/shared/testimonials__1.jpg",
+    text: "Their dedication to maintaining high standards is evident in their work. Absolutely no complaints and will be returning for their services again!",
+  },
+];
+
 export const aboutServicesData = [
   {
     icon: <FaServicestack />,
@@ -211,4 +233,12 @@ export const aboutaccordionOurMissionData = [
     title: "Recycle More",
     content: "Additional content for Recycle More goes here...",
   },
+];
+
+export const aboutWasteBreakDownProgressBarData = [
+  { label: "Construction Waste", percentage: 95 },
+  { label: "Manufacturing Waste", percentage: 88 },
+  { label: "Retail Waste", percentage: 77 },
+  { label: "Retail Waste", percentage: 20 },
+  { label: "Retail Waste", percentage: 64 },
 ];

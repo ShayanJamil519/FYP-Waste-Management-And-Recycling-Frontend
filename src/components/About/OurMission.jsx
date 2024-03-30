@@ -67,7 +67,7 @@ const OurMission = () => {
         </div>
         {/* Right Container */}
         <div className="w-[40%] font-poppins ">
-          <h1 className="font-paralucent text-5xl mb-4 text-[#182822] leading-normal">
+          <h1 className="font-paralucent text-4xl mb-4 text-[#182822] leading-normal">
             Our Mission
           </h1>
 

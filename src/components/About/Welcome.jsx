@@ -20,8 +20,10 @@ const ServiceCard = ({ icon, title, description }) => {
 const Welcome = () => {
   return (
     <div className="w-full pt-24 pb-16 px-10 font-poppins bg-[#f7f9f8]">
-      <h6 className="text-center font-bold text-[#f29620]">More About Us</h6>
-      <h1 className="font-paralucent text-5xl mt-1 mb-4 w-2/4 mx-auto text-center text-[#182822] leading-normal">
+      <h6 className="text-center font-semibold text-[#f29620]">
+        More About Us
+      </h6>
+      <h1 className="font-paralucent text-4xl mt-1 mb-3 text-center text-[#182822] leading-normal">
         Welcome to Recy-sense
       </h1>
 

@@ -47,6 +47,14 @@ body {
   background: #dbdbdb !important;
 }
 
+.testimonials__caurosel .swiper-pagination-bullet-active {
+  background: #fff !important;
+}
+
+.testimonials__caurosel .swiper-pagination-bullet {
+  background: #ffa500 !important;
+}
+
 /* Home Page */
 
 /* How It Works Section */
