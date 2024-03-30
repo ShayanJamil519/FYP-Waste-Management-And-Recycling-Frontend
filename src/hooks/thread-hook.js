@@ -52,7 +52,7 @@ const useReplyThread = () => {
     ThreadEntry.addReply(threadId , data)
   );
 
-  const addResponse = async (threadId , data) => {
+  const addResponsee = async (threadId , data) => {
     try {
       console.log("assa")
       console.log(threadId)
@@ -64,7 +64,7 @@ const useReplyThread = () => {
   };
 
   return {
-    addResponse,
+    addResponsee,
     isLoading: mutation.isLoading,
     isError: mutation.isError,
     error: mutation.error,

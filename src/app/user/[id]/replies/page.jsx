@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 
 
+
 const Page = () => {
 
     const pathname = usePathname();
@@ -25,14 +26,18 @@ const Page = () => {
         content: "",
       });
     //const { mutate: addMutate } = useReplyThread( JSON.stringify(threadId, userData));
-    const { mutate: addMutate } = useReplyThread(JSON.stringify(threadId), userData);
+    //const { mutate: addMutate } = useReplyThread(JSON.stringify(threadId), userData);
+    const { addResponsee, error } =
+    useReplyThread();
     useEffect(() => {
+      console.log("data")
+      console.log(data?.replies)
         const checkUser = () => {
             setReplyList(data?.replies);
             setTitle(data?.title);
         };
         checkUser();
-    }, [data?.replies , data?.title]);
+    }, [data]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -40,30 +45,23 @@ const Page = () => {
           ...userData,
           [name]: value,
         });
-        console.log(userData.title)
+        console.log(userData.content)
       };
 
    const handleSubmitReply = async (event) => {
         event.preventDefault();
         setIsLoading(true);
-        addMutate(
-          {},
-          {
-            onSuccess: (response) => {
-              console.log(response)
-              toast.success(response?.data?.message);
-              setThreadList(response?.data?.threads);
-              setIsLoading(false);
-            },
-            onError: (response) => {
-              console.error("An error occurred:");
-              console.log(response);
-              console.log(response.response.data.message);
-              toast.error(response.response.data.message);
-              setIsLoading(false);
-            },
-          }
-        );
+        console.log("hold")
+        console.log(threadId)
+        console.log(userData.content)
+        try {
+
+          await addResponsee(threadId,userData);
+          toast.success("Reply added succesfully");
+        } catch (error) {
+          // Handle error, e.g., display error message
+          toast.error(error);
+        }
       };
 
     return (
@@ -74,10 +72,9 @@ const Page = () => {
                 <label htmlFor='reply'>Reply to the thread</label>
                 <textarea
                     rows={5}
-                    value={reply}
-                    onChange={(e) => setReply(e.target.value)}
+                    onChange={handleInputChange}
                     type='text'
-                    name='reply'
+                    name='content'
                     className='modalInput'
                 />
     
@@ -87,9 +84,9 @@ const Page = () => {
             <div className='thread__container'>
                 {replyList?.map((reply) => (
                     <div className='thread__item' key={reply}>
-                        <p>{reply.text}</p>
+                        <p>{reply.content}</p>
                         <div className='react__container'>
-                            <p style={{ opacity: "0.5" }}>by {reply.name}</p>
+                            <p style={{ opacity: "0.5" }}>by {reply.userId}</p>
                         </div>
                     </div>
                 ))}
