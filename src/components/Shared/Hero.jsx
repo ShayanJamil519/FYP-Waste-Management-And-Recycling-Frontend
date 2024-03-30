@@ -3,18 +3,17 @@ import { useRouter } from "next/navigation";
 import { IoMdHome } from "react-icons/io";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-const Hero = () => {
+const Hero = ({ title, bgImage }) => {
   const router = useRouter();
   return (
     <div
       style={{
-        background:
-          "linear-gradient( 135deg, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0.2)), url('/home/hero__slider1.jpg') no-repeat center center/cover",
+        background: `linear-gradient( 135deg, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0.2)), url('${bgImage}') no-repeat center center/cover`,
       }}
       className="w-full min-h-[70vh] relative flex justify-center items-center"
     >
       <h1 className="font-paralucent text-[#fff] text-[70px] leading-[80px]">
-        Make a Complain
+        {title}
       </h1>
       <div className="absolute bottom-0 right-0 left-0 flex justify-center items-center py-5 border-t-[1px] border-[#d3d1d1]">
         <div className="text-[#fff] font-poppins  flex justify-center items-center w-fit">
@@ -26,7 +25,7 @@ const Hero = () => {
             Home
           </span>
           <MdKeyboardArrowRight />
-          <span className="text-sm">Make a Complain</span>
+          <span className="text-sm">{title}</span>
         </div>
       </div>
     </div>

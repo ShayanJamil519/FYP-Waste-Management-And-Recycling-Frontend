@@ -21,7 +21,7 @@ import Hero from "@/components/Shared/Hero";
 const page = () => {
   return (
     <>
-      <Hero />
+      <Hero title="Make a Complain" bgImage="/home/hero__slider1.jpg" />
 
       <div className="my-32 mx-10 bg-[#fff] min-h-[50vh] flex justify-center items-stretch gap-10">
         <Action />

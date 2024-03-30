@@ -1,10 +1,8 @@
 import { RxDashboard } from "react-icons/rx";
-import { useRouter } from 'next/router';
-
-
+import { FaServicestack, FaTruckPickup } from "react-icons/fa6";
+import { MdOutlineEvent } from "react-icons/md";
 
 export const sidebarLinksDistrictAdmin = [
-  
   {
     linkText: `Dashboard`,
     linkTo: "/dashboard/district-admin",
@@ -30,7 +28,6 @@ export const sidebarLinksDistrictAdmin = [
 
 export const generateSidebarLinksUser = (id) => {
   const sidebarLinks = [
-    
     {
       linkText: `Home`,
       linkTo: "/dashboard/user/home",
@@ -38,7 +35,7 @@ export const generateSidebarLinksUser = (id) => {
     },
     {
       linkText: `Replies`,
-      linkTo: `/dashboard/user/${id}/replies`, 
+      linkTo: `/dashboard/user/${id}/replies`,
       linkIcon: <RxDashboard />,
     },
   ];
@@ -168,5 +165,50 @@ export const howItWorksHomeListData = [
   },
   {
     list: "Provide Regular, Reliable and Convenient Services",
+  },
+];
+
+export const aboutServicesData = [
+  {
+    icon: <FaServicestack />,
+    title: "Corporate Services",
+    description:
+      "Guaranteed that all of your universal waste management is performed safely and responsibly.",
+  },
+  {
+    icon: <FaTruckPickup />,
+    title: "Convenient Pickup",
+    description:
+      "We offer business pickup services to safely recycle your electronics in a safe manner.",
+  },
+  {
+    icon: <MdOutlineEvent />,
+    title: "E-waste Events",
+    description:
+      "We work with non-profits, businesses, and other organizations to host community e-waste events.",
+  },
+];
+
+export const aboutaccordionOurMissionData = [
+  {
+    title: "Reducing Waste",
+    content:
+      "Stet clita kasd gubergren, no sea takimata sanctus est lorem ipsum dolor sit amet ipsum dolor sit amet, consetetur elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+  },
+  {
+    title: "Reduce Program",
+    content: "Additional content for Reduce Program goes here...",
+  },
+  {
+    title: "Recycle More",
+    content: "Additional content for Recycle More goes here...",
+  },
+  {
+    title: "Reduce Program",
+    content: "Additional content for Reduce Program goes here...",
+  },
+  {
+    title: "Recycle More",
+    content: "Additional content for Recycle More goes here...",
   },
 ];
