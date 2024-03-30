@@ -13,6 +13,7 @@ import DataLoader from "@/components/Shared/DataLoader";
 
 const AllRecyclingPointsTable = () => {
   const [selectedId, setSelectedId] = useState(null);
+  const [admin, setAdmin] = useState(null);
   const deleteRecyclingMutation = useDeleteRecyclingPoint();
   const [openRecyclingPointModal, setOpenRecyclingPointModal] = useState(false);
   const paginate = usePagination();
@@ -38,10 +39,12 @@ const AllRecyclingPointsTable = () => {
     }
   };
 
-  const handleEditRecyclingPoint = (id) => {
+  const handleEditRecyclingPoint = (id,admin) => {
     console.log("Itemmmmmmmmmmmmmm");
     // console.log(visibleItems);
-    setOpenLandfillEntryModal(true);
+    
+    setOpenRecyclingPointModal(true);
+    setAdmin(admin);
     setSelectedId(id);
     // You can use the complaintId here or pass it to the modal component
   };
@@ -133,7 +136,7 @@ const AllRecyclingPointsTable = () => {
                 <MdEdit
                   className="cursor-pointer"
                   // onClick={() => setOpenRecyclingPointModal(true)}
-                  onClick={() => handleEditRecyclingPoint(product._id)}
+                  onClick={() => handleEditRecyclingPoint(product._id,product.admin)}
                 />
                 <MdDelete
                   className="cursor-pointer"
@@ -157,6 +160,7 @@ const AllRecyclingPointsTable = () => {
         <RecyclingPointModal
           setOpenRecyclingPointModal={setOpenRecyclingPointModal}
           id={selectedId}
+          admin={admin}
         />
       )}
     </div>

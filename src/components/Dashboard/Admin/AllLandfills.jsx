@@ -13,6 +13,7 @@ import DataLoader from "@/components/Shared/DataLoader";
 
 const AllLandfillsTable = () => {
   const [selectedId, setSelectedId] = useState(null);
+  const [admin, setAdmin] = useState(null);
   const deleteLandfillMutation = useDeleteLandfill();
   const [openLandfillEntryModal, setOpenLandfillEntryModal] = useState(false);
   const paginate = usePagination();
@@ -40,11 +41,12 @@ const AllLandfillsTable = () => {
     }
   };
 
-  const handleEditLandfill = (id) => {
+  const handleEditLandfill = (id,admin) => {
     console.log("Itemmmmmmmmmmmmmm");
     // console.log(visibleItems);
     setOpenLandfillEntryModal(true);
     setSelectedId(id);
+    setAdmin(admin);
     // You can use the complaintId here or pass it to the modal component
   };
   // Check loading and error states
@@ -137,7 +139,7 @@ const AllLandfillsTable = () => {
               <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit
                   className="cursor-pointer"
-                  onClick={() => handleEditLandfill(product._id)}
+                  onClick={() => handleEditLandfill(product._id,product.admin)}
                 />
                 <MdDelete
                   className="cursor-pointer"
@@ -161,6 +163,7 @@ const AllLandfillsTable = () => {
         <LandfillEntryModal
           setOpenLandfillEntryModal={setOpenLandfillEntryModal}
           id={selectedId}
+          admin={admin}
         />
       )}
     </div>

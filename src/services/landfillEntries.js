@@ -27,8 +27,8 @@ class LandfillEntry {
       console.log("IDDDDDDDDDDDDD");
       console.log(id);
       console.log(data);
-      const response = await axios.post(
-        `${apiUrl}/landfill/add-response-to-a-landfill/${id}`,
+      const response = await axios.put(
+        `${apiUrl}/landfill/update/${id}`,
         data,
         {
           headers: {

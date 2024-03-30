@@ -1,22 +1,25 @@
-import React from "react";
+import { React, useState } from "react";
 import Modal from "../Modal";
 import { useRouter } from "next/navigation";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
-import { useAddResponseToLandfill } from "../../../hooks/complain-hook";
+import { useAddResponseToLandfill } from "../../../hooks/landfillEntries";
+import { FaUpload } from "react-icons/fa6";
+import { RxCross1 } from "react-icons/rx";
+import { FaSpinner } from "react-icons/fa";
 
-const LandfillEntryModal = ({ setOpenLandfillEntryModal, id }) => {
+const LandfillEntryModal = ({ setOpenLandfillEntryModal, id, admin }) => {
   const router = useRouter();
   const [image, setImage] = useState(null);
   const [info, setInfo] = useState({
+    admin: admin,
     name: "",
     district: "",
-    subDivision: "",
+    sourceSubdivision: "",
     image: "",
   });
-  const { addResponse, isLoading, isError, error } =
-    useAddResponseToLandfill();
+  const { addResponse, isLoading, isError, error } = useAddResponseToLandfill();
 
   const handleAvatarChange = (event) => {
     console.log("handleAvatar");
@@ -47,6 +50,7 @@ const LandfillEntryModal = ({ setOpenLandfillEntryModal, id }) => {
     event.preventDefault();
     console.log("lANDFILL__ID");
     console.log(id);
+    console.log(info.admin);
     try {
       await addResponse(id, info);
       setOpenLandfillEntryModal(false);
@@ -61,7 +65,10 @@ const LandfillEntryModal = ({ setOpenLandfillEntryModal, id }) => {
   //   setInfo({ ...info, [name]: value });
   // };
   const handleInputChange = (event) => {
+    // console.log(event.target.value)
     if (event && event.target) {
+      console.log(event.target.name);
+      console.log(event.target.value);
       const { name, value } = event.target;
       setInfo({ ...info, [name]: value });
     }
@@ -121,6 +128,7 @@ const LandfillEntryModal = ({ setOpenLandfillEntryModal, id }) => {
           </div>
           <div className="grid grid-cols-2 gap-5">
             <Input
+              name="district"
               label="District"
               value={info.district}
               onChange={handleInputChange}
@@ -128,6 +136,7 @@ const LandfillEntryModal = ({ setOpenLandfillEntryModal, id }) => {
               placeholder="Please write you details"
             />
             <Input
+              name="name"
               label="Name"
               type="text"
               value={info.name}
@@ -135,14 +144,14 @@ const LandfillEntryModal = ({ setOpenLandfillEntryModal, id }) => {
               placeholder="Please write you details"
             />
             <Input
-              label="subDivision"
+              name="sourceSubdivision"
+              label="sourceSubdivision"
               type="text"
-              value={info.subDivision}
+              value={info.sourceSubdivision}
               onChange={handleInputChange}
               placeholder="Please write you details"
             />
           </div>
-
 
           <button
             type="submit"

@@ -25,8 +25,8 @@ class RecyclingEntry {
       console.log("IDDDDDDDDDDDDD");
       console.log(id);
       console.log(data);
-      const response = await axios.post(
-        `${apiUrl}/recycling/add-response-to-a-recyclingPoint/${id}`,
+      const response = await axios.put(
+        `${apiUrl}/recycling/update/${id}`,
         data,
         {
           headers: {

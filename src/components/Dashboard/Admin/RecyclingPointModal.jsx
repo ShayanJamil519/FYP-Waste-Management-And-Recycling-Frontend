@@ -1,21 +1,25 @@
-import React from "react";
+import {React,useState} from "react";
 import Modal from "../Modal";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Input from "@/components/CC/Input";
 import TextArea from "@/components/CC/TextArea";
 import { useAddResponseToRecyclingPoint } from "../../../hooks/recyclePointEntries";
+import { FaUpload } from "react-icons/fa6";
+import { RxCross1 } from "react-icons/rx";
+import { FaSpinner } from "react-icons/fa";
 
-const RecyclingPointModal = ({ setOpenRecyclingPointModal, id  }) => {
-  const router = useRouter();
+const RecyclingPointModal = ({ setOpenRecyclingPointModal, id, admin }) => {
+  // const router = useRouter();
   const [image, setImage] = useState(null);
   const [info, setInfo] = useState({
+    admin: admin,
     name: "",
     district: "",
-    subDivision: "",
+    sourceSubdivision: "",
     image: "",
   });
   const { addResponse, isLoading, isError, error } =
-    useAddResponseToLandfill();
+    useAddResponseToRecyclingPoint();
 
   const handleAvatarChange = (event) => {
     console.log("handleAvatar");
@@ -80,7 +84,7 @@ const RecyclingPointModal = ({ setOpenRecyclingPointModal, id  }) => {
           touch. Or you can call us and our specialists will provide help!
         </p>
         <form className="w-full mt-10 " onSubmit={handleAddResponse}>
-        <div className="my-3">
+          <div className="my-3">
             {image ? (
               <div className="">
                 <div className="w-24 h-24 mx-auto relative">
@@ -121,12 +125,14 @@ const RecyclingPointModal = ({ setOpenRecyclingPointModal, id  }) => {
           <div className="grid grid-cols-2 gap-5">
             <Input
               label="District"
+              name="district"
               value={info.district}
               onChange={handleInputChange}
               type="text"
               placeholder="Please write you details"
             />
             <Input
+              name="name"
               label="Name"
               type="text"
               value={info.name}
@@ -134,13 +140,13 @@ const RecyclingPointModal = ({ setOpenRecyclingPointModal, id  }) => {
               placeholder="Please write you details"
             />
             <Input
-              label="subDivision"
+              name="sourceSubdivision"
+              label="sourceSubdivision"
               type="text"
-              value={info.subDivision}
+              value={info.sourceSubdivision}
               onChange={handleInputChange}
               placeholder="Please write you details"
             />
-
           </div>
 
           <button
