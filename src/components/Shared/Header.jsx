@@ -16,10 +16,10 @@ const headerLinks = [
     linkTo: "/",
   },
 
-  {
-    linkText: "Company",
-    linkTo: "/company",
-  },
+  // {
+  //   linkText: "Company",
+  //   linkTo: "/company",
+  // },
 
   {
     linkText: "Services",
@@ -28,6 +28,10 @@ const headerLinks = [
   {
     linkText: "About Us",
     linkTo: "/about",
+  },
+  {
+    linkText: "Contact Us",
+    linkTo: "/contact",
   },
 ];
 
