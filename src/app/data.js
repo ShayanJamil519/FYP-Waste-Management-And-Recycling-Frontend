@@ -242,3 +242,95 @@ export const aboutWasteBreakDownProgressBarData = [
   { label: "Retail Waste", percentage: 20 },
   { label: "Retail Waste", percentage: 64 },
 ];
+
+export const topicCardsData = [
+  {
+    category: "MEMBER POST",
+    title: "Setting up content and creative project tasks",
+    authorName: "Nelson Martinez",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "March 23, 2024 01:38",
+  },
+  {
+    category: "DEMINAR",
+    title: "Forecasting Made Easy: Smooth Resource Allocation...",
+    authorName: "Lisa",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "Monday at 19:46",
+  },
+  {
+    category: "FROM WRIKE",
+    title: "Exciting Announcement for PMI Certified Members!",
+    authorName: "Lisa",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "Monday at 19:37",
+  },
+  {
+    category: "MEMBER POST",
+    title: "Setting up content and creative project tasks",
+    authorName: "Nelson Martinez",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "March 23, 2024 01:38",
+  },
+  {
+    category: "DEMINAR",
+    title: "Forecasting Made Easy: Smooth Resource Allocation...",
+    authorName: "Lisa",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "Monday at 19:46",
+  },
+  {
+    category: "FROM WRIKE",
+    title: "Exciting Announcement for PMI Certified Members!",
+    authorName: "Lisa",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "Monday at 19:37",
+  },
+  {
+    category: "MEMBER POST",
+    title: "Setting up content and creative project tasks",
+    authorName: "Nelson Martinez",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "March 23, 2024 01:38",
+  },
+  {
+    category: "DEMINAR",
+    title: "Forecasting Made Easy: Smooth Resource Allocation...",
+    authorName: "Lisa",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "Monday at 19:46",
+  },
+  {
+    category: "FROM WRIKE",
+    title: "Exciting Announcement for PMI Certified Members!",
+    authorName: "Lisa",
+    authorImage: "/shared/testimonials__1.jpg",
+    timestamp: "Monday at 19:37",
+  },
+];
+
+export const postsData = [
+  {
+    id: 1,
+    name: "janet andrews",
+    date: "January 23, 2024 21:41",
+    content:
+      "One of the biggest challenges of Wrike is finding/coordinating tasks that relate to the same project but ALL HAVE DIFFERENT TICKET NUMBERS...",
+    likes: 2,
+    comments: [
+      {
+        id: 1,
+        name: "janet andrews",
+        date: "January 23, 2024 21:42",
+        content: "Sorry for the unproofed comment above...",
+      },
+      {
+        id: 2,
+        name: "peter parker",
+        date: "January 24, 2024 08:30",
+        content:
+          "This is indeed a significant issue that needs to be addressed!",
+      },
+    ],
+  },
+];

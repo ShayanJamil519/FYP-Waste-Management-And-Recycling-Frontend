@@ -30,6 +30,11 @@ const headerLinks = [
     linkTo: "/about",
   },
   {
+    linkText: "Community Forum",
+    linkTo: "/forum",
+  },
+
+  {
     linkText: "Contact Us",
     linkTo: "/contact",
   },
