@@ -14,6 +14,8 @@ import * as tf from "@tensorflow/tfjs-core";
 
 import * as tflite from "@tensorflow/tfjs-tflite";
 
+const MAX_DETECTIONS = 5;
+const THRESHOLD = 0.4;
 const MODEL_PATH = "/model/waste.tflite";
 const classLabels = {
   0: "Open Litter",
@@ -22,6 +24,29 @@ const classLabels = {
   3: "Biodegradable Waste",
   4: "Medical Waste",
 };
+
+
+const classColors = {
+  "Open Litter": "#F44336",
+  "Overflow Dustbin": "#388E3C",
+  "Plastic Waste": "#2979FF",
+  "Biodegradable Waste": "#E040FB",
+  "Medical Waste": "#FF6D00"
+};
+
+
+
+const BoundingBox = ({ left, top, width, height, className, score, color }) => (
+  <div className="box-container" style={{ position: 'absolute', left: left + 'px', top: top + 'px' }}>
+    <div className="box" style={{ borderColor: color, borderWidth: '4px', width: width + 'px', height: height + 'px' }}></div>
+    <div className="label" style={{ backgroundColor: color }}>{`${className} (${score.toFixed(2)})`}</div>
+  </div>
+);
+
+const drawBoundingBoxes = (left, top, width, height, className, score, color) => (
+  <BoundingBox key={`${left}-${top}-${width}-${height}`} left={left} top={top} width={width} height={height} className={className} score={score} color={color} />
+);
+
 const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
   const router = useRouter();
@@ -53,37 +78,10 @@ const ComplainForm = () => {
     image: "",
   });
 
-  // const resetForm = () => {
-  //   setUserData({
-  //     userId: user?.userId,
-  //     district: "",
-  //     area: "",
-  //     description: "",
-  //     latitude: parseFloat(latitude),
-  //     longitude: parseFloat(longitude),
-  //     image: "",
-  //   });
-  //   setImage(null); // Reset the image state if necessary
-  // };
+
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   if (name === "image") {
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setUserData({ ...userData, [name]: reader.result });
-  //       }
-  //     };
-
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   } else {
-  //     setUserData({ ...userData, [name]: value });
-  //   }
-  // };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserData({
@@ -135,6 +133,13 @@ const ComplainForm = () => {
         const img = new Image();
         img.onload = async () => {
           try {
+            const parentElement = document.getElementsByClassName("my-3");
+            console.log(parentElement)
+            for (const element of parentElement) {
+              // Append the image to each element
+              element.appendChild(img.cloneNode());
+          }
+            //parentElement.appendChild(img);
             const tensor = tf.browser.fromPixels(img);
             const resizedImage = tf.image.resizeBilinear(tensor, [448, 448]);
             const objectDetector = await tflite.loadTFLiteModel(MODEL_PATH);
@@ -166,6 +171,31 @@ const ComplainForm = () => {
             // Sort the results in the order of confidence to get top results.
             detections.sort((a, b) => b.score - a.score);
             console.log(detections);
+            const numDetectionsToShow = Math.min(MAX_DETECTIONS, detections.length);
+            for (let i = 0; i < numDetectionsToShow; i++) {
+              const detection = detections[i];
+              const { boundingBox, className, score, index } = detection;
+              const y_min = Math.floor(boundingBox[0] * img.clientHeight);
+              const y_max = Math.floor(boundingBox[2] * img.clientHeight);
+              const x_min = Math.floor(boundingBox[1] * img.clientWidth);
+              const x_max = Math.floor(boundingBox[3] * img.clientWidth);
+              //const container = img.parentNode;
+              if (score > THRESHOLD) {
+                const color = classColors[className];
+                console.log(x_max,x_min ,y_max ,y_min , score , color ,className)
+                const boxContainer = drawBoundingBoxes(
+                  x_min,
+                  y_min,
+                  x_max - x_min,
+                  y_max - y_min,
+                  className,
+                  score,
+                  color
+                );
+                //img.parentNode.appendChild(boxContainer);
+                  console.log(boxContainer)
+              }
+            }
           } catch (error) {
             console.error("Error while processing image:", error);
           }
