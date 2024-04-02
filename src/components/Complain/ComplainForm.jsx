@@ -121,6 +121,8 @@ const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
   const router = useRouter();
 
+  const [detectionDimension, setDetectionDimension] = useState({});
+
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
   const { user } = useStateContext();
@@ -209,8 +211,13 @@ const ComplainForm = () => {
             boxContainer1.style.width = '100%';
             boxContainer1.style.position = 'absolute';*/
 
-            parentElement.appendChild(img.cloneNode());
-            parentElement.appendChild(boxContainer1);
+            // parentElement.appendChild(img.cloneNode());
+            // parentElement.appendChild(boxContainer1);
+
+            let predictionImage =
+              document.getElementsByClassName("image-prediction")[0];
+            predictionImage.style.height = "450px";
+            predictionImage.style.width = "450px";
 
             //parentElement.appendChild(img);
             const tensor = tf.browser.fromPixels(img);
@@ -221,9 +228,9 @@ const ComplainForm = () => {
             // Get the output tensors.
             let result = await objectDetector.predict(input);
             let boxes = Array.from(await result[Object.keys(result)[0]].data());
-            
-            console.log("boxes")
-            console.log(boxes)
+
+            console.log("boxes");
+            console.log(boxes);
             let classes = Array.from(
               await result[Object.keys(result)[1]].data()
             );
@@ -243,22 +250,21 @@ const ComplainForm = () => {
               const score = scores[i];
               detections.push({ boundingBox, className, score, index: i });
             }
-console.log("detections")
-console.log(detections);
+            console.log("detections");
+            console.log(detections);
             // Sort the results in the order of confidence to get top results.
             detections.sort((a, b) => b.score - a.score);
-            
 
             const numDetectionsToShow = Math.min(
               MAX_DETECTIONS,
               detections.length
             );
-            console.log("client")
-            console.log(img.clientHeight)
-            console.log(img.clientWidth)
-            console.log("client and width")
-            console.log(img.height)
-            console.log(img.width)
+            console.log("client");
+            console.log(img.clientHeight);
+            console.log(img.clientWidth);
+            console.log("client and width");
+            console.log(img.height);
+            console.log(img.width);
             for (let i = 0; i < numDetectionsToShow; i++) {
               const detection = detections[i];
               const { boundingBox, className, score, index } = detection;
@@ -266,31 +272,42 @@ console.log(detections);
               const y_max = Math.floor(boundingBox[2] * img.height);
               const x_min = Math.floor(boundingBox[1] * img.width);
               const x_max = Math.floor(boundingBox[3] * img.width);
+
               //const container = img.parentNode;
               if (score > THRESHOLD) {
                 const color = classColors[className];
-                console.log(
+                console.log({
                   x_max,
                   x_min,
                   y_max,
                   y_min,
                   score,
                   color,
-                  className
-                );
-                const boxContainer = drawBoundingBoxes(
-                  x_min,
-                  y_min,
-                  x_max - x_min,
-                  y_max - y_min,
                   className,
-                  score,
-                  color
-                );
+                });
+
+                setDetectionDimension({
+                  y_min,
+                  x_min,
+                  predictionValue: score,
+                  predictionName: className,
+                  width: x_max - x_min,
+                  height: y_max - y_min,
+                });
+
+                // const boxContainer = drawBoundingBoxes(
+                //   x_min,
+                //   y_min,
+                //   x_max - x_min,
+                //   y_max - y_min,
+                //   className,
+                //   score,
+                //   color
+                // );
 
                 //img.parentNode.appendChild(boxContainer);
-                boxContainer1.appendChild(boxContainer);
-                console.log(boxContainer);
+                // boxContainer1.appendChild(boxContainer);
+                // console.log(boxContainer);
               }
             }
           } catch (error) {
@@ -326,21 +343,33 @@ console.log(detections);
         touch. Or you can call us and our specialists will provide help!
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
-        <div id="image-container-prediction" className="relative">
-          <div className="prediction_box absolute top-20 left-0 border-4 border-red-600 w-24 h-24">
-            <p className="absolute top-0 left-0 text-red-600 text-lg">
-              Precition
-            </p>
-          </div>
-
-          <img src="/images.jpg" alt="image/logo" />
-        </div>
-
         <div id="image-container" className="relative">
           <div id="my-3">
             {image ? (
-              <div className="">
-                <div className="w-24 h-24 mx-auto relative"></div>
+              // <div className="">
+              //   <div className="w-24 h-24 mx-auto relative"></div>
+              // </div>
+
+              <div id="image-container-prediction" className="relative w-full">
+                <div
+                  style={{
+                    top: `${detectionDimension.y_min}px`,
+                    left: `${detectionDimension.x_min}px`,
+                    width: `${detectionDimension.width}px`,
+                    height: `${detectionDimension.height}px`,
+                  }}
+                  className={`prediction_box absolute border-4 border-red-600`}
+                >
+                  <p className="absolute top-0 left-0 text-red-600 text-lg">
+                    {`${detectionDimension.predictionName} + ${detectionDimension.predictionValue}`}
+                  </p>
+                </div>
+
+                <img
+                  src={image}
+                  alt="image/logo"
+                  className="image-prediction"
+                />
               </div>
             ) : (
               <label htmlFor="avatar-upload" className="cursor-pointer">
