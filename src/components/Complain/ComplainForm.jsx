@@ -1,5 +1,5 @@
 "use client";
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 import { useEffect, useState } from "react";
 import { useComplain } from "../../hooks/complain-hook";
 import Input from "../CC/Input";
@@ -14,6 +14,7 @@ import "@tensorflow/tfjs-backend-cpu";
 import * as tf from "@tensorflow/tfjs-core";
 
 import * as tflite from "@tensorflow/tfjs-tflite";
+import "./complain.css";
 
 const MAX_DETECTIONS = 5;
 const THRESHOLD = 0.4;
@@ -26,17 +27,13 @@ const classLabels = {
   4: "Medical Waste",
 };
 
-
 const classColors = {
   "Open Litter": "#F44336",
   "Overflow Dustbin": "#388E3C",
   "Plastic Waste": "#2979FF",
   "Biodegradable Waste": "#E040FB",
-  "Medical Waste": "#FF6D00"
+  "Medical Waste": "#FF6D00",
 };
-
-
-
 
 /*const BoundingBox = ({ left, top, width, height, className, score, color }) => (
   <div className="box-container" style={{ position: 'absolute', left: left + 'px', top: top + 'px' }}>
@@ -57,36 +54,68 @@ const drawBoundingBoxes = (left, top, width, height, className, score, color) =>
   <BoundingBox key={`${left}-${top}-${width}-${height}`} left={left} top={top} width={width} height={height} className={className} score={score} color={color} />
 );*/
 
+// =============
+
+// function drawBoundingBoxes(left, top, width, height, className, score, color) {
+//   const container = document.createElement("div");
+//   container.classList.add("box-container");
+
+//   const box = document.createElement("div");
+//   box.classList.add("box");
+//   box.style.borderColor = color;
+//   box.style.borderWidth = "4px";
+//   container.appendChild(box);
+
+//   const label = document.createElement("div");
+//   label.classList.add("label");
+//   label.style.backgroundColor = color;
+//   label.textContent = `${className} (${score.toFixed(2)})`;
+//   container.appendChild(label);
+
+//   // Adjust the position based on the centered image.
+//   const imgElement = document.getElementById("my-3");
+//   const imgRect = imgElement.getBoundingClientRect();
+//   const offsetX = imgRect.left;
+
+//   container.style.left = `${left + offsetX - 1}px`;
+//   container.style.top = `${top - 10}px`;
+//   box.style.width = `${width + 1}px`;
+//   box.style.height = `${height + 1}px`;
+
+//   return container;
+// }
+
 function drawBoundingBoxes(left, top, width, height, className, score, color) {
+  // Container for both the box and the label
   const container = document.createElement("div");
   container.classList.add("box-container");
 
+  // The bounding box itself
   const box = document.createElement("div");
   box.classList.add("box");
-  box.style.borderColor = color;
+  box.style.borderColor = color; // Color passed as a parameter
   box.style.borderWidth = "4px";
+  // box.style.width = `${width}px`;
+  // box.style.height = `${height}px`;
+  box.style.width = `${100}px`;
+  box.style.height = `${100}px`;
   container.appendChild(box);
 
+  // Label for the bounding box
   const label = document.createElement("div");
   label.classList.add("label");
-  label.style.backgroundColor = color;
-  label.textContent = `${className} (${score.toFixed(2)})`;
+  label.style.backgroundColor = color; // Color passed as a parameter
+  label.textContent = `${className} (${score.toFixed(2)})`; // Text with the class name and score
   container.appendChild(label);
 
-  // Adjust the position based on the centered image.
-  const imgElement = document.getElementById("my-3");
-  const imgRect = imgElement.getBoundingClientRect();
-  const offsetX = imgRect.left;
+  // Adjust the position based on the image position
+  container.style.left = `${left}px`;
+  container.style.top = `${top}px`;
 
-  container.style.left = `${left + offsetX - 1}px`;
-  container.style.top = `${top - 10}px`;
-  box.style.width = `${width + 1}px`;
-  box.style.height = `${height + 1}px`;
-
-  return container;
+  // Append the container to the DOM
+  const imageContainer = document.getElementById("image-container"); // The ID of the element that holds the image
+  imageContainer.appendChild(container);
 }
-
-
 
 const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
@@ -115,8 +144,6 @@ const ComplainForm = () => {
     longitude: parseFloat(localStorage.getItem("longitude")),
     image: "",
   });
-
-
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
 
@@ -171,21 +198,20 @@ const ComplainForm = () => {
         const img = new Image();
         img.onload = async () => {
           try {
-
-            const parentElement = document.getElementById("my-3");
-            console.log(parentElement)
-            const boxContainer1 = document.createElement('div');
-            parentElement.style.position= 'relative'
-            boxContainer1.classList.add('box-container');
+            const parentElement = document.getElementById("image-container");
+            console.log(parentElement);
+            const boxContainer1 = document.createElement("div");
+            parentElement.style.position = "relative";
+            boxContainer1.classList.add("box-container");
             /*boxContainer1.style.top = '0';
             boxContainer1.style.left = '0';
             boxContainer1.style.height = '100%';
             boxContainer1.style.width = '100%';
             boxContainer1.style.position = 'absolute';*/
 
-           parentElement.appendChild(img.cloneNode());
-           parentElement.appendChild(boxContainer1)
- 
+            parentElement.appendChild(img.cloneNode());
+            parentElement.appendChild(boxContainer1);
+
             //parentElement.appendChild(img);
             const tensor = tf.browser.fromPixels(img);
             const resizedImage = tf.image.resizeBilinear(tensor, [448, 448]);
@@ -218,7 +244,10 @@ const ComplainForm = () => {
             // Sort the results in the order of confidence to get top results.
             detections.sort((a, b) => b.score - a.score);
             console.log(detections);
-            const numDetectionsToShow = Math.min(MAX_DETECTIONS, detections.length);
+            const numDetectionsToShow = Math.min(
+              MAX_DETECTIONS,
+              detections.length
+            );
             for (let i = 0; i < numDetectionsToShow; i++) {
               const detection = detections[i];
               const { boundingBox, className, score, index } = detection;
@@ -229,7 +258,15 @@ const ComplainForm = () => {
               //const container = img.parentNode;
               if (score > THRESHOLD) {
                 const color = classColors[className];
-                console.log(x_max,x_min ,y_max ,y_min , score , color ,className)
+                console.log(
+                  x_max,
+                  x_min,
+                  y_max,
+                  y_min,
+                  score,
+                  color,
+                  className
+                );
                 const boxContainer = drawBoundingBoxes(
                   x_min,
                   y_min,
@@ -239,10 +276,10 @@ const ComplainForm = () => {
                   score,
                   color
                 );
-                
-                  //img.parentNode.appendChild(boxContainer);
-                  boxContainer1.appendChild(boxContainer)
-                  console.log(boxContainer)
+
+                //img.parentNode.appendChild(boxContainer);
+                boxContainer1.appendChild(boxContainer);
+                console.log(boxContainer);
               }
             }
           } catch (error) {
@@ -278,31 +315,43 @@ const ComplainForm = () => {
         touch. Or you can call us and our specialists will provide help!
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
-        <div  id="my-3" >
-          {image ? (
-            <div className="">
-              <div className="w-24 h-24 mx-auto relative">
-                
+        <div id="image-container-prediction" className="relative">
+          <div className="prediction_box absolute top-20 left-0 border-4 border-red-600 w-24 h-24">
+            <p className="absolute top-0 left-0 text-red-600 text-lg">
+              Precition
+            </p>
+          </div>
+
+          <img src="/images.jpg" alt="image/logo" />
+        </div>
+
+        <div id="image-container" className="relative">
+          <div id="my-3">
+            {image ? (
+              <div className="">
+                <div className="w-24 h-24 mx-auto relative"></div>
               </div>
-            </div>
-          ) : (
-            <label htmlFor="avatar-upload" className="cursor-pointer">
-              <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
-                <FaUpload className="text-2xl" />
-                <p>Upload your image</p>
-                <p className="text-xs mt-2">Click to browse your image here</p>
-              </div>
-            </label>
-          )}
-          <input
-            id="avatar-upload"
-            required
-            name="image"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            className="hidden"
-          />
+            ) : (
+              <label htmlFor="avatar-upload" className="cursor-pointer">
+                <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
+                  <FaUpload className="text-2xl" />
+                  <p>Upload your image</p>
+                  <p className="text-xs mt-2">
+                    Click to browse your image here
+                  </p>
+                </div>
+              </label>
+            )}
+            <input
+              id="avatar-upload"
+              required
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className="hidden"
+            />
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-5">
           <Input
