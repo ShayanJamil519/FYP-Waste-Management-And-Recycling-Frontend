@@ -2,6 +2,7 @@
 import { topicCardsData } from "@/app/data";
 import React from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const TopicCard = ({ category, title, authorName, authorImage, timestamp }) => {
   const router = useRouter();
@@ -31,9 +32,18 @@ const TopicCard = ({ category, title, authorName, authorImage, timestamp }) => {
 const Topics = () => {
   return (
     <div className="w-full pt-24 pb-16 px-10 font-poppins bg-[#f7f9f8]">
-      <h6 className="text-center font-semibold text-[#f29620]">
-        New to the Community?
-      </h6>
+      <div className="grid px-5 grid-cols-3">
+        <div></div>
+        <h6 className="text-center font-semibold text-[#f29620]">
+          New to the Community?
+        </h6>
+        <Link
+          href="/forum/new-topic"
+          className="bg-[#f29620] hover:bg-[#eba852] text-white w-fit mr-0 ml-auto font-poppins py-2 px-4 rounded"
+        >
+          Add New Topic
+        </Link>
+      </div>
       <h1 className="font-paralucent text-4xl mt-1 mb-3 text-center text-[#182822] leading-normal">
         Browse community topics
       </h1>
