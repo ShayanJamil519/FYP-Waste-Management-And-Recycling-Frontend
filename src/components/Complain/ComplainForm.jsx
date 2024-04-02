@@ -97,8 +97,8 @@ function drawBoundingBoxes(left, top, width, height, className, score, color) {
   box.style.borderWidth = "4px";
   // box.style.width = `${width}px`;
   // box.style.height = `${height}px`;
-  box.style.width = `${100}px`;
-  box.style.height = `${100}px`;
+  box.style.width = `${width}px`;
+  box.style.height = `${height}px`;
   container.appendChild(box);
 
   // Label for the bounding box
@@ -109,8 +109,8 @@ function drawBoundingBoxes(left, top, width, height, className, score, color) {
   container.appendChild(label);
 
   // Adjust the position based on the image position
-  container.style.left = `${left}px`;
-  container.style.top = `${top}px`;
+  box.style.left = `${left}px`;
+  box.style.top = `${top}px`;
 
   // Append the container to the DOM
   const imageContainer = document.getElementById("image-container"); // The ID of the element that holds the image
@@ -221,6 +221,9 @@ const ComplainForm = () => {
             // Get the output tensors.
             let result = await objectDetector.predict(input);
             let boxes = Array.from(await result[Object.keys(result)[0]].data());
+            
+            console.log("boxes")
+            console.log(boxes)
             let classes = Array.from(
               await result[Object.keys(result)[1]].data()
             );
@@ -229,8 +232,8 @@ const ComplainForm = () => {
             );
             let n = Array.from(await result[Object.keys(result)[3]].data());
             console.log(result);
-            console.log("classes");
-            console.log(classes);
+            //console.log("classes");
+            //console.log(classes);
             const detections = [];
 
             for (let i = 0; i < n; i++) {
@@ -240,21 +243,29 @@ const ComplainForm = () => {
               const score = scores[i];
               detections.push({ boundingBox, className, score, index: i });
             }
-
+console.log("detections")
+console.log(detections);
             // Sort the results in the order of confidence to get top results.
             detections.sort((a, b) => b.score - a.score);
-            console.log(detections);
+            
+
             const numDetectionsToShow = Math.min(
               MAX_DETECTIONS,
               detections.length
             );
+            console.log("client")
+            console.log(img.clientHeight)
+            console.log(img.clientWidth)
+            console.log("client and width")
+            console.log(img.height)
+            console.log(img.width)
             for (let i = 0; i < numDetectionsToShow; i++) {
               const detection = detections[i];
               const { boundingBox, className, score, index } = detection;
-              const y_min = Math.floor(boundingBox[0] * img.clientHeight);
-              const y_max = Math.floor(boundingBox[2] * img.clientHeight);
-              const x_min = Math.floor(boundingBox[1] * img.clientWidth);
-              const x_max = Math.floor(boundingBox[3] * img.clientWidth);
+              const y_min = Math.floor(boundingBox[0] * img.height);
+              const y_max = Math.floor(boundingBox[2] * img.height);
+              const x_min = Math.floor(boundingBox[1] * img.width);
+              const x_max = Math.floor(boundingBox[3] * img.width);
               //const container = img.parentNode;
               if (score > THRESHOLD) {
                 const color = classColors[className];
