@@ -216,8 +216,12 @@ const ComplainForm = () => {
 
             let predictionImage =
               document.getElementsByClassName("image-prediction")[0];
-            predictionImage.style.height = "450px";
-            predictionImage.style.width = "450px";
+             console.log({predictionImage})
+            //predictionImage.style.height = "450px";
+           // predictionImage.style.width = "450px";
+
+            //img.style.height = "400px"; // Set the height to 300 pixels
+            //img.style.width = "400px";
 
             //parentElement.appendChild(img);
             const tensor = tf.browser.fromPixels(img);
@@ -226,6 +230,8 @@ const ComplainForm = () => {
             const input = tf.cast(tf.expandDims(resizedImage), "int32");
 
             // Get the output tensors.
+            //img.height="400px"
+            //img.width="400px"
             let result = await objectDetector.predict(input);
             let boxes = Array.from(await result[Object.keys(result)[0]].data());
 
@@ -268,10 +274,10 @@ const ComplainForm = () => {
             for (let i = 0; i < numDetectionsToShow; i++) {
               const detection = detections[i];
               const { boundingBox, className, score, index } = detection;
-              const y_min = Math.floor(boundingBox[0] * img.height);
-              const y_max = Math.floor(boundingBox[2] * img.height);
-              const x_min = Math.floor(boundingBox[1] * img.width);
-              const x_max = Math.floor(boundingBox[3] * img.width);
+              const y_min = Math.floor(boundingBox[0] * 450);
+              const y_max = Math.floor(boundingBox[2] * 450);
+              const x_min = Math.floor(boundingBox[1] * 450);
+              const x_max = Math.floor(boundingBox[3] * 450);
 
               //const container = img.parentNode;
               if (score > THRESHOLD) {
@@ -369,6 +375,8 @@ const ComplainForm = () => {
                   src={image}
                   alt="image/logo"
                   className="image-prediction"
+                  
+                  
                 />
               </div>
             ) : (

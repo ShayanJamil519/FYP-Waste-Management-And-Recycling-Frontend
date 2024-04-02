@@ -5,6 +5,11 @@
   pointer-events: none; /* This makes sure that the box does not interfere with image clicks */
 }
 
+.image-prediction{
+  height: 450px;
+  width: 450px;
+}
+
 .box {
   position: absolute;
   border: 4px solid; /* Adjust the color in the JavaScript */
