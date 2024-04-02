@@ -1,4 +1,5 @@
 "use client";
+import { createRoot } from 'react-dom/client';
 import { useEffect, useState } from "react";
 import { useComplain } from "../../hooks/complain-hook";
 import Input from "../CC/Input";
@@ -36,16 +37,56 @@ const classColors = {
 
 
 
-const BoundingBox = ({ left, top, width, height, className, score, color }) => (
+
+/*const BoundingBox = ({ left, top, width, height, className, score, color }) => (
   <div className="box-container" style={{ position: 'absolute', left: left + 'px', top: top + 'px' }}>
     <div className="box" style={{ borderColor: color, borderWidth: '4px', width: width + 'px', height: height + 'px' }}></div>
     <div className="label" style={{ backgroundColor: color }}>{`${className} (${score.toFixed(2)})`}</div>
   </div>
 );
 
-const drawBoundingBoxes = (left, top, width, height, className, score, color) => (
+const drawBoundingBoxes = (left, top, width, height, className, score, color) => {
+  const boundingBox = <BoundingBox key={`${left}-${top}-${width}-${height}`} left={left} top={top} width={width} height={height} className={className} score={score} color={color} />;
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  root.render(boundingBox);
+  return container.firstChild;
+};*/
+
+/*const drawBoundingBoxes = (left, top, width, height, className, score, color) => (
   <BoundingBox key={`${left}-${top}-${width}-${height}`} left={left} top={top} width={width} height={height} className={className} score={score} color={color} />
-);
+);*/
+
+function drawBoundingBoxes(left, top, width, height, className, score, color) {
+  const container = document.createElement("div");
+  container.classList.add("box-container");
+
+  const box = document.createElement("div");
+  box.classList.add("box");
+  box.style.borderColor = color;
+  box.style.borderWidth = "4px";
+  container.appendChild(box);
+
+  const label = document.createElement("div");
+  label.classList.add("label");
+  label.style.backgroundColor = color;
+  label.textContent = `${className} (${score.toFixed(2)})`;
+  container.appendChild(label);
+
+  // Adjust the position based on the centered image.
+  const imgElement = document.getElementById("my-3");
+  const imgRect = imgElement.getBoundingClientRect();
+  const offsetX = imgRect.left;
+
+  container.style.left = `${left + offsetX - 1}px`;
+  container.style.top = `${top - 10}px`;
+  box.style.width = `${width + 1}px`;
+  box.style.height = `${height + 1}px`;
+
+  return container;
+}
+
+
 
 const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
@@ -63,9 +104,6 @@ const ComplainForm = () => {
     setLatitude(savedLatitude);
     const savedLongitude = localStorage.getItem("longitude");
     setLongitude(savedLongitude);
-    console.log("PRINTTT");
-    console.log(savedLatitude);
-    console.log(savedLongitude);
   }, []);
 
   const [userData, setUserData] = useState({
@@ -133,12 +171,21 @@ const ComplainForm = () => {
         const img = new Image();
         img.onload = async () => {
           try {
-            const parentElement = document.getElementsByClassName("my-3");
+
+            const parentElement = document.getElementById("my-3");
             console.log(parentElement)
-            for (const element of parentElement) {
-              // Append the image to each element
-              element.appendChild(img.cloneNode());
-          }
+            const boxContainer1 = document.createElement('div');
+            parentElement.style.position= 'relative'
+            boxContainer1.classList.add('box-container');
+            /*boxContainer1.style.top = '0';
+            boxContainer1.style.left = '0';
+            boxContainer1.style.height = '100%';
+            boxContainer1.style.width = '100%';
+            boxContainer1.style.position = 'absolute';*/
+
+           parentElement.appendChild(img.cloneNode());
+           parentElement.appendChild(boxContainer1)
+ 
             //parentElement.appendChild(img);
             const tensor = tf.browser.fromPixels(img);
             const resizedImage = tf.image.resizeBilinear(tensor, [448, 448]);
@@ -192,7 +239,9 @@ const ComplainForm = () => {
                   score,
                   color
                 );
-                //img.parentNode.appendChild(boxContainer);
+                
+                  //img.parentNode.appendChild(boxContainer);
+                  boxContainer1.appendChild(boxContainer)
                   console.log(boxContainer)
               }
             }
@@ -229,21 +278,11 @@ const ComplainForm = () => {
         touch. Or you can call us and our specialists will provide help!
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
-        <div className="my-3">
+        <div  id="my-3" >
           {image ? (
             <div className="">
               <div className="w-24 h-24 mx-auto relative">
-                <img
-                  src={image}
-                  alt="Image"
-                  className="rounded-full w-full h-full  "
-                />
-                <button
-                  onClick={removeAvatar}
-                  className="absolute  top-0 right-0 p-[5px] bg-gray-200 rounded-full"
-                >
-                  <RxCross1 className="text-[#000] text-[14px] " />
-                </button>
+                
               </div>
             </div>
           ) : (
