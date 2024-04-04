@@ -90,33 +90,39 @@ const NewLandFill = () => {
   };
 
   const handleSubmit = async (event) => {
+    console.log(data)
     event.preventDefault();
     setIsLoading(true);
     try {
-    
+    console.log("trying")
 
       addMutate(
         {},
         {
           onSuccess: (response) => {
+            console.log("OnSuccess")
+
             toast.success(response?.data?.message);
             setIsLoading(false);
           },
           onError: (response) => {
             toast.error(response.response.data.message);
+            console.log("OnError")
+
             setIsLoading(false);
           },
         }
       );
     } catch (error) {
       toast.error(error.message);
+      console.log("onerrrrror22")
       setIsLoading(false);
     }
   };
 
   return (
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
-      <h1 className="font-bold text-3xl">Community Waste Movements</h1>
+      <h1 className="font-bold text-3xl">Create New Landfill</h1>
       <p className="text-sm mt-3 leading-6 text-[#62706b]">
         Please complete the form below, to request a quote, and we’ll be in
         touch. Or you can call us and our specialists will provide help!

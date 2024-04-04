@@ -28,7 +28,7 @@ const ComplainsTable = () => {
         // Find the last space before maxLength
         let lastSpaceIndex = description.lastIndexOf(' ', maxLength);
         // Truncate the description and add ellipsis
-        return description.substring(0, lastSpaceIndex) + '...';
+        return description.substring(0, 5) + '...';
     }
 }
 
@@ -154,7 +154,7 @@ const ComplainsTable = () => {
                   <p className="text-sm text-black dark:text-white">
                     {item?.response.length > 0 ? (
                       item?.response.map((_i, index) => (
-                        <span key={index}>{_i?.date}</span>
+                        <span key={index}>{truncateDescription(formatDate(_i?.date),6)}</span>
                       ))
                     ) : (
                       <span>{truncateDescription("No Response Found",12)}</span>

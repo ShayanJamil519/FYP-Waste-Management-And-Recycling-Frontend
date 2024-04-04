@@ -7,10 +7,10 @@ import { useAddResponseToRecyclingPoint } from "../../../hooks/recyclePointEntri
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
-
 const RecyclingPointModal = ({ setOpenRecyclingPointModal, id, admin }) => {
   // const router = useRouter();
   const [image, setImage] = useState(null);
+  const [isLooading, setIsLoading] = useState(false);
   const [info, setInfo] = useState({
     admin: admin,
     name: "",
@@ -49,12 +49,15 @@ const RecyclingPointModal = ({ setOpenRecyclingPointModal, id, admin }) => {
   const handleAddResponse = async (event) => {
     event.preventDefault();
     console.log("lANDFILL__ID");
+    setIsLoading(true);
     console.log(id);
     try {
       await addResponse(id, info);
+      setIsLoading(false);
       setOpenRecyclingPointModal(false);
       // Optionally, you can add a redirect or any other logic here after successful response
     } catch (error) {
+      setIsLoading(false);
       console.error("Error adding response:", error);
     }
   };
@@ -149,21 +152,27 @@ const RecyclingPointModal = ({ setOpenRecyclingPointModal, id, admin }) => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-          >
-            Edit
-            <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
-              <IoIosArrowRoundForward className="text-[27px] font-bold" />
-            </span>{" "}
-            <style jsx>{`
-              button:hover span {
-                background-color: #fff;
-                color: #257830;
-              }
-            `}</style>
-          </button>
+          <div className="grid place-items-center mt-6">
+          {isLooading ? (
+            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+          ) : (
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Edit
+              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
+        </div>
         </form>
       </div>
     </Modal>
