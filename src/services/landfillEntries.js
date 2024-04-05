@@ -64,6 +64,28 @@ class LandfillEntry {
     }
   }
 
+  async deleteLandfillEntryById(id) {
+    try {
+      console.log("service")
+      const response = await axios.delete(
+        `${apiUrl}/landfill/delete-landfill-entry-point/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw (
+        error.response.data.message ||
+        "Something went wrong while deleting the Landfill."
+      );
+    }
+  }
+
+
   async getAllLandfills() {
     try {
       console.log("DAAAAAAAATA333")
@@ -74,6 +96,23 @@ class LandfillEntry {
         },
       });
       console.log("DAAAAAAAATA444")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  async getAllLandfillEntries() {
+    try {
+      console.log("Entry Service")
+      const {data} = await axios.get(`${apiUrl}/landfill/get-landfill-input-entries`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("DAAAAAAAATA")
       console.log(data)
       return data;
     } catch (error) {

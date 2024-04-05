@@ -5,107 +5,40 @@ import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import RecyclingInputEntryModal from "./RecyclingInputEntryModal";
+import { useGetAllInputEntries} from "@/hooks/recyclePointEntries";
+import DataLoader from "@/components/Shared/DataLoader";
 
-const productData = [
-  {
-    district: "South",
-    area: "Malir",
-    description: "Polygon",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "North",
-    area: "Nazimabad",
-    description: "Ethereum",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "Ethereum",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "Ethereum",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "Polygon",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "Polygon",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "Polygon",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "On my street",
-    resonse: "Approved",
-    date: "100",
-  },
-];
 
 const RecyclingInputEntries = () => {
-  const [tableData, setTableData] = useState(productData);
   const [openRecyclingInputEntryModal, setOpenRecyclingInputEntryModal] =
     useState(false);
-
+    const { data, isLoading, isError } = useGetAllInputEntries();
   const paginate = usePagination();
 
   const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(productData);
+    paginate(data && data?.inputEntries);
+
+    console.log("entriesData");
+  console.log(data);
+  if (isLoading) {
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        <DataLoader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div>Error loading Landfill Entries</div>;
+  }
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
   return (
     <div>
@@ -118,24 +51,24 @@ const RecyclingInputEntries = () => {
         </div>
 
         <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
-          <div className="col-span-2 flex items-center">
-            <p className="font-medium">District</p>
+          <div className="col-span-1 flex items-center">
+            <p className="font-medium">Image</p>
           </div>
           <div className=" hidden items-center sm:flex">
+            <p className="font-medium">Quantity</p>
+          </div>
+          <div className=" flex items-center">
             <p className="font-medium">Area</p>
           </div>
-          <div className=" flex items-center col-span-2">
-            <p className="font-medium">Chain</p>
-          </div>
           <div className=" flex items-center">
-            <p className="font-medium">Token</p>
+            <p className="font-medium">District</p>
           </div>
-          <div className=" flex items-center">
-            <p className="font-medium">Amount</p>
+          <div className=" flex items-center col-span-1">
+            <p className="font-medium">Date</p>
           </div>
-          <div className=" flex items-center">
+          {/* <div className=" flex items-center">
             <p className="font-medium">Actions</p>
-          </div>
+          </div> */}
         </div>
 
         {/* Table Body */}
@@ -145,38 +78,46 @@ const RecyclingInputEntries = () => {
               className=" grid grid-cols-7 border-t border-stroke py-6 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
               key={key}
             >
-              <div className="col-span-2 flex items-center">
+              <div className="col-span-1 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <p className="text-sm text-black dark:text-white">
-                    {product.district}
-                  </p>
+                  <div className=" w-20 h-20 rounded-md">
+                    <img src={product.image.url} alt="" />
+                  </div>
+                  {/* <p className="text-sm text-black dark:text-white">
+                    {item?.district}
+                  </p> */}
                 </div>
               </div>
               <div className="hidden items-center sm:flex">
                 <p className="text-sm text-black dark:text-white">
-                  {product.area}
+                  {product.quantityReceived}
                 </p>
               </div>
-              <div className=" flex items-center col-span-2">
+              {/* <div className=" flex items-center col-span-2">
                 <p className="text-sm text-black dark:text-white ">
-                  {product.description}
+                  {product.sourceSubdivision}
+                </p>
+              </div> */}
+              <div className=" flex items-center">
+                <p className="text-sm text-black dark:text-white">
+                  {product.area}
                 </p>
               </div>
               <div className=" flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  {product.resonse}
+                  {product.district}
                 </p>
               </div>
               <div className=" flex items-center">
-                <p className="text-sm text-meta-3">{product.date}</p>
+                <p className="text-sm text-meta-3">{formatDate(product.dateAndTime)}</p>
               </div>
-              <div className=" flex gap-3 justify-start items-center text-[20px]">
+              {/* <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit
                   className="cursor-pointer"
                   onClick={() => setOpenRecyclingInputEntryModal(true)}
                 />
                 <MdDelete className="cursor-pointer" />
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

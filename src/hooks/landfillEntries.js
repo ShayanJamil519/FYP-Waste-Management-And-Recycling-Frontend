@@ -8,6 +8,10 @@ const useDeleteLandfill = () => {
   return useMutation((id) => LandfillEntry.deleteLandfillById(id));
 };
 
+const useDeleteLandfillEntry = () => {
+  console.log("HOOK")
+  return useMutation((id) => LandfillEntry.deleteLandfillEntryById(id));
+};
 
 const useInputEntry = (data) => {
   const queryClient = useQueryClient();
@@ -66,6 +70,12 @@ const useGetAllLandfills = () => {
   LandfillEntry.getAllLandfills);
 };
 
+const useGetAllLandfillEntries = () => {
+  console.log("Entriesss")
+  return useQuery(["allLandfillEntries"],
+  LandfillEntry.getAllLandfillEntries);
+};
 
 
-export { useNewLandfill, useGetAllLandfills , useInputEntry, useDeleteLandfill, useAddResponseToLandfill};
+
+export { useNewLandfill, useGetAllLandfills , useInputEntry, useDeleteLandfill, useDeleteLandfillEntry, useAddResponseToLandfill, useGetAllLandfillEntries};

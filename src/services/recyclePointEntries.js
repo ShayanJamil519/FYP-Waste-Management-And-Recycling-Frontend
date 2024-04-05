@@ -93,6 +93,42 @@ class RecyclingEntry {
     return res;
   }
 
+  async getAllInputEntries() {
+    try {
+      console.log("Entry Service")
+      const {data} = await axios.get(`${apiUrl}/recycling/get-input-entries`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("DAAAAAAAATA")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  async getAllOutputEntries() {
+    try {
+      console.log("Entry Service")
+      const {data} = await axios.get(`${apiUrl}/recycling/get-output-entries`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("DAAAAAAAATA")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+
   async outputEntry(data) {
 
     const res = await axios.post(

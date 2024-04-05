@@ -77,6 +77,19 @@ const useGetAllRecyclingPoints = () => {
   RecyclingEntry.getAllRecyclingPoints);
 };
 
+const useGetAllInputEntries = () => {
+  console.log("Entriesss")
+  return useQuery(["allInputEntries"],
+  RecyclingEntry.getAllInputEntries);
+};
+
+const useGetAllOutputEntries = () => {
+  console.log("Entriesss")
+  return useQuery(["allOutputEntries"],
+  RecyclingEntry.getAllOutputEntries);
+};
+
+
 export {
   useInputEntry,
   useOutputEntry,
@@ -84,4 +97,6 @@ export {
   useGetAllRecyclingPoints,
   useAddResponseToRecyclingPoint,
   useDeleteRecyclingPoint,
+  useGetAllInputEntries,
+  useGetAllOutputEntries
 };
