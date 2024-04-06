@@ -35,87 +35,8 @@ const classColors = {
   "Medical Waste": "#FF6D00",
 };
 
-/*const BoundingBox = ({ left, top, width, height, className, score, color }) => (
-  <div className="box-container" style={{ position: 'absolute', left: left + 'px', top: top + 'px' }}>
-    <div className="box" style={{ borderColor: color, borderWidth: '4px', width: width + 'px', height: height + 'px' }}></div>
-    <div className="label" style={{ backgroundColor: color }}>{`${className} (${score.toFixed(2)})`}</div>
-  </div>
-);
 
-const drawBoundingBoxes = (left, top, width, height, className, score, color) => {
-  const boundingBox = <BoundingBox key={`${left}-${top}-${width}-${height}`} left={left} top={top} width={width} height={height} className={className} score={score} color={color} />;
-  const container = document.createElement("div");
-  const root = createRoot(container);
-  root.render(boundingBox);
-  return container.firstChild;
-};*/
 
-/*const drawBoundingBoxes = (left, top, width, height, className, score, color) => (
-  <BoundingBox key={`${left}-${top}-${width}-${height}`} left={left} top={top} width={width} height={height} className={className} score={score} color={color} />
-);*/
-
-// =============
-
-// function drawBoundingBoxes(left, top, width, height, className, score, color) {
-//   const container = document.createElement("div");
-//   container.classList.add("box-container");
-
-//   const box = document.createElement("div");
-//   box.classList.add("box");
-//   box.style.borderColor = color;
-//   box.style.borderWidth = "4px";
-//   container.appendChild(box);
-
-//   const label = document.createElement("div");
-//   label.classList.add("label");
-//   label.style.backgroundColor = color;
-//   label.textContent = `${className} (${score.toFixed(2)})`;
-//   container.appendChild(label);
-
-//   // Adjust the position based on the centered image.
-//   const imgElement = document.getElementById("my-3");
-//   const imgRect = imgElement.getBoundingClientRect();
-//   const offsetX = imgRect.left;
-
-//   container.style.left = `${left + offsetX - 1}px`;
-//   container.style.top = `${top - 10}px`;
-//   box.style.width = `${width + 1}px`;
-//   box.style.height = `${height + 1}px`;
-
-//   return container;
-// }
-
-function drawBoundingBoxes(left, top, width, height, className, score, color) {
-  // Container for both the box and the label
-  const container = document.createElement("div");
-  container.classList.add("box-container");
-
-  // The bounding box itself
-  const box = document.createElement("div");
-  box.classList.add("box");
-  box.style.borderColor = color; // Color passed as a parameter
-  box.style.borderWidth = "4px";
-  // box.style.width = `${width}px`;
-  // box.style.height = `${height}px`;
-  box.style.width = `${width}px`;
-  box.style.height = `${height}px`;
-  container.appendChild(box);
-
-  // Label for the bounding box
-  const label = document.createElement("div");
-  label.classList.add("label");
-  label.style.backgroundColor = color; // Color passed as a parameter
-  label.textContent = `${className} (${score.toFixed(2)})`; // Text with the class name and score
-  container.appendChild(label);
-
-  // Adjust the position based on the image position
-  box.style.left = `${left}px`;
-  box.style.top = `${top}px`;
-
-  // Append the container to the DOM
-  const imageContainer = document.getElementById("image-container"); // The ID of the element that holds the image
-  imageContainer.appendChild(container);
-}
 
 const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
@@ -205,38 +126,19 @@ const ComplainForm = () => {
             const boxContainer1 = document.createElement("div");
             parentElement.style.position = "relative";
             boxContainer1.classList.add("box-container");
-            /*boxContainer1.style.top = '0';
-            boxContainer1.style.left = '0';
-            boxContainer1.style.height = '100%';
-            boxContainer1.style.width = '100%';
-            boxContainer1.style.position = 'absolute';*/
 
-            // parentElement.appendChild(img.cloneNode());
-            // parentElement.appendChild(boxContainer1);
 
             let predictionImage =
               document.getElementsByClassName("image-prediction")[0];
              console.log({predictionImage})
-            //predictionImage.style.height = "450px";
-           // predictionImage.style.width = "450px";
 
-            //img.style.height = "400px"; // Set the height to 300 pixels
-            //img.style.width = "400px";
-
-            //parentElement.appendChild(img);
             const tensor = tf.browser.fromPixels(img);
             const resizedImage = tf.image.resizeBilinear(tensor, [448, 448]);
             const objectDetector = await tflite.loadTFLiteModel(MODEL_PATH);
             const input = tf.cast(tf.expandDims(resizedImage), "int32");
 
-            // Get the output tensors.
-            //img.height="400px"
-            //img.width="400px"
             let result = await objectDetector.predict(input);
             let boxes = Array.from(await result[Object.keys(result)[0]].data());
-
-            console.log("boxes");
-            console.log(boxes);
             let classes = Array.from(
               await result[Object.keys(result)[1]].data()
             );
@@ -244,9 +146,7 @@ const ComplainForm = () => {
               await result[Object.keys(result)[2]].data()
             );
             let n = Array.from(await result[Object.keys(result)[3]].data());
-            console.log(result);
-            //console.log("classes");
-            //console.log(classes);
+
             const detections = [];
 
             for (let i = 0; i < n; i++) {
@@ -256,8 +156,7 @@ const ComplainForm = () => {
               const score = scores[i];
               detections.push({ boundingBox, className, score, index: i });
             }
-            console.log("detections");
-            console.log(detections);
+
             // Sort the results in the order of confidence to get top results.
             detections.sort((a, b) => b.score - a.score);
 
@@ -265,12 +164,7 @@ const ComplainForm = () => {
               MAX_DETECTIONS,
               detections.length
             );
-            console.log("client");
-            console.log(img.clientHeight);
-            console.log(img.clientWidth);
-            console.log("client and width");
-            console.log(img.height);
-            console.log(img.width);
+
             for (let i = 0; i < numDetectionsToShow; i++) {
               const detection = detections[i];
               const { boundingBox, className, score, index } = detection;
@@ -282,15 +176,6 @@ const ComplainForm = () => {
               //const container = img.parentNode;
               if (score > THRESHOLD) {
                 const color = classColors[className];
-                console.log({
-                  x_max,
-                  x_min,
-                  y_max,
-                  y_min,
-                  score,
-                  color,
-                  className,
-                });
 
                 setDetectionDimension({
                   y_min,
@@ -301,19 +186,7 @@ const ComplainForm = () => {
                   height: y_max - y_min,
                 });
 
-                // const boxContainer = drawBoundingBoxes(
-                //   x_min,
-                //   y_min,
-                //   x_max - x_min,
-                //   y_max - y_min,
-                //   className,
-                //   score,
-                //   color
-                // );
-
-                //img.parentNode.appendChild(boxContainer);
-                // boxContainer1.appendChild(boxContainer);
-                // console.log(boxContainer);
+                
               }
             }
           } catch (error) {
@@ -331,10 +204,6 @@ const ComplainForm = () => {
     }
   };
 
-  const removeAvatar = () => {
-    setImage(null);
-    // Update userData state if necessary
-  };
 
   return (
     <div
@@ -410,14 +279,7 @@ const ComplainForm = () => {
             placeholder="Please write you details"
             onChange={handleInputChange}
           />
-          {/* <Input
-            name="district"
-            label="Enter Your Destrict"
-            type="text"
-            value={userData.district}
-            placeholder="Please write you details"
-            onChange={handleInputChange}
-          /> */}
+          
           <div>
             <label
               htmlFor="district-select"
