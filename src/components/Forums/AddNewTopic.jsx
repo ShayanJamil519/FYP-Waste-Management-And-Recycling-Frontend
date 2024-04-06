@@ -3,54 +3,82 @@ import React, { useState } from "react";
 import Input from "../CC/Input";
 import TextArea from "../CC/TextArea";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { useStateContext } from "@/app/StateContext";
+import { useCreateThread } from "@/hooks/thread-hook";
+import { toast } from "react-toastify";
 
 const AddNewTopic = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
   const [textValue, setTextValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, setUser } = useStateContext();
 
-  const handleTextChange = (text) => {
-    setTextValue(text);
+  const [userData, setUserData] = useState({
+    userId: user?._id,
+    userName : user?.name,
+    title: "",
+    tcontent :"",
+    avatar : user?.image
+  });
+  const { mutate: addMutate } = useCreateThread(JSON.stringify(userData));
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+    console.log(userData.title)
   };
-
-  const handleSelectChange = (option) => {
-    setSelectedOption(option);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+          console.log(response)
+          toast.success(response?.data?.message);
+          setThreadList(response?.data?.threads);          
+          setIsLoading(false);
+        },
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response);
+          console.log(response.response.data.message);
+          toast.error(response.response.data.message);
+          setIsLoading(false);
+        },
+      }
+    );
   };
 
   return (
     <div className="py-32 mx-auto font-poppins bg-[#f7f9f8]">
       <div className="w-[70%] mx-auto p-10 font-poppins rounded bg-[#fff]">
         <h1 className="font-bold text-2xl">
-          Get In Touch With Your Nearest Local Business Sales Executive!!
+          Create and New Post and let the community Help you!!
         </h1>
         <p className="text-sm mt-3 leading-6 text-[#ffa500]">
-          Contact Us And We Will Respond Within The Next Two Working Days.
+          Contact Us And the community will Respond ASAP.
         </p>
-        <form className="w-full mt-10 ">
+        <form className="w-full mt-10 " onSubmit={handleSubmit}>
           <div className="grid grid-cols-3 gap-4">
             <Input
-              label="Name"
+              label="Title"
               type="text"
-              placeholder="Please write your name"
+              name="title"
+              placeholder="Please write your Title"
+              onChange={handleInputChange}
             />
 
-            <Input
-              label="Email"
-              type="email"
-              placeholder="Please write your email"
-            />
-            <Input
-              label="Phone number"
-              type="number"
-              placeholder="Please write your number"
-            />
+
           </div>
           <TextArea
-            value={textValue}
-            onChange={handleTextChange}
+
+            onChange={handleInputChange}
+            name="tcontent"
             placeholder="Enter your text here..."
             rows={6}
-            label="Your Query"
+            label="Your Content"
           />
 
           <button className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm">
