@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useGetAllThreads } from "@/hooks/thread-hook";
 import Link from "next/link";
 
-const TopicCard = ({ category, title, userName, avatar, date }) => {
+const TopicCard = ({ category, title, userName, avatar, date ,_id }) => {
   const router = useRouter();
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
@@ -17,7 +17,7 @@ const TopicCard = ({ category, title, userName, avatar, date }) => {
 
   return (
     <div
-      onClick={() => router.push("/forum/1")}
+      onClick={() => router.push(`/forum/${_id}`)}
       className=" bg-[#fff] cursor-pointer font-poppins rounded p-6 max-w-sm mx-auto transition duration-300 ease-in-out transform  hover:shadow-lg"
     >
       <p className="text-xs uppercase text-gray-500 mb-2">{category}</p>

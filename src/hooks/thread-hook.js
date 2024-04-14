@@ -20,18 +20,17 @@ const useCreateThread = (data) => {
   console.log("HOOK")
   return useMutation((threadId) => ThreadEntry.likeById(threadId));
 };*/
-
-const useLikeThread = () => {
-  console.log("dsds")
-  const mutation = useMutation(({ threadId ,data}) =>
-    ThreadEntry.likeById(threadId , data)
+const useLikeThread2 = () => {
+  
+  const mutation = useMutation((userData) =>
+    ThreadEntry.likeById2(userData)
   );
 
-  const addResponse = async (threadId , data) => {
+  const addResponse = async (userData) => {
     try {
       console.log("assa")
-      console.log(threadId)
-      const response = await mutation.mutateAsync({ threadId , data });
+      console.log(userData)
+      const response = await mutation.mutateAsync(userData);
       return response;
     } catch (error) {
       throw new Error(error.message);
@@ -45,6 +44,9 @@ const useLikeThread = () => {
     error: mutation.error,
   };
 };
+
+
+
 
 const useReplyThread = () => {
   console.log("dsds")
@@ -88,7 +90,7 @@ const useGetAThread = (threadId) => {
 export {
   useCreateThread,
   useGetAThread,
-  useLikeThread,
   useGetAllThreads,
-  useReplyThread
+  useReplyThread,
+  useLikeThread2
 };

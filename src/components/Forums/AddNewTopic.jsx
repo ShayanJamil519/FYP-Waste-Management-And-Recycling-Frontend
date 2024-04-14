@@ -37,7 +37,7 @@ const AddNewTopic = () => {
         onSuccess: (response) => {
           console.log(response)
           toast.success(response?.data?.message);
-          setThreadList(response?.data?.threads);          
+                    
           setIsLoading(false);
         },
         onError: (response) => {

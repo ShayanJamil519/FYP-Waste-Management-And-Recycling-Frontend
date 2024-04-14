@@ -51,11 +51,11 @@ class ThreadEntry {
       throw error;
     }
   };
-  async likeById(threadId, data) {
+  async likeById2(userData) {
     try {
       //console.log(data);
-      const response = await axios.post(`${apiUrl}/thread/like/${threadId}`,
-      data ,
+      const response = await axios.post(`${apiUrl}/thread/like`,
+      userData ,
         {
           headers: {
             Authorization: token,
@@ -69,7 +69,7 @@ class ThreadEntry {
       throw new Error("Internal server error");
     }
   }
-
+ 
   async addReply(threadId, data) {
     try {
       const response = await axios.post(`${apiUrl}/thread/add-reply-to-a-thread/${threadId}`,
