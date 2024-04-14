@@ -2,7 +2,7 @@
 import { topicCardsData } from "@/app/data";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useGetAllThreads} from "@/hooks/thread-hook";
+import { useGetAllThreads } from "@/hooks/thread-hook";
 import Link from "next/link";
 
 const TopicCard = ({ category, title, userName, avatar, date }) => {
@@ -13,7 +13,7 @@ const TopicCard = ({ category, title, userName, avatar, date }) => {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
-  }
+  };
 
   return (
     <div
@@ -39,7 +39,7 @@ const TopicCard = ({ category, title, userName, avatar, date }) => {
 
 const Topics = () => {
   const { data, isError } = useGetAllThreads();
-  console.log(data)
+  console.log(data);
   return (
     <div className="w-full pt-24 pb-16 px-10 font-poppins bg-[#f7f9f8]">
       <div className="grid px-5 grid-cols-3">
@@ -59,11 +59,13 @@ const Topics = () => {
       </h1>
       <div className="py-12 w-full">
         <div className="flex flex-wrap  justify-center items-center">
-          {data.map((topic, index) => (
-            <div key={index} className="px-4 mb-8 w-full md:w-1/3">
-              <TopicCard {...topic} />
-            </div>
-          ))}
+          {data &&
+            data.length > 0 &&
+            data.map((topic, index) => (
+              <div key={index} className="px-4 mb-8 w-full md:w-1/3">
+                <TopicCard {...topic} />
+              </div>
+            ))}
         </div>
       </div>
     </div>

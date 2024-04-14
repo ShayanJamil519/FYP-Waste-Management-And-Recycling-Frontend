@@ -1,194 +1,37 @@
 "use client";
-import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
-import ReviewIncentiveModal from "./ReviewIncentiveModal";
 
 const productData = [
   {
-    district: "South",
-    area: "Malir",
-    description: "Polygon",
-    resonse: "Recy Token",
-    date: "100",
+    subdivision: "Nazimabad",
+    totalUsers: 10,
+    tokens: "10",
   },
   {
-    district: "North",
-    area: "Nazimabad",
-    description: "Ethereum",
-    resonse: "Recy Token",
-    date: "100",
+    subdivision: "Nazimabad",
+    totalUsers: 10,
+    tokens: "Not alloted yet",
   },
   {
-    district: "East",
-    area: "Korangi",
-    description: "Ethereum",
-    resonse: "Approved",
-    date: "100",
+    subdivision: "Nazimabad",
+    totalUsers: 10,
+    tokens: "10",
   },
   {
-    district: "South",
-    area: "Malir",
-    description: "Ethereum",
-    resonse: "Recy Token",
-    date: "100",
+    subdivision: "Nazimabad",
+    totalUsers: 10,
+    tokens: "Not alloted yet",
   },
   {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "Polygon",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "Polygon",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "Polygon",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "On my street",
-    resonse: "Approved",
-    date: "100",
-  },
-];
-const productData2 = [
-  {
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "On my street",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "On my street",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "North",
-    area: "Nazimabad",
-    description: "On my street",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "In Front of my house",
-    resonse: "Approved",
-    date: "100",
-  },
-  {
-    image: "/home/waste.jpeg",
-    district: "South",
-    area: "Malir",
-    description: "In Front of my house",
-    resonse: "Recy Token",
-    date: "100",
-  },
-  {
-    district: "East",
-    area: "Korangi",
-    description: "On my street",
-    resonse: "Approved",
-    date: "100",
+    subdivision: "Nazimabad",
+    totalUsers: 10,
+    tokens: "10",
   },
 ];
 
 const IncentivesTable = () => {
-  const [tableData, setTableData] = useState(productData);
   const [openReviewIncentiveModal, setOpenReviewIncentiveModal] =
     useState(false);
   const paginate = usePagination();
@@ -202,28 +45,22 @@ const IncentivesTable = () => {
       <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
         <div className="py-4 px-4 md:px-6 xl:px-7.5">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Top Products
+            Incentive Details For South District
           </h4>
         </div>
 
-        <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
+        <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-7 md:px-6 2xl:px-7">
           <div className="col-span-2 flex items-center">
-            <p className="font-medium">District</p>
+            <p className="font-medium">Subdivision</p>
           </div>
-          <div className=" hidden items-center sm:flex">
-            <p className="font-medium">Area</p>
+          <div className=" hidden items-center justify-center sm:flex">
+            <p className="font-medium">Total Users</p>
           </div>
-          <div className=" flex items-center col-span-2">
-            <p className="font-medium">Chain</p>
+          <div className=" flex items-center justify-center col-span-2">
+            <p className="font-medium">Tokens Alloted Per House</p>
           </div>
-          <div className=" flex items-center">
-            <p className="font-medium">Token</p>
-          </div>
-          <div className=" flex items-center">
-            <p className="font-medium">Amount</p>
-          </div>
-          <div className=" flex items-center">
-            <p className="font-medium">Actions</p>
+          <div className=" flex justify-center items-center">
+            <p className="font-medium">Action</p>
           </div>
         </div>
 
@@ -231,41 +68,30 @@ const IncentivesTable = () => {
         <div className="h-[55vh] overflow-auto">
           {visibleItems.map((product, key) => (
             <div
-              className=" grid grid-cols-7 border-t border-stroke py-6 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
+              className=" grid grid-cols-7 border-t border-stroke py-6 px-4  sm:grid-cols-7 md:px-6 2xl:px-7"
               key={key}
             >
               <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <p className="text-sm text-black dark:text-white">
-                    {product.district}
+                    {product.subdivision}
                   </p>
                 </div>
               </div>
-              <div className="hidden items-center sm:flex">
+              <div className="hidden items-center justify-center sm:flex">
                 <p className="text-sm text-black dark:text-white">
-                  {product.area}
+                  {product.totalUsers}
                 </p>
               </div>
-              <div className=" flex items-center col-span-2">
+              <div className=" flex items-center justify-center col-span-2">
                 <p className="text-sm text-black dark:text-white ">
-                  {product.description}
+                  {product.tokens}
                 </p>
               </div>
-              <div className=" flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {product.resonse}
-                </p>
-              </div>
-              <div className=" flex items-center">
-                <p className="text-sm text-meta-3">{product.date}</p>
-              </div>
-              <div className=" flex gap-3 justify-start items-center text-[20px]">
-                <MdEdit
-                  className="cursor-pointer"
-                  onClick={() => setOpenReviewIncentiveModal(true)}
-                />
-                <MdDelete className="cursor-pointer" />
-              </div>
+
+              <button className="px-3 py-2 col-span-2 w-fit  text-[16px] text-[#fff] bg-[#296d8d] rounded-md">
+                Calculate Incentives
+              </button>
             </div>
           ))}
         </div>
@@ -276,14 +102,6 @@ const IncentivesTable = () => {
         currentPage={currentPage}
         onPageChange={goToPage}
       />
-
-      {/* Edit Modal */}
-
-      {openReviewIncentiveModal && (
-        <ReviewIncentiveModal
-          setOpenReviewIncentiveModal={setOpenReviewIncentiveModal}
-        />
-      )}
     </div>
   );
 };
