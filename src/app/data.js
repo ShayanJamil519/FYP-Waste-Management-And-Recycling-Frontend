@@ -126,6 +126,19 @@ export const sidebarLinksAdmin = [
   },
 ];
 
+export const sidebarLinksUser = [
+  {
+    linkText: `Dashboard`,
+    linkTo: "/dashboard/user",
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Claim Incentives`,
+    linkTo: "/dashboard/user/claim-incentives",
+    linkIcon: <RxDashboard />,
+  },
+];
+
 export const signupSliderImages = [
   {
     image: "/shared/signup_carousel_1.jpg",

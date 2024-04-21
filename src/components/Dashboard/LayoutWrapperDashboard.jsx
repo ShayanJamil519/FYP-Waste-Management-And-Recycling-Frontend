@@ -2,8 +2,8 @@
 
 import { useStateContext } from "@/app/StateContext";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import DataLoader from "../Shared/DataLoader";
@@ -13,8 +13,8 @@ import {
   sidebarLinksDistrictAdmin,
   sidebarLinksLandfillAdmin,
   sidebarLinksRecyclingPointAdmin,
-  generateSidebarLinksUser
-  
+  generateSidebarLinksUser,
+  sidebarLinksUser,
 } from "@/app/data";
 import ProfileDropdown from "./ProfileDropdown";
 import Cookies from "js-cookie";
@@ -23,14 +23,13 @@ export default function LayoutWrapperDashboard({ children }) {
   const { user, setUser } = useStateContext();
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
-  const searchParams = useSearchParams()
-  
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const token = typeof window !== "undefined" ? Cookies.get("jwt") : null;
-    console.log("url")
-    const url = `${pathname}?${searchParams}`
-    console.log(url)
+    console.log("url");
+    const url = `${pathname}?${searchParams}`;
+    console.log(url);
     if (token) {
       const decodedCookieValue = jwt.decode(token.substring(7));
       setUser(decodedCookieValue);
@@ -59,8 +58,8 @@ export default function LayoutWrapperDashboard({ children }) {
       break;
 
     case "user":
-        sidebarLinks = sidebarLinksAdmin;
-        break;
+      sidebarLinks = sidebarLinksUser;
+      break;
     default:
       // Default case or handle unknown roles
       break;

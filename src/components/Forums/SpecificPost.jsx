@@ -1,13 +1,19 @@
 "use client";
 import { postsData } from "@/app/data";
-import React , {useState} from "react";
+import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FaFacebookF, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import { useGetAThread ,useReplyThread ,useLikeThread  , useLikeThread2} from "../../hooks/thread-hook";
+import {
+  useGetAThread,
+  useReplyThread,
+  useLikeThread,
+  useLikeThread2,
+} from "../../hooks/thread-hook";
 import { useStateContext } from "@/app/StateContext";
 import { toast } from "react-toastify";
 import { usePathname, useRouter } from "next/navigation";
 import DataLoader from "../Shared/DataLoader";
+
 const formatDate = (isoDate) => {
   const date = new Date(isoDate);
   const year = date.getFullYear();
@@ -15,38 +21,80 @@ const formatDate = (isoDate) => {
   const day = date.getDate().toString().padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+
+// ===============================
+function WriteComment() {
+  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
+  const [comment, setComment] = useState("");
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const sendComment = () => {
+    // Here you would handle the submission of the comment
+    console.log(comment);
+    // After sending the comment:
+    setComment(""); // Clear the comment input after sending
+    setIsCommentBoxOpen(!isCommentBoxOpen);
+  };
+
+  return (
+    <div className="w-full">
+      {!isCommentBoxOpen && (
+        <button
+          onClick={() => setIsCommentBoxOpen(!isCommentBoxOpen)}
+          className="text-[#000] font-semibold "
+        >
+          Write a comment
+        </button>
+      )}
+
+      {isCommentBoxOpen && (
+        <div className="w-full">
+          <textarea
+            value={comment}
+            onChange={handleCommentChange}
+            placeholder="Type your comment here..."
+            className="w-full p-3 min-h-32 border rounded-md focus:outline-none"
+          />
+          <button
+            onClick={sendComment}
+            className="px-12 py-3 bg-[#f29620] hover:bg-[#eba852] text-lg text-white rounded-md  transition duration-300 ease-in-out"
+          >
+            Send
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===============================
+
 const Post = () => {
   const { user, setUser } = useStateContext();
-  console.log("user")
-  const userId = user?.userId
+  console.log("user");
+  const userId = user?.userId;
   const pathname = usePathname();
   const threadId = pathname.split("/forum/")[1].split("/")[0];
   const [userData, setUserData] = useState({
-
     userId: userId,
     threadId: threadId,
   });
 
- 
- 
-  console.log(userId)
-  
-
-
-  
-
+  console.log(userId);
 
   const { data, isError } = useGetAThread(threadId);
-  console.log(data)
-  const { addResponse, isLoading,  error } =
-  useLikeThread2();
+  console.log(data);
+  const { addResponse, isLoading, error } = useLikeThread2();
 
   const handleLikeFunction = async () => {
     try {
-      console.log("s")
-      await addResponse(JSON.stringify(userData) );
+      console.log("s");
+      await addResponse(JSON.stringify(userData));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -66,14 +114,23 @@ const Post = () => {
           <p className="text-xs text-gray-500">{formatDate(data?.date)}</p>
         </div>
       </div>
-      <p className="text-[#000] font-light leading-relaxed">
-       {data?.tcontent}
-      </p>
+      <p className="text-[#000] font-light leading-relaxed">{data?.tcontent}</p>
       <div className="flex items-center justify-between">
-        <button className="flex items-center text-gray-600 mt-4" onClick={() => handleLikeFunction()}>
-          <FaHeart className="text-[20px] mr-2" />
-          <span className="text-[15px] font-semibold">{data?.likes.length}</span>
-        </button>
+        <div className="flex justify-start  items-center gap-10 mt-4">
+          <button
+            className="flex items-center text-gray-600 "
+            onClick={() => handleLikeFunction()}
+          >
+            <FaHeart className="text-[20px] mr-2" />
+            <span className="text-[15px] font-semibold">
+              {data?.likes.length}
+            </span>
+          </button>
+
+          <h3 className="font-semibold -mb-1">
+            {data?.replies.length} Comments
+          </h3>
+        </div>
         <div className="flex items-center gap-5">
           <FaFacebookF className="text-[18px] cursor-pointer" />
           <FaLinkedinIn className="text-[18px] cursor-pointer" />
@@ -85,7 +142,10 @@ const Post = () => {
 
       {true && (
         <div className="mt-4 space-y-4">
-          <h3 className="font-semibold">{data?.replies.length} Comments</h3>
+          <div className="flex justify-between items-center">
+            <WriteComment />
+          </div>
+
           {data?.replies.map((comment) => (
             <Comment key={comment} {...comment} />
           ))}
@@ -95,10 +155,7 @@ const Post = () => {
   );
 };
 
-const Comment = ({RuserName ,content,
-  rAvatar,
-  timeOfReply
-  }) => {
+const Comment = ({ RuserName, content, rAvatar, timeOfReply }) => {
   return (
     <div className="bg-gray-100 p-3 rounded-md shadow">
       <div className="flex items-center space-x-2">
@@ -108,24 +165,19 @@ const Comment = ({RuserName ,content,
           className="w-8 h-8 rounded-full"
         />
         <div>
-          <p className="font-medium">{
-RuserName}</p>
+          <p className="font-medium">{RuserName}</p>
           <p className="text-xs text-gray-500">{formatDate(timeOfReply)}</p>
         </div>
       </div>
-      <p className="mt-2 text-sm text-normal text-[#63716c]">
-        {content}
-      </p>
+      <p className="mt-2 text-sm text-normal text-[#63716c]">{content}</p>
     </div>
   );
 };
 
 const SpecificPost = () => {
-
-  
   return (
     <div className="w-[80%] py-20 mx-auto font-poppins">
-      <Post  />
+      <Post />
     </div>
   );
 };

@@ -21,10 +21,10 @@ const headerLinks = [
   //   linkTo: "/company",
   // },
 
-  {
-    linkText: "Services",
-    linkTo: "/services",
-  },
+  // {
+  //   linkText: "Services",
+  //   linkTo: "/services",
+  // },
   {
     linkText: "About Us",
     linkTo: "/about",
