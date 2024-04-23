@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
 import ProfileDropdown from "../Dashboard/ProfileDropdown";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const headerLinks = [
   {
@@ -68,8 +69,8 @@ const Header = () => {
 
   return (
     <div className="bg-[#fff] font-poppins py-3 border-b-[1px] text-[#000] block z-50  sticky top-0 left-0 right-0 backdrop-saturate-200 backdrop-blur-2xl bg-opacity-90">
-      <div className="w-[90%] md:w-[90%] mx-auto flex justify-between items-center">
-        <div className="flex w-full justify-between items-center gap-16">
+      <div className="w-[95%] sm:w-[90%] mx-auto flex justify-between items-center">
+        <div className="flex w-full justify-between items-center  lg:gap-16">
           <div className="lg:flex justify-start items-center gap-3  hidden ">
             <Link href="/">
               <img
@@ -81,15 +82,15 @@ const Header = () => {
             <h1 className="text-[#000]">Recy-Sense</h1>
           </div>
 
-          <div className="lg:hidden block">
+          <div className="lg:hidden flex jusify-start items-center gap-3">
             <Link href="/">
               <img
-                src="/shared/header__logo__small.png"
+                src="/shared/header__logo.png"
                 alt="logo"
                 className="w-[50px]"
               />
             </Link>
-            <h1 className="text-[#000]">Recy-Sense</h1>
+            <h1 className="text-[#000] text-[15px]">Recy-Sense</h1>
           </div>
 
           <div className="hidden lg:flex justify-start items-center gap-10">
@@ -136,12 +137,11 @@ const Header = () => {
                 </button>
               )}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/toggle__open.png"
-                alt="logo"
+              <RxHamburgerMenu
                 className="lg:hidden block cursor-pointer"
                 onClick={handleNavbar}
               />
+
               {openLoginModal && <Login />}
               {openSignupModal && <SignUp />}
             </div>
@@ -170,11 +170,11 @@ const Header = () => {
           </ul>
 
           <Link
-            href={"/promotion"}
+            href={"/complain"}
             onClick={handleNavbar}
             className="text-center text-sm py-2 px-4  text-[#000] bg-[#32A632] hover:shadow-lg block w-full mb-2 rounded-[16px] capitalize shadow-none"
           >
-            <span>Promote My Business</span>
+            <span>Make a Complain</span>
           </Link>
         </div>
       )}
