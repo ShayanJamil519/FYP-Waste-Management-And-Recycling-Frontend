@@ -35,7 +35,7 @@ const Hero = () => {
   const navigate = useRouter();
 
   return (
-    <div className=" flex  relative min-h-[85vh] sm:min-h-[95vh] w-full ">
+    <div className=" flex  relative min-h-[85vh] sm:min-h-screen w-full ">
       <div
         ref={ref}
         style={{

@@ -7,11 +7,11 @@ const AboutUs = () => {
   return (
     <div className="w-full text-[#000]">
       {/* Top Container */}
-      <div className="flex gap-7 justify-between items-start px-10 py-10 border-b-[1px] border-[#ddd]">
+      <div className="flex lg:flex-row flex-col gap-7 justify-between items-start px-3 md:px-10 pt-6 pb-10 sm:pt-10 sm:pb-16 border-b-[1px] border-[#ddd]">
         {/* Left Container */}
-        <div className="flex gap-5 justify-start items-center w-1/2">
+        <div className="flex md:flex-row flex-col gap-5 justify-start items-start lg:items-center lg:w-1/2">
           {/* Left Container */}
-          <div className="flex w-1/3 justify-start items-center">
+          <div className="flex flex-row lg:flex-col md:w-1/3 justify-start items-start lg:items-center">
             <img
               src="/home/contact__avatar.jpg"
               alt="logo"
@@ -24,8 +24,8 @@ const AboutUs = () => {
           {/* Right Container */}
           <div>
             <p className="text-[#62706b] text-[15px] font-poppins font-semibold">
-            Blockchain integration ensures
-             the security and immutability of these incentives, promoting a fair and accountable system. 
+              Blockchain integration ensures the security and immutability of
+              these incentives, promoting a fair and accountable system.
             </p>
             <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
               <span className="text-[#257830] text-[15px] font-semibold font-poppins">
@@ -43,14 +43,16 @@ const AboutUs = () => {
           </div>
         </div>
         {/* Right Container */}
-        <div className="-mt-32 flex gap-10">
+        <div className="lg:-mt-32 flex md:flex-row flex-col gap-5 lg:gap-10">
           {/* First Div */}
-          <div className="text-[#fff] bg-[#257830] font-poppins px-8 py-7 h-fit w-[320px] rounded-md relative">
+          <div className="text-[#fff] bg-[#257830] font-poppins px-4 sm:px-8 py-5 sm:py-7 h-fit lg:w-[320px] rounded-md relative">
             <h1 className="font-semibold text-lg">
-              User<br /> Satisfaction
+              User
+              <br className="lg:block hidden" /> Satisfaction
             </h1>
             <p className="mt-3 mb-5 text-sm">
-            Municipal authorities can utilize our platform to incentivize communities based on the quality of segregated waste.
+              Municipal authorities can utilize our platform to incentivize
+              communities based on the quality of segregated waste.
             </p>
 
             <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
@@ -74,10 +76,11 @@ const AboutUs = () => {
             />
           </div>
           {/* Second Div */}
-          <div className="text-[#fff] bg-[#f29620] font-poppins px-8 py-7 w-[320px] h-fit rounded-md relative">
+          <div className="text-[#fff] bg-[#f29620] font-poppins px-4 sm:px-8 py-5 sm:py-7 lg:w-[320px] h-fit rounded-md relative">
             <h1 className="font-semibold text-lg">Sustainable Management</h1>
             <p className="mt-3 mb-5 text-sm">
-            Our services extend to a user-friendly interface where citizens can lodge complaints about improper waste disposal
+              Our services extend to a user-friendly interface where citizens
+              can lodge complaints about improper waste disposal
             </p>
             <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
               <span className="p-0 rounded-full bg-[#fff] transition duration-500  text-[#f29620] ">

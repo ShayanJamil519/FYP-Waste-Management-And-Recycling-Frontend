@@ -4,10 +4,10 @@ import { IoIosArrowRoundForward, IoMdMail } from "react-icons/io";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#111d19] font-poppins text-white text-[15px] py-10 px-16">
-      <div className=" mx-auto grid grid-cols-1 md:grid-cols-6 gap-16 ">
+    <footer className="bg-[#111d19]  font-poppins text-white text-[15px] py-10 px-4 md:px-16">
+      <div className=" mx-auto grid grid-cols-1 md:grid-cols-6 gap-10 md:gap-16 ">
         {/* Fourth Column */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <p className="mb-4">
             We recognize that the right service for home is most important
             chosie, Trashco can provide the waste collection you need for your
@@ -29,24 +29,24 @@ const Footer = () => {
 
         {/* First Column */}
         <div>
-          <h5 className="text-xl font-bold mb-6">Company</h5>
+          <h5 className="text-xl font-bold mb-2 sm:mb-6">Company</h5>
           <ul>
-            <li className="mb-4">
+            <li className="mb-3 sm:mb-4">
               <a href="#" className="hover:underline">
                 About Us
               </a>
             </li>
-            <li className="mb-4">
+            <li className="mb-3 sm:mb-4">
               <a href="#" className="hover:underline">
                 Sustainability
               </a>
             </li>
-            <li className="mb-4">
+            <li className="mb-3 sm:mb-4">
               <a href="#" className="hover:underline">
                 Leadership Team
               </a>
             </li>
-            <li className="mb-4">
+            <li className="mb-3 sm:mb-4">
               <a href="#" className="hover:underline">
                 Blog Grid
               </a>
@@ -61,9 +61,9 @@ const Footer = () => {
 
         {/* Second Column */}
         <div>
-          <h5 className="text-xl font-bold mb-6">Services</h5>
+          <h5 className="text-xl font-bold mb-2 sm:mb-6">Services</h5>
           <ul>
-            <li className="mb-4">
+            <li className="mb-3 sm:mb-4">
               <a href="#" className="hover:underline">
                 Residential Waste
               </a>
@@ -73,16 +73,16 @@ const Footer = () => {
         </div>
 
         {/* Fourth Column */}
-        <div className="col-span-2">
-          <h5 className="text-xl font-bold mb-6">Newsletter</h5>
+        <div className="md:col-span-2">
+          <h5 className="text-xl font-bold mb-2 sm:mb-6">Newsletter</h5>
           <p className="mb-4">
             Sign up for industry alerts, deals, news and insights from Trashco
             company.
           </p>
-          <div className="flex mt-4 bg-[#fff] w-fit rounded-md justify-center items-center">
+          <div className="flex  mt-4 bg-[#fff] w-full rounded-md justify-center items-center">
             <input
               type="email"
-              className="py-4 px-3  focus:outline-none text-[#20332c] rounded-md"
+              className="py-4 px-3 w-[90%] focus:outline-none text-[#20332c] rounded-md"
               placeholder="Your Email Address"
             />
             <button className="p-1 bg-[#20332c] mr-2 w-fit h-fit rounded-full  focus:outline-none">
