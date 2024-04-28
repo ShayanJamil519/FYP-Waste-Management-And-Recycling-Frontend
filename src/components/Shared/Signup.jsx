@@ -6,7 +6,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+
 import { FaSpinner } from "react-icons/fa";
+import axios from 'axios';
+
 
 // slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -38,6 +41,7 @@ const SignUp = () => {
     subDivision: "",
     area: "",
     avatar: "",
+    address:""
   });
 
   const { mutate: addMutate } = useUserSignup(JSON.stringify(userData));
@@ -98,21 +102,102 @@ const SignUp = () => {
       setUserData({ ...userData, [name]: value });
     }
   };
-  // const { name, value } = event.target.files[0];
-  //   const file = event.target.files[0];
-  //   console.log(file)
-  //   if (file) {
 
-  //     setUserData({
-  //       ...userData,
-  //       avatar:URL.createObjectURL(file),
-  //     });
-  //     // Update userData state if necessary, e.g., if you're sending the avatar to the backend.
-  //   }
-  //   else{
-  //     console.log("Chandio");
-  //   }
-  // };
+  const handleAddressChange2 = async (event) => {
+    console.log("handleAvatar");
+    const { name, value } = event.target;
+    if (name === "address") {
+      const reader = new FileReader();
+
+      reader.onload = async () => {
+        console.log("handleAvatar22");
+        if (reader.readyState === 2) {
+          try {
+            console.log(reader.result)
+            // Send base64-encoded image to Azure Computer Vision API
+            /*const response = await axios.post(
+              `https://fyp-se20017.cognitiveservices.azure.com/vision/v3.2/ocr?language=en&detectOrientation=true`,
+              {
+                url: reader.result,
+              },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Ocp-Apim-Subscription-Key': process.env.NEXT_PUBLIC_OCR_API_KEY,
+                },
+              }
+            );
+        
+            // Handle response
+            const extractedText = response.data.regions.map(region =>
+              region.lines.map(line => line.words.map(word => word.text).join(' ')).join('\n')
+            ).join('\n');
+            
+            console.log(extractedText)*/
+            const endpoint = 'https://fyp-se20017.cognitiveservices.azure.com/vision/v3.2/read/analyze';
+
+    const params = {
+      language: 'en',
+    };
+
+    const headers = {
+      'Ocp-Apim-Subscription-Key':process.env.NEXT_PUBLIC_OCR_API_KEY ,
+      'Content-Type': 'application/json',
+    };
+
+    const requestBody = {
+      url: "https://www.stickergenius.com/wp-content/uploads/2013/10/your_text_wall.jpg",
+    };
+            const response = await axios.post(endpoint, requestBody, { params, headers });
+
+    // Extract text from response
+    const extractedText = response.data?.analyzeResult?.readResults?.[0]?.lines?.map(line => line.text).join('\n');
+    console.log(extractedText)
+    console.log(response)
+    console.log(response.data)
+          } catch (error) {
+            console.log(error)
+            console.error('Error extracting text:', error.response?.data || error.message);
+            throw error;
+          }
+        }
+        
+        
+      };
+      
+
+      reader.readAsDataURL(event.target.files[0]);
+    } 
+   /* console.log("handleAvatar33");
+    const { name, value } = event.target;
+    if (name === "address") {
+
+        const selectedImage = event.target.files[0];
+    
+        const formData = new FormData();
+        formData.append('file', selectedImage);
+      console.log(formData)
+        try {
+          const response = await axios.post('https://api.ocr.space/parse/image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'apikey': process.env.NEXT_PUBLIC_OCR_API_KEY,
+              ocrengine : 2,
+              language: "eng",
+              detectOrientation:true
+            },
+          });
+    
+          console.log(response.data)
+          console.log(response.data.ParsedResults[0].ParsedText);
+        } catch (error) {
+          console.error('Error extracting text:', error);
+        }
+    } else {
+
+    }*/
+};
+
 
   const removeAvatar = () => {
     setAvatar(null);
@@ -290,22 +375,7 @@ const SignUp = () => {
                 onChange={handleInputChange}
                 className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
-              {/* <input
-                type="text"
-                placeholder="district"
-                name="district"
-                // required
-                onChange={handleInputChange}
-                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
-              />
-              <input
-                type="text"
-                placeholder="subDivison"
-                name="subDivison"
-                // required
-                onChange={handleInputChange}
-                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
-              /> */}
+
 
               <div>
                 <select
@@ -325,6 +395,7 @@ const SignUp = () => {
                 </select>
               </div>
               <div>
+                
                 <select
                   id="subDivision-select"
                   required
@@ -340,23 +411,32 @@ const SignUp = () => {
                     </option>
                   ))}
                 </select>
+                
+                
               </div>
-
-              {/* <input
-                type="url"
-                placeholder="avatar"
-                name="avatar"
-                // required
-                onChange={handleInputChange}
-                className="text-[10px] py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
-              /> */}
-
-              {/* <Select
-                name="gender"
-                options={["Male", "Female"]}
-                onChange={handleInputChange}
-                placeholder="Select Gender"
-              /> */}
+              
+              
+            </div>
+            <div className="my-3">
+                <label htmlFor="address-upload" className="cursor-pointer">
+                  <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
+                    <FaUpload className="text-2xl" />
+                    <p>Upload your Cnic For Address Verification</p>
+                    <p className="text-xs mt-2">
+                      Click to browse your image here
+                    </p>
+                  </div>
+                </label>
+              
+              <input
+                id="address-upload"
+                required
+                name="address"
+                type="file"
+                accept="image/*"
+                onChange={handleAddressChange2}
+                className="hidden"
+              />
             </div>
             <div className="grid place-items-center mt-6">
               {isLoading ? (
