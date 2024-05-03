@@ -8,28 +8,34 @@ const Services = () => {
       style={{
         background: "linear-gradient(to bottom, #f7f9f8 70%, #fff 30%)",
       }}
-      className="w-full min-h-screen pt-32 pb-20 px-10"
+      className="w-full min-h-screen pt-16 md:pt-32 pb-10 md:pb-20 px-3 md:px-10"
     >
       <h6 className="text-center font-bold text-[#f29620]">
         Safe And Trusted Waste Collection Service
       </h6>
-      <h1 className="font-paralucent text-4xl mt-5 mb-16 w-2/4 mx-auto text-center text-[#182822] leading-normal">
+      <h1 className="font-paralucent text-[27px] md:text-3xl lg:text-4xl mt-5 mb-16 lg:w-2/4 mx-auto text-left lg:text-center text-[#182822] leading-normal">
         Devoted & Trustworthy Waste Collection Services
       </h1>
-      <div className="flex justify-center items-center w-full gap-10">
+      <div className="overflow-x-auto  flex  justify-start lg:justify-between items-start w-full lg:gap-8">
         {[1, 2, 3].map((_, index) => (
-          <div key={index} className="w-1/3">
+          <div
+            key={index}
+            className="flex-shrink-0 lg:shrink  lg:w-1/3 w-[85%] mr-6 lg:mr-unset"
+          >
             <img
               src="/home/services1.jpg"
               alt="logo"
-              className="w-full rounded-lg"
+              className="w-full sm:h-fit h-[300px] rounded-lg object-cover"
             />
-            <div className="p-7 relative rounded-lg w-[90%] -mt-28 bg-[#fff] font-poppins transition duration-500 ease-in-out shadow-sm hover:shadow-lg shadow-[#ddd9d9]">
+            <div className="p-4 md:p-7 relative rounded-lg w-[90%] -mt-28 bg-[#fff] font-poppins transition duration-500 ease-in-out shadow-sm hover:shadow-lg shadow-[#ddd9d9]">
               <h1 className="font-paralucent text-xl text-[#182822] hover:text-[#f29620] transition duration-500 ease-in-out cursor-pointer">
-              Real-Time Waste Tracking
+                Real-Time Waste Tracking
               </h1>
-              <p className="text-[#62706b] text-sm my-5">
-              Our platform offers a groundbreaking service by providing users with real-time insights into the entire waste management process. From generation to recycling and disposal, users can track and verify the journey of their waste.
+              <p className="text-[#62706b] text-[13px] sm:text-sm my-3 sm:my-5">
+                Our platform offers a groundbreaking service by providing users
+                with real-time insights into the entire waste management
+                process. From generation to recycling and disposal, users can
+                track and verify the journey of their waste.
               </p>
               <button className="flex justify-center items-center gap-3 transition duration-500 ease-in-out hover:bg-[#257830] text-[#20332c] hover:text-[#fff] outline-none border-2 hover:border-[#257830] border-[#20332c] px-8 py-4 rounded-sm">
                 Explore More
