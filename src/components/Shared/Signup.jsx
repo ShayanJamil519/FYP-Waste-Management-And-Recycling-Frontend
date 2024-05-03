@@ -7,10 +7,8 @@ import { useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-
 import { FaSpinner } from "react-icons/fa";
-import axios from 'axios';
-
+import axios from "axios";
 
 // slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -27,6 +25,27 @@ import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 
 const SignUp = () => {
+  const allowedSubDivision = {
+    south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
+    east: [
+      "gulzar e hijri",
+      "jamshed quarters",
+      "ferozabad",
+      "gulshan e iqbal",
+    ],
+    west: ["orangi", "mangopir", "mominabad"],
+    korangi: ["korangi", "landhi", "model colony", "shah faisal"],
+    malir: ["airport", "gadap", "ibrahim hyderi", "murad memon", "shah mureed"],
+    central: [
+      "gulberg",
+      "liaquatabad",
+      "new karachi",
+      "nazimabad",
+      "north nazimabad",
+    ],
+    keamari: ["baldia", "site", "harbour", "mauripur"],
+  };
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const districtOptions = ["malir", "DistrictB", "DistrictC"];
@@ -42,7 +61,7 @@ const SignUp = () => {
     subDivision: "",
     area: "",
     avatar: "",
-    address:""
+    address: "",
   });
 
   const { mutate: addMutate } = useUserSignup(JSON.stringify(userData));
@@ -64,6 +83,7 @@ const SignUp = () => {
       [name]: value,
     });
   };
+  const subDivisions = allowedSubDivision[userData.district];
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -114,7 +134,7 @@ const SignUp = () => {
         console.log("handleAvatar22");
         if (reader.readyState === 2) {
           try {
-            console.log(reader.result)
+            console.log(reader.result);
             // Send base64-encoded image to Azure Computer Vision API
             /*const response = await axios.post(
               `https://fyp-se20017.cognitiveservices.azure.com/vision/v3.2/ocr?language=en&detectOrientation=true`,
@@ -135,41 +155,48 @@ const SignUp = () => {
             ).join('\n');
             
             console.log(extractedText)*/
-            const endpoint = 'https://fyp-se20017.cognitiveservices.azure.com/vision/v3.2/read/analyze';
+            const endpoint =
+              "https://fyp-se20017.cognitiveservices.azure.com/vision/v3.2/read/analyze";
 
-    const params = {
-      language: 'en',
-    };
+            const params = {
+              language: "en",
+            };
 
-    const headers = {
-      'Ocp-Apim-Subscription-Key':process.env.NEXT_PUBLIC_OCR_API_KEY ,
-      'Content-Type': 'application/json',
-    };
+            const headers = {
+              "Ocp-Apim-Subscription-Key": process.env.NEXT_PUBLIC_OCR_API_KEY,
+              "Content-Type": "application/json",
+            };
 
-    const requestBody = {
-      url: "https://www.stickergenius.com/wp-content/uploads/2013/10/your_text_wall.jpg",
-    };
-            const response = await axios.post(endpoint, requestBody, { params, headers });
+            const requestBody = {
+              url: "https://www.stickergenius.com/wp-content/uploads/2013/10/your_text_wall.jpg",
+            };
+            const response = await axios.post(endpoint, requestBody, {
+              params,
+              headers,
+            });
 
-    // Extract text from response
-    const extractedText = response.data?.analyzeResult?.readResults?.[0]?.lines?.map(line => line.text).join('\n');
-    console.log(extractedText)
-    console.log(response)
-    console.log(response.data)
+            // Extract text from response
+            const extractedText =
+              response.data?.analyzeResult?.readResults?.[0]?.lines
+                ?.map((line) => line.text)
+                .join("\n");
+            console.log(extractedText);
+            console.log(response);
+            console.log(response.data);
           } catch (error) {
-            console.log(error)
-            console.error('Error extracting text:', error.response?.data || error.message);
+            console.log(error);
+            console.error(
+              "Error extracting text:",
+              error.response?.data || error.message
+            );
             throw error;
           }
         }
-        
-        
       };
-      
 
       reader.readAsDataURL(event.target.files[0]);
-    } 
-   /* console.log("handleAvatar33");
+    }
+    /* console.log("handleAvatar33");
     const { name, value } = event.target;
     if (name === "address") {
 
@@ -197,8 +224,7 @@ const SignUp = () => {
     } else {
 
     }*/
-};
-
+  };
 
   const removeAvatar = () => {
     setAvatar(null);
@@ -377,8 +403,7 @@ const SignUp = () => {
                 className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
 
-
-              <div>
+              {/* <div>
                 <select
                   id="district-select"
                   name="district"
@@ -403,6 +428,7 @@ const SignUp = () => {
                   name="subDivision"
                   value={userData.subDivision}
                   onChange={handleSelectChange}
+                  disabled={!userData.district}
                   className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
                 >
                   <option value="">Select SubDivision</option>
@@ -415,20 +441,56 @@ const SignUp = () => {
                 
                 
               </div>
-              
-              
+               */}
+
+              <div>
+                <select
+                  id="district-select"
+                  name="district"
+                  required
+                  value={userData.district}
+                  onChange={handleSelectChange}
+                  className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
+                >
+                  <option value="">Select District</option>
+                  {Object.keys(allowedSubDivision).map((district, index) => (
+                    <option key={index} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <select
+                  id="subDivision-select"
+                  required
+                  name="subDivision"
+                  value={userData.subDivision}
+                  onChange={handleSelectChange}
+                  className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
+                  disabled={!userData.district}
+                >
+                  <option value="">Select SubDivision</option>
+                  {subDivisions &&
+                    subDivisions.map((subDivision, index) => (
+                      <option key={index} value={subDivision}>
+                        {subDivision}
+                      </option>
+                    ))}
+                </select>
+              </div>
             </div>
             <div className="my-3">
-                <label htmlFor="address-upload" className="cursor-pointer">
-                  <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
-                    <FaUpload className="text-2xl" />
-                    <p>Upload your Cnic For Address Verification</p>
-                    <p className="text-xs mt-2">
-                      Click to browse your image here
-                    </p>
-                  </div>
-                </label>
-              
+              <label htmlFor="address-upload" className="cursor-pointer">
+                <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
+                  <FaUpload className="text-2xl" />
+                  <p>Upload your Cnic For Address Verification</p>
+                  <p className="text-xs mt-2">
+                    Click to browse your image here
+                  </p>
+                </div>
+              </label>
+
               <input
                 id="address-upload"
                 required

@@ -38,6 +38,26 @@ const classColors = {
 const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
   const router = useRouter();
+  const allowedSubDivision = {
+    south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
+    east: [
+      "gulzar e hijri",
+      "jamshed quarters",
+      "ferozabad",
+      "gulshan e iqbal",
+    ],
+    west: ["orangi", "mangopir", "mominabad"],
+    korangi: ["korangi", "landhi", "model colony", "shah faisal"],
+    malir: ["airport", "gadap", "ibrahim hyderi", "murad memon", "shah mureed"],
+    central: [
+      "gulberg",
+      "liaquatabad",
+      "new karachi",
+      "nazimabad",
+      "north nazimabad",
+    ],
+    keamari: ["baldia", "site", "harbour", "mauripur"],
+  };
 
   const [detectionDimension, setDetectionDimension] = useState({});
 
@@ -63,6 +83,7 @@ const ComplainForm = () => {
     latitude: parseFloat(localStorage.getItem("latitude")),
     longitude: parseFloat(localStorage.getItem("longitude")),
     image: "",
+    subDivision: "",
   });
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
@@ -82,6 +103,7 @@ const ComplainForm = () => {
       [name]: value,
     });
   };
+  const subDivisions = allowedSubDivision[userData.district];
 
   const handleSubmit = async (event) => {
     console.log("image here");
@@ -211,7 +233,7 @@ const ComplainForm = () => {
         touch. Or you can call us and our specialists will provide help!
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
-        <div id="image-container" className="relative">
+        <div id="image-container" className="relative m-10">
           <div id="my-3">
             {image ? (
               // <div className="">
@@ -278,7 +300,7 @@ const ComplainForm = () => {
             >
               Select Your District
             </label>
-            <select
+            {/* <select
               id="district-select"
               name="district"
               required
@@ -292,8 +314,50 @@ const ComplainForm = () => {
                   {district}
                 </option>
               ))}
+            </select> */}
+            <select
+              id="district-select"
+              name="district"
+              required
+              value={userData.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {Object.keys(allowedSubDivision).map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
             </select>
           </div>
+
+          <div>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your Sub Division
+            </label>
+            <select
+              id="subDivision-select"
+              required
+              name="subDivision"
+              value={userData.subDivision}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df]"
+              disabled={!userData.district}
+            >
+              <option value="">Select SubDivision</option>
+              {subDivisions &&
+                subDivisions.map((subDivision, index) => (
+                  <option key={index} value={subDivision}>
+                    {subDivision}
+                  </option>
+                ))}
+            </select>
+          </div>
+
           <Input
             name="area"
             label="Enter Your Area"
@@ -311,34 +375,34 @@ const ComplainForm = () => {
           />
         </div>
         <div className="grid place-items-center mt-6">
-              {isLoading ? (
-                <button
-                  type="submit"
-                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
-                  disabled
-                >
-                  <FaSpinner className="animate-spin mr-2 text-white" />
-                  <span className={"text-white"}>Loading...</span>
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  // onClick={resetForm}
-                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-                >
-                  Submit Complain
-                  <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
-                    <IoIosArrowRoundForward className="text-[27px] font-bold" />
-                  </span>{" "}
-                  <style jsx>{`
-                    button:hover span {
-                      background-color: #fff;
-                      color: #257830;
-                    }
-                  `}</style>
-                </button>
-              )}
-            </div>
+          {isLoading ? (
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+              disabled
+            >
+              <FaSpinner className="animate-spin mr-2 text-white" />
+              <span className={"text-white"}>Loading...</span>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              // onClick={resetForm}
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Submit Complain
+              <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

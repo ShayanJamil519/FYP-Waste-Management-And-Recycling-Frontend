@@ -13,6 +13,27 @@ import WasteManagementContractInteraction from "@/utils/wasteMangementContractIn
 import { FaSpinner } from "react-icons/fa";
 
 const LandfillIntake = () => {
+
+  const allowedSubDivision = {
+    south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
+    east: [
+      "gulzar e hijri",
+      "jamshed quarters",
+      "ferozabad",
+      "gulshan e iqbal",
+    ],
+    west: ["orangi", "mangopir", "mominabad"],
+    korangi: ["korangi", "landhi", "model colony", "shah faisal"],
+    malir: ["airport", "gadap", "ibrahim hyderi", "murad memon", "shah mureed"],
+    central: [
+      "gulberg",
+      "liaquatabad",
+      "new karachi",
+      "nazimabad",
+      "north nazimabad",
+    ],
+    keamari: ["baldia", "site", "harbour", "mauripur"],
+  };
   const router = useRouter();
   const sourceSubdivisionOptions = ["Division 1", "Division 2", "Division 3"];
   const districtOptions = ["District 1", "District 2", "District 3"];
@@ -64,6 +85,7 @@ const LandfillIntake = () => {
       [name]: value,
     });
   };
+  const subDivisions = allowedSubDivision[data.district];
 
   const handleAvatarChange = (event) => {
     console.log("handleImage");
@@ -170,7 +192,7 @@ const LandfillIntake = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-5">
-          <div>
+          {/* <div>
             <label
               htmlFor="district-select"
               className="font-semibold text-sm text-[#202725] mb-1"
@@ -192,7 +214,7 @@ const LandfillIntake = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <Input
             label="quantityReceived"
             type="text"
@@ -201,7 +223,7 @@ const LandfillIntake = () => {
             onChange={handleInputChange}
             value={data.quantityReceived}
           />
-          <div>
+          {/* <div>
             <label
               htmlFor="sourceSubdivision-select"
               className="font-semibold text-sm text-[#202725] mb-1"
@@ -223,7 +245,7 @@ const LandfillIntake = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <Input
             label="area"
             type="text"
@@ -240,6 +262,71 @@ const LandfillIntake = () => {
             onChange={handleInputChange}
             value={data.landfillSite}
           />
+          <div>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your District
+            </label>
+            {/* <select
+              id="district-select"
+              name="district"
+              required
+              value={userData.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select> */}
+            <select
+              id="district-select"
+              name="district"
+              required
+              value={data.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {Object.keys(allowedSubDivision).map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your Sub Division
+            </label>
+            <select
+              id="subDivision-select"
+              required
+              name="sourceSubdivision"
+              value={data.sourceSubdivision}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df]"
+              disabled={!data.district}
+            >
+              <option value="">Select SubDivision</option>
+              {subDivisions &&
+                subDivisions.map((subDivision, index) => (
+                  <option key={index} value={subDivision}>
+                    {subDivision}
+                  </option>
+                ))}
+            </select>
+          </div>
+
         </div>
         <div className="grid place-items-center mt-6">
               {isLoading ? (

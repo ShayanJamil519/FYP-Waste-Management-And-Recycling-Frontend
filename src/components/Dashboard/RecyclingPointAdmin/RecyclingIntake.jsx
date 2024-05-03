@@ -12,8 +12,29 @@ import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 
 const RecyclingIntake = () => {
-  const router = useRouter();
 
+  const allowedSubDivision = {
+    south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
+    east: [
+      "gulzar e hijri",
+      "jamshed quarters",
+      "ferozabad",
+      "gulshan e iqbal",
+    ],
+    west: ["orangi", "mangopir", "mominabad"],
+    korangi: ["korangi", "landhi", "model colony", "shah faisal"],
+    malir: ["airport", "gadap", "ibrahim hyderi", "murad memon", "shah mureed"],
+    central: [
+      "gulberg",
+      "liaquatabad",
+      "new karachi",
+      "nazimabad",
+      "north nazimabad",
+    ],
+    keamari: ["baldia", "site", "harbour", "mauripur"],
+  };
+
+  const router = useRouter();
   const districtOptions = ["District 1", "District 2", "District 3"];
   const sourceSubdivisionOptions = ["Division 1", "Division 2", "Division 3"];
   const [isLoading, setIsLoading] = useState(false);
@@ -63,10 +84,12 @@ const RecyclingIntake = () => {
     });
   };
 
+  const subDivisions = allowedSubDivision[data.district];
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const date = Date.now()
+      const date = Date.now();
       setIsLoading(true);
       await WasteManagementContractInteraction.RecordInputEntry(
         date,
@@ -175,7 +198,7 @@ const RecyclingIntake = () => {
             >
               Select Your District
             </label>
-            <select
+            {/* <select
               id="district-select"
               name="district"
               required
@@ -185,6 +208,21 @@ const RecyclingIntake = () => {
             >
               <option value="">Select District</option>
               {districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select> */}
+                        <select
+              id="district-select"
+              name="district"
+              required
+              value={data.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {Object.keys(allowedSubDivision).map((district, index) => (
                 <option key={index} value={district}>
                   {district}
                 </option>
@@ -206,7 +244,7 @@ const RecyclingIntake = () => {
             >
               Select Your SubDivision
             </label>
-            <select
+            {/* <select
               id="sourceSubdivision-select"
               name="sourceSubdivision"
               required
@@ -220,6 +258,23 @@ const RecyclingIntake = () => {
                   {sourceSubdivision}
                 </option>
               ))}
+            </select> */}
+            <select
+              id="subDivision-select"
+              required
+              name="subDivision"
+              value={data.subDivision}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df]"
+              disabled={!data.district}
+            >
+              <option value="">Select SubDivision</option>
+              {subDivisions &&
+                subDivisions.map((subDivision, index) => (
+                  <option key={index} value={subDivision}>
+                    {subDivision}
+                  </option>
+                ))}
             </select>
           </div>
           <Input
@@ -232,34 +287,34 @@ const RecyclingIntake = () => {
           />
         </div>
         <div className="grid place-items-center mt-6">
-              {isLoading ? (
-                <button
-                  type="submit"
-                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
-                  disabled
-                >
-                  <FaSpinner className="animate-spin mr-2 text-white" />
-                  <span className={"text-white"}>Loading...</span>
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  // onClick={resetForm}
-                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-                >
-                  Send Input
-                  <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
-                    <IoIosArrowRoundForward className="text-[27px] font-bold" />
-                  </span>{" "}
-                  <style jsx>{`
-                    button:hover span {
-                      background-color: #fff;
-                      color: #257830;
-                    }
-                  `}</style>
-                </button>
-              )}
-            </div>
+          {isLoading ? (
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+              disabled
+            >
+              <FaSpinner className="animate-spin mr-2 text-white" />
+              <span className={"text-white"}>Loading...</span>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              // onClick={resetForm}
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Send Input
+              <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
