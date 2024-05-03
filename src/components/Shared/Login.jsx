@@ -4,6 +4,7 @@ import { useStateContext } from "@/app/StateContext";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useUserLogin } from "../../hooks/auth-hook";
+import { IoIosArrowRoundForward } from "react-icons/io";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
@@ -147,7 +148,7 @@ const Login = () => {
                   {!isLoading && 'Login'}
                 </button>
               </div> */}
-              <div className="grid place-items-center mt-6">
+              {/* <div className="grid place-items-center mt-6">
                 {isLoading ? (
                   <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
                 ) : (
@@ -157,6 +158,35 @@ const Login = () => {
                     className={`bg-[#32A632] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24`}
                   >
                     Login
+                  </button>
+                )}
+              </div> */}
+              <div className="grid place-items-center mt-6">
+                {isLoading ? (
+                  <button
+                    type="submit"
+                    className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+                    disabled
+                  >
+                    <FaSpinner className="animate-spin mr-2 text-white" />
+                    <span className={"text-white"}>Loading...</span>
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    // onClick={resetForm}
+                    className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+                  >
+                    login
+                    <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
+                      <IoIosArrowRoundForward className="text-[27px] font-bold" />
+                    </span>{" "}
+                    <style jsx>{`
+                      button:hover span {
+                        background-color: #fff;
+                        color: #257830;
+                      }
+                    `}</style>
                   </button>
                 )}
               </div>

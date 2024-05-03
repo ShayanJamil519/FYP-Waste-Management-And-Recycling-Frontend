@@ -2,43 +2,105 @@
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
+import {
+  useGetSubdivisionsAndUserCounts,
+  useGetSubdivisionComplaints,
+  useGetPredictData,
+} from "../../../hooks/incentives";
+import DataLoader from "@/components/Shared/DataLoader";
+import UploadReportButton from "@/components/Shared/UploadReportButton";
+import { useStateContext } from "@/app/StateContext";
 
-const productData = [
-  {
-    subdivision: "Nazimabad",
-    totalUsers: 10,
-    tokens: "10",
-  },
-  {
-    subdivision: "Nazimabad",
-    totalUsers: 10,
-    tokens: "Not alloted yet",
-  },
-  {
-    subdivision: "Nazimabad",
-    totalUsers: 10,
-    tokens: "10",
-  },
-  {
-    subdivision: "Nazimabad",
-    totalUsers: 10,
-    tokens: "Not alloted yet",
-  },
-  {
-    subdivision: "Nazimabad",
-    totalUsers: 10,
-    tokens: "10",
-  },
-];
+import { useEffect } from "react";
 
 const IncentivesTable = () => {
+  const district = "south";
+  const [data, setData] = useState({});
+  // https://cheerful-eel-garment.cyclic.app
+
+
+  const { mutate: addMutate } = useGetPredictData(JSON.stringify(data));
+  
   const [openReviewIncentiveModal, setOpenReviewIncentiveModal] =
     useState(false);
   const paginate = usePagination();
 
-  const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(productData);
+  // const {data:prediction, refetch} = useGetPredictData(data);
+  const { data:data1, isLoading, isError } =
+    useGetSubdivisionsAndUserCounts(district);
+  const { data:data2 } = useGetSubdivisionComplaints(district);
+  console.log("DATA22222222222222222")
+  console.log(data2)
 
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
+    data1
+  );
+  const handleButtonClick = async (product) => {
+
+    console.log("product")
+    console.log(product)
+    const findSubdivisionData = (data, subdivision) => {
+      return data[subdivision];
+    };
+    
+    const subdivisionData = findSubdivisionData(data2, product.subdivision);
+    
+    if (subdivisionData) {
+      console.log(`Data for ${product.subdivision}:`, subdivisionData);
+    } else {
+      console.log(`${product.subdivision} not found`);
+    }
+    try {
+      const {
+        avgRecyclablePercentage,
+        avgPlasticPercentage,
+        avgGlassPercentage,
+        avgMetalloids
+      } = product;
+      
+      const {
+        total: subdivisionTotal,
+        valid: subdivisionValid
+      } = subdivisionData;
+      
+      // Now, you can use these variables to assign values to your target variables
+      const recyclablePercentage = avgRecyclablePercentage;
+      const plasticPercentage = avgPlasticPercentage;
+      const glassPercentage = avgGlassPercentage;
+      const Metalloids = avgMetalloids;
+      const complaints = subdivisionTotal;
+      const validcomplaints = subdivisionValid;
+      setData({recyclablePercentage,plasticPercentage,glassPercentage,Metalloids,complaints,validcomplaints})
+      
+    addMutate(
+      {},
+      {
+        onSuccess: (response) => {
+          console.log(response)
+          console.log("chandioooooooooooo")
+                    
+        },
+        onError: (response) => {
+          console.error("An error occurred:");
+          console.log(response);
+          console.log(response.response.data.message);
+        },
+      }
+    );
+      console.log("ATAD")
+      console.log(data)
+      // const {data:prediction, refetch} = useGetPredictData(data);
+      // const {data:prediction} = useGetPredictData(data);
+      // refetch();
+      // Handle success, e.g., show a success message or update state
+    } catch (error) {
+      console.log("ERROR")
+      console.log(error)
+    }
+  };
+
+  // The rest of your component code goes here
+  // recyclablePercentage, plasticPercentage, glassPercentage, Metalloids, complaints, validcomplaints
   return (
     <div>
       {/* Table */}
@@ -80,7 +142,7 @@ const IncentivesTable = () => {
               </div>
               <div className="hidden items-center justify-center sm:flex">
                 <p className="text-sm text-black dark:text-white">
-                  {product.totalUsers}
+                  {product.userCount}
                 </p>
               </div>
               <div className=" flex items-center justify-center col-span-2">
@@ -89,7 +151,10 @@ const IncentivesTable = () => {
                 </p>
               </div>
 
-              <button className="px-3 py-2 col-span-2 w-fit  text-[16px] text-[#fff] bg-[#296d8d] rounded-md">
+              <button
+                className="px-3 py-2 col-span-2 w-fit  text-[16px] text-[#fff] bg-[#296d8d] rounded-md"
+                onClick={() => handleButtonClick(product)}
+              >
                 Calculate Incentives
               </button>
             </div>

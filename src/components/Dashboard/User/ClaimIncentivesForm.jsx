@@ -25,27 +25,34 @@ const ClaimIncentivesForm = () => {
         </div>
 
         <div className="grid place-items-center mt-6">
-          {isLoading ? (
-            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
-          ) : (
-            <button
-              // onClick={resetForm}
-              type="submit"
-              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-            >
-              Submit Complain
-              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
-                <IoIosArrowRoundForward className="text-[27px] font-bold" />
-              </span>{" "}
-              <style jsx>{`
-                button:hover span {
-                  background-color: #fff;
-                  color: #257830;
-                }
-              `}</style>
-            </button>
-          )}
-        </div>
+              {isLoading ? (
+                <button
+                  type="submit"
+                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+                  disabled
+                >
+                  <FaSpinner className="animate-spin mr-2 text-white" />
+                  <span className={"text-white"}>Loading...</span>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  // onClick={resetForm}
+                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+                >
+                  Submit
+                  <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
+                    <IoIosArrowRoundForward className="text-[27px] font-bold" />
+                  </span>{" "}
+                  <style jsx>{`
+                    button:hover span {
+                      background-color: #fff;
+                      color: #257830;
+                    }
+                  `}</style>
+                </button>
+              )}
+            </div>
       </form>
     </div>
   );
