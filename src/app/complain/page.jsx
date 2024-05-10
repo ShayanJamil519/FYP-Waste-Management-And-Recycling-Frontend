@@ -23,9 +23,9 @@ const page = () => {
     <>
       <Hero title="Make a Complain" bgImage="/home/hero__slider1.jpg" />
 
-      <div className="my-32 mx-10 bg-[#fff] min-h-[50vh] flex justify-center items-stretch gap-10">
+      <div className="lg:my-32 md:my-20 my-10 sm:mx-10   bg-[#fff] flex sm:flex-row flex-col justify-center lg:gap-10">
         <Action />
-        <div className="w-full">
+        <div className="lg:w-[70%] w-full">
           <ComplainForm />
           <MapComponent />
         </div>

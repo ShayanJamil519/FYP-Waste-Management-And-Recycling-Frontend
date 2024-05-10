@@ -6,14 +6,16 @@ import { FaPhone } from "react-icons/fa6";
 
 const Action = () => {
   return (
-    <div className="w-[30%] h-fit sticky top-20 bottom-0 rounded-2xl bg-[#257830] px-10 py-20 font-poppins text-[#fff]">
+    <div className="sm:w-[30%] w-full mx-auto lg:h-fit lg:sticky lg:top-20 lg:bottom-0 rounded-2xl bg-[#257830] sm:px-10 px-5 py-7 sm:py-20 font-poppins text-[#fff]">
       <h1 className="font-semibold text-xl">
         Trusted And Reliable Waste Collection!
       </h1>
       <p className="text-sm mt-3 leading-6">
-      The platform becomes a catalyst for positive change, encouraging responsible waste management practices while rewarding users for their contributions to a sustainable future.
+        The platform becomes a catalyst for positive change, encouraging
+        responsible waste management practices while rewarding users for their
+        contributions to a sustainable future.
       </p>
-      <button className="mt-6 flex justify-center items-center font-semibold text-sm gap-3 bg-[#fff] transition duration-500 ease-in-out hover:bg-[#20332c] text-[#20332c] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm">
+      <button className="sm:mt-6 mt-4 flex justify-center items-center font-semibold text-sm gap-3 bg-[#fff] transition duration-500 ease-in-out hover:bg-[#20332c] text-[#20332c] hover:text-[#fff] outline-none border-0 lg:py-5 py-3 px-7 rounded-md">
         Get Started Now
         <span className="p-0 rounded-full bg-[#20332c]  transition duration-500 text-[#fff] ">
           <IoIosArrowRoundForward className="text-[27px] font-bold" />
@@ -25,14 +27,18 @@ const Action = () => {
           }
         `}</style>
       </button>
-      <div className="font-poppins text-[#fff] mt-10">
-        <p className="flex justify-start items-center gap-6 mb-2">
+      <div className="font-poppins text-[#fff] mt-5 sm:mt-10">
+        <p className="flex justify-start items-center sm:gap-6 gap-3 mb-2">
           <MdMarkEmailUnread className="text-[25px]" />
-          <span className="cursor-pointer">Recy-sense@gmail.com</span>
+          <span className="cursor-pointer sm:text-base text-sm">
+            Recy-sense@gmail.com
+          </span>
         </p>
-        <p className="flex justify-start items-center gap-6">
+        <p className="flex justify-start items-center sm:gap-6 gap-3 ">
           <FaPhone className="text-[21px]" />
-          <span className="cursor-pointer">+92 01161145741</span>
+          <span className="cursor-pointer sm:text-base text-sm">
+            +92 01161145741
+          </span>
         </p>
       </div>
     </div>

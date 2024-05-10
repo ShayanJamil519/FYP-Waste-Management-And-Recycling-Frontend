@@ -225,15 +225,15 @@ const ComplainForm = () => {
       style={{
         boxShadow: "0px 5px 43px 0px rgba(17, 29, 25, 0.12)",
       }}
-      className=" p-10 font-poppins"
+      className=" sm:p-10 px-4 py-7 w-full font-poppins "
     >
       <h1 className="font-bold text-2xl">Make a request</h1>
       <p className="text-sm mt-3 leading-6 text-[#62706b]">
         Please complete the form below, to request a quote, and we’ll be in
         touch. Or you can call us and our specialists will provide help!
       </p>
-      <form className="w-full mt-10 " onSubmit={handleSubmit}>
-        <div id="image-container" className="relative m-10">
+      <form className="w-full  mt-10 " onSubmit={handleSubmit}>
+        <div id="image-container" className="relative sm:m-10">
           <div id="my-3">
             {image ? (
               // <div className="">
