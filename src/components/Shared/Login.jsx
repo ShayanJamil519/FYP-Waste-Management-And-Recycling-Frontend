@@ -63,7 +63,7 @@ const Login = () => {
       <div className="  bg-white rounded-xl  ">
         <div className="w-full mx-auto border-2 rounded-xl">
           <div className="px-4 lg:px-8">
-            <h2 className="font-paralucent text-center text-[20px] lg:text-3xl lg:my-4">
+            <h2 className="font-paralucent text-center text-[20px] lg:text-3xl mt-7 lg:my-4">
               Login
             </h2>
             <div className="flex mt-3 sm:mt-1 lg:mt-6">
@@ -165,7 +165,7 @@ const Login = () => {
                 {isLoading ? (
                   <button
                     type="submit"
-                    className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+                    className="lg:mt-6 mt-2 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 lg:py-5 py-3 rounded-md"
                     disabled
                   >
                     <FaSpinner className="animate-spin mr-2 text-white" />
@@ -175,7 +175,7 @@ const Login = () => {
                   <button
                     type="submit"
                     // onClick={resetForm}
-                    className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+                    className="lg:mt-6 mt-2 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 lg:py-5 py-3 rounded-md"
                   >
                     login
                     <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">

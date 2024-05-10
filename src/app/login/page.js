@@ -7,7 +7,7 @@ const page = () => {
         background:
           "linear-gradient( 135deg, rgba(0, 0, 0, 0.7) 45%, rgba(0, 0, 0, 0.2)), url('/shared/auth__bg1.png') no-repeat center center/cover",
       }}
-      className="min-h-[88.5vh] px-32 gap-12  w-full grid lg:grid-cols-2 justify-items-center place-items-start md:place-items-center"
+      className="lg:min-h-[88.5vh] min-h-[90vh]  lg:px-32 px-6 gap-12  w-full grid lg:grid-cols-2 justify-items-center  place-items-center"
     >
       {/* Left */}
       <div className="col-span-1 ">
@@ -15,7 +15,7 @@ const page = () => {
       </div>
 
       {/* Right */}
-      <div className="col-span-1">
+      <div className="lg:col-span-1 lg:block hidden">
         <div>
           <h1 className="text-4xl font-paralucent font-bold uppercase mb-5 text-[#fff]">
             Empowering Sustainability

@@ -234,7 +234,7 @@ const SignUp = () => {
   return (
     <div className=" flex items-center justify-center w-full ">
       <div className="w-full  bg-[#32A632] flex rounded-[15px] sm:rounded-[20px] flex-col lg:flex-row ">
-        <div className="lg:w-[45%] sm:p-unset  flex items-center justify-center rounded-[15px] sm:rounded-[20px] w-full mx-auto relative ">
+        <div className="lg:w-[45%] sm:p-unset  lg:flex hidden items-center justify-center rounded-[15px] sm:rounded-[20px] w-full mx-auto relative ">
           <Swiper
             modules={[Navigation, Pagination, A11y, Autoplay]}
             slidesPerView={1}
@@ -260,7 +260,7 @@ const SignUp = () => {
           </Swiper>
         </div>
 
-        <div className="lg:w-[55%] border-solid  bg-white px-6 rounded-[15px] sm:rounded-[20px] pt-5 pb-5 w-full">
+        <div className="lg:w-[55%] border-solid  bg-white sm:px-6 px-4 rounded-[15px] sm:rounded-[20px] pt-5 pb-5 w-full">
           <p className="text-[#32A632] font-satisfy text-[12px] sm:text-[16px] lg:text-xl ">
             Welcome
           </p>
@@ -359,7 +359,7 @@ const SignUp = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4 ">
+            <div className="sm:grid flex flex-col sm:grid-cols-2 gap-4 ">
               <input
                 type="text"
                 placeholder="Enter Your name"
@@ -403,46 +403,6 @@ const SignUp = () => {
                 className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
               />
 
-              {/* <div>
-                <select
-                  id="district-select"
-                  name="district"
-                  required
-                  value={userData.district}
-                  onChange={handleSelectChange}
-                  className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
-                >
-                  <option value="">Select District</option>
-                  {districtOptions.map((district, index) => (
-                    <option key={index} value={district}>
-                      {district}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                
-                <select
-                  id="subDivision-select"
-                  required
-                  name="subDivision"
-                  value={userData.subDivision}
-                  onChange={handleSelectChange}
-                  disabled={!userData.district}
-                  className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
-                >
-                  <option value="">Select SubDivision</option>
-                  {subDivisionOptions.map((subDivision, index) => (
-                    <option key={index} value={subDivision}>
-                      {subDivision}
-                    </option>
-                  ))}
-                </select>
-                
-                
-              </div>
-               */}
-
               <div>
                 <select
                   id="district-select"
@@ -484,7 +444,9 @@ const SignUp = () => {
               <label htmlFor="address-upload" className="cursor-pointer">
                 <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
                   <FaUpload className="text-2xl" />
-                  <p>Upload your Cnic For Address Verification</p>
+                  <p className="text-center sm:text-base text-[14px]">
+                    Upload your Cnic For Address Verification
+                  </p>
                   <p className="text-xs mt-2">
                     Click to browse your image here
                   </p>
@@ -528,7 +490,7 @@ const SignUp = () => {
                 <button
                   type="submit"
                   // onClick={resetForm}
-                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+                  className="lg:mt-6 mt-2 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 lg:py-5 py-3 rounded-md"
                 >
                   Sign Up
                   <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">

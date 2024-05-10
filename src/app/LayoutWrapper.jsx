@@ -25,7 +25,8 @@ export default function LayoutWrapper({ children }) {
         <QueryClientProvider client={queryClient}>
           {!pathname?.includes("/dashboard") && <Header />}
           {children}
-          {!pathname?.includes("/dashboard") && <Footer />}
+          {!pathname?.includes("/dashboard") ||
+            (!pathname?.includes("/login") && <Footer />)}
         </QueryClientProvider>
       </StateProvider>
     </>
