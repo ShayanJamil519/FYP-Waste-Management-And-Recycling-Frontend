@@ -1,6 +1,7 @@
 "use client";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
+import IncentivesContractInteraction from "@/utils/incentivesContractIntegration";
 import { useState } from "react";
 import {
   useGetSubdivisionsAndUserCounts,
@@ -14,6 +15,9 @@ import { useStateContext } from "@/app/StateContext";
 import { useEffect } from "react";
 
 const IncentivesTable = () => {
+  const currentDate = new Date();
+const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
+// console.log(currentMonth); 
   const district = "south";
   const [data, setData] = useState({});
   // https://cheerful-eel-garment.cyclic.app
@@ -40,7 +44,7 @@ const IncentivesTable = () => {
     console.log("product")
     console.log(product)
     const findSubdivisionData = (data, subdivision) => {
-      return data[subdivision];
+      return data[subdivision];  
     };
     
     const subdivisionData = findSubdivisionData(data2, product.subdivision);
@@ -55,7 +59,8 @@ const IncentivesTable = () => {
         avgRecyclablePercentage,
         avgPlasticPercentage,
         avgGlassPercentage,
-        avgMetalloids
+        avgMetalloids,
+        subdivision
       } = product;
       
       const {
@@ -71,12 +76,17 @@ const IncentivesTable = () => {
       const complaints = subdivisionTotal;
       const validcomplaints = subdivisionValid;
       setData({recyclablePercentage,plasticPercentage,glassPercentage,Metalloids,complaints,validcomplaints})
-      
+
     addMutate(
       {},
       {
-        onSuccess: (response) => {
-          console.log(response)
+        onSuccess: async (response) => {
+          console.log(response.data)
+          await IncentivesContractInteraction.CalculateIncentives(
+            subdivision,
+            response.data,
+            currentMonth
+          );
           console.log("chandioooooooooooo")
                     
         },
