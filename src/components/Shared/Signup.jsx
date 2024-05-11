@@ -61,6 +61,7 @@ const SignUp = () => {
     subDivision: "",
     area: "",
     avatar: "",
+    avatara : "",
     address: "",
   });
 
@@ -125,105 +126,23 @@ const SignUp = () => {
   };
 
   const handleAddressChange2 = async (event) => {
-    console.log("handleAvatar");
+    console.log("handleAvatar22");
     const { name, value } = event.target;
-    if (name === "address") {
+    if (name === "avatara") {
       const reader = new FileReader();
 
-      reader.onload = async () => {
-        console.log("handleAvatar22");
+      reader.onload = () => {
+        console.log("handleAvatar222");
         if (reader.readyState === 2) {
-          try {
-            console.log(reader.result);
-            // Send base64-encoded image to Azure Computer Vision API
-            /*const response = await axios.post(
-              `https://fyp-se20017.cognitiveservices.azure.com/vision/v3.2/ocr?language=en&detectOrientation=true`,
-              {
-                url: reader.result,
-              },
-              {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Ocp-Apim-Subscription-Key': process.env.NEXT_PUBLIC_OCR_API_KEY,
-                },
-              }
-            );
-        
-            // Handle response
-            const extractedText = response.data.regions.map(region =>
-              region.lines.map(line => line.words.map(word => word.text).join(' ')).join('\n')
-            ).join('\n');
-            
-            console.log(extractedText)*/
-            const endpoint =
-              "https://fyp-se20017.cognitiveservices.azure.com/vision/v3.2/read/analyze";
-
-            const params = {
-              language: "en",
-            };
-
-            const headers = {
-              "Ocp-Apim-Subscription-Key": process.env.NEXT_PUBLIC_OCR_API_KEY,
-              "Content-Type": "application/json",
-            };
-
-            const requestBody = {
-              url: "https://www.stickergenius.com/wp-content/uploads/2013/10/your_text_wall.jpg",
-            };
-            const response = await axios.post(endpoint, requestBody, {
-              params,
-              headers,
-            });
-
-            // Extract text from response
-            const extractedText =
-              response.data?.analyzeResult?.readResults?.[0]?.lines
-                ?.map((line) => line.text)
-                .join("\n");
-            console.log(extractedText);
-            console.log(response);
-            console.log(response.data);
-          } catch (error) {
-            console.log(error);
-            console.error(
-              "Error extracting text:",
-              error.response?.data || error.message
-            );
-            throw error;
-          }
+          setUserData({ ...userData, [name]: reader.result });
+          
         }
       };
 
       reader.readAsDataURL(event.target.files[0]);
-    }
-    /* console.log("handleAvatar33");
-    const { name, value } = event.target;
-    if (name === "address") {
-
-        const selectedImage = event.target.files[0];
-    
-        const formData = new FormData();
-        formData.append('file', selectedImage);
-      console.log(formData)
-        try {
-          const response = await axios.post('https://api.ocr.space/parse/image', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'apikey': process.env.NEXT_PUBLIC_OCR_API_KEY,
-              ocrengine : 2,
-              language: "eng",
-              detectOrientation:true
-            },
-          });
-    
-          console.log(response.data)
-          console.log(response.data.ParsedResults[0].ParsedText);
-        } catch (error) {
-          console.error('Error extracting text:', error);
-        }
     } else {
-
-    }*/
+      setUserData({ ...userData, [name]: value });
+    }
   };
 
   const removeAvatar = () => {
@@ -456,7 +375,7 @@ const SignUp = () => {
               <input
                 id="address-upload"
                 required
-                name="address"
+                name="avatara"
                 type="file"
                 accept="image/*"
                 onChange={handleAddressChange2}
