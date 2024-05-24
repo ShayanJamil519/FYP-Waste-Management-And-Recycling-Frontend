@@ -6,7 +6,7 @@ import { FaPhone } from "react-icons/fa6";
 
 const Action = () => {
   return (
-    <div className="sm:w-[30%] w-full mx-auto lg:h-fit lg:sticky lg:top-20 lg:bottom-0 rounded-2xl bg-[#257830] sm:px-10 px-5 py-7 sm:py-20 font-poppins text-[#fff]">
+    <div className="lg:w-[30%] w-full hidden sm:block mx-auto lg:h-fit lg:sticky lg:top-20 lg:bottom-0 rounded-2xl bg-[#257830] sm:px-10 px-5 py-7 sm:py-20 font-poppins text-[#fff]">
       <h1 className="font-semibold text-xl">
         Trusted And Reliable Waste Collection!
       </h1>

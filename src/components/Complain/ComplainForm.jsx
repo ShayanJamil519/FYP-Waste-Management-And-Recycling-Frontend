@@ -283,7 +283,7 @@ const ComplainForm = () => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid mt-3 sm:mt-0 md:grid-cols-2 gap-5">
           <Input
             name="userId"
             label="Enter Your ID"
@@ -378,7 +378,7 @@ const ComplainForm = () => {
           {isLoading ? (
             <button
               type="submit"
-              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+              className=" mt-3 sm:mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-md sm:rounded-sm"
               disabled
             >
               <FaSpinner className="animate-spin mr-2 text-white" />
@@ -388,7 +388,7 @@ const ComplainForm = () => {
             <button
               type="submit"
               // onClick={resetForm}
-              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+              className="mt-3 sm:mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-md sm:rounded-sm"
             >
               Submit Complain
               <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">

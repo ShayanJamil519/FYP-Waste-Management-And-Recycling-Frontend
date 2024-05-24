@@ -21,6 +21,7 @@ export default function LayoutWrapper({ children }) {
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
+
       <StateProvider>
         <QueryClientProvider client={queryClient}>
           {!pathname?.includes("/dashboard") && <Header />}
