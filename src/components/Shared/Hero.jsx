@@ -11,7 +11,7 @@ const Hero = ({ title, bgImage, page }) => {
       style={{
         background: `linear-gradient( 135deg, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0.2)), url('${bgImage}') no-repeat center center/cover`,
       }}
-      className="w-full  min-h-[30vh] sm:min-h-[70vh] relative flex-col flex justify-center items-center"
+      className="w-full  min-h-[50vh] sm:min-h-[70vh] relative flex-col flex justify-center items-center"
     >
       <h1 className="font-paralucent text-[#fff] text-center lg:mb-unset mb-8 text-[30px] sm:text-[70px] sm:leading-[80px]">
         {title}

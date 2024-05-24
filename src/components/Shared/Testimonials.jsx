@@ -16,7 +16,7 @@ SwiperCore.use([Navigation, Pagination]);
 
 const Testimonials = () => {
   return (
-    <div className="min-h-screen pb-36 px-20 font-poppins">
+    <div className="min-h-screen pb-12 md:pb-24 lg:pb-36 px-4 md:px-16 lg:px-20 font-poppins">
       <h1 className="font-paralucent text-4xl  text-center text-[#182822] leading-normal">
         Testimonials
       </h1>
@@ -61,7 +61,7 @@ const Testimonials = () => {
                   <p className="text-[#63716c] text-sm">{testimonial.title}</p>
                 </div>
               </div>
-              <div className="h-7"></div>
+              <div className="sm:h-7"></div>
             </SwiperSlide>
           ))}
         </Swiper>

@@ -24,14 +24,14 @@ const ProgressBar = ({ label, percentage }) => {
 
 const WasteBreakDown = () => {
   return (
-    <div className="min-h-screen pb-28 pl-10">
+    <div className="min-h-screen sm:pb-16 pb-12 lg:pb-28 px-4 sm:pl-10">
       {/* Top Container */}
 
-      <div className="flex justify-between items-start gap-10">
+      <div className="flex lg:flex-row flex-col-reverse justify-between items-start gap-10">
         {/* Left Container */}
 
-        <div className="w-[40%] font-poppins ">
-          <h1 className="font-paralucent text-4xl mb-4 text-[#182822] leading-normal">
+        <div className="lg:w-[40%] font-poppins ">
+          <h1 className="font-paralucent text-[27px] md:text-3xl lg:text-4xl mb-4 text-[#182822] leading-normal">
             Providing A Regular Trash Collection On A Scheduled Time Or Call In
             Service.
           </h1>
@@ -59,7 +59,7 @@ const WasteBreakDown = () => {
             background:
               "url('/home/how__it__works1.jpg') no-repeat center center/cover",
           }}
-          className="w-[50%] min-h-[550px] rounded-s-3xl "
+          className="lg:w-[50%] w-full  h-[550px] sm:h-[650px] lg:h-[550px] rounded-s-3xl "
         ></div>
       </div>
     </div>

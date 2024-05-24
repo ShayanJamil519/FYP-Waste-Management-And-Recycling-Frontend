@@ -30,34 +30,34 @@ const OurMission = () => {
   };
 
   return (
-    <div className="min-h-screen py-36 px-20">
+    <div className="min-h-screen py-10 md:py-20 lg:py-36 px-4 md:px-10 lg:px-20">
       {/* Top Container */}
 
-      <div className="flex justify-between items-start gap-10">
+      <div className="flex lg:flex-row flex-col justify-between items-start gap-10 mt-10 lg:mt-20">
         {/* Left Container */}
         <div
           style={{
             background:
               "url('/home/how__it__works1.jpg') no-repeat center center/cover",
           }}
-          className="w-[60%] h-[550px] rounded-3xl sticky top-20 bottom-0"
+          className="lg:w-[60%] w-full h-[550px] sm:h-[650px] lg:h-[550px] rounded-3xl relative lg:sticky lg:top-20 lg:bottom-0"
         >
-          <div className="absolute -left-12 bottom-28  w-full  h-48 flex justify-center items-stretch">
-            <div className="w-[15%] bg-[#f29620] grid place-items-center rounded-s-xl cursor-pointer transition duration-500 ease-in-out hover:bg-[#257830]">
+          <div className="absolute lg:-left-12 bottom-5 lg:bottom-28 w-[90%] sm:w-[80%] md:w-[90%] lg:w-full  lg:h-48 flex justify-center items-stretch">
+            <div className="w-[25%] lg:w-[15%] bg-[#f29620] grid place-items-center rounded-s-xl cursor-pointer transition duration-500 ease-in-out hover:bg-[#257830]">
               <FaPlay className="text-[20px] text-[#fff]" />
             </div>
-            <div className="w-full flex justify-center items-center rounded-e-xl py-10 bg-[#fff]">
+            <div className="w-full flex lg:flex-row gap-4 lg:gap-unset  flex-col justify-center items-center rounded-e-xl py-5  lg:py-10 bg-[#fff]">
               {howItWorksHomeData.map((item) => (
                 <div
                   key={item.title}
-                  className="px-7 flex flex-col justify-center items-center border-r-gray-300 border-r-2"
+                  className="px-7 flex flex-col justify-center items-center border-r-gray-300 lg:border-r-2"
                 >
                   <img
                     src={item.imageSrc}
                     alt="logo"
-                    className="transition duration-400 ease-in-out hover:scale-110"
+                    className="transition duration-400 sm:w-[70px] w-[50px] lg:w-fit ease-in-out hover:scale-110"
                   />
-                  <h1 className="mt-3 text-center text-[#182822] font-semibold font-poppins">
+                  <h1 className="lg:mt-3 text-center text-[#182822] sm:text-base text-[13px] lg:font-semibold font-poppins">
                     {item.title}
                   </h1>
                 </div>
@@ -66,8 +66,8 @@ const OurMission = () => {
           </div>
         </div>
         {/* Right Container */}
-        <div className="w-[40%] font-poppins ">
-          <h1 className="font-paralucent text-4xl mb-4 text-[#182822] leading-normal">
+        <div className="lg:w-[40%] font-poppins ">
+          <h1 className="font-paralucent text-[27px] md:text-3xl lg:text-4xl sm:text-left text-center mb-4 text-[#182822] leading-normal">
             Our Mission
           </h1>
 
