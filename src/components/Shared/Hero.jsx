@@ -13,16 +13,16 @@ const Hero = ({ title, bgImage, page }) => {
       }}
       className="w-full  min-h-[50vh] sm:min-h-[70vh] relative flex-col flex justify-center items-center"
     >
-      <h1 className="font-paralucent text-[#fff] text-center lg:mb-unset mb-8 text-[30px] sm:text-[70px] sm:leading-[80px]">
+      <h1 className="font-paralucent text-[#fff] text-center lg:mb-unset mb-0 md:mb-8 text-[30px] sm:text-[60px] md:text-[70px] sm:leading-[80px]">
         {title}
       </h1>
 
       {page === "forum" && (
-        <div className="mt-6 flex justify-center items-center bg-white rounded-lg font-poppins">
+        <div className="mt-3 lg:mt-4 flex w-[90%] md:w-fit mx-auto justify-center items-center bg-white rounded-lg font-poppins">
           <input
             type="text"
             placeholder="Search the Community"
-            className="pl-5 py-4 w-[550px] focus:outline-none rounded-s-lg"
+            className="pl-5 py-3 md:py-4  mx-auto w-full md:w-[550px] focus:outline-none rounded-s-lg"
           />
           <button type="submit" className=" text-green-600 px-3 ">
             <FiSearch className="text-[26px]" />

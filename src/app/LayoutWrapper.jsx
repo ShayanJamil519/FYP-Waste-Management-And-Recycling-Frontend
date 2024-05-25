@@ -17,7 +17,12 @@ import { usePathname } from "next/navigation";
 export default function LayoutWrapper({ children }) {
   const [queryClient] = useState(() => new QueryClient());
   const pathname = usePathname();
-  console.log(pathname);
+
+  const showFooter =
+    !pathname?.includes("/dashboard") &&
+    !pathname?.includes("/login") &&
+    !pathname?.includes("/signup");
+
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -26,8 +31,7 @@ export default function LayoutWrapper({ children }) {
         <QueryClientProvider client={queryClient}>
           {!pathname?.includes("/dashboard") && <Header />}
           {children}
-          {!pathname?.includes("/dashboard") ||
-            (!pathname?.includes("/login") && <Footer />)}
+          {showFooter && <Footer />}
         </QueryClientProvider>
       </StateProvider>
     </>

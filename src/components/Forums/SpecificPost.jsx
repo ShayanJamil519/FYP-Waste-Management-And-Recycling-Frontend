@@ -60,7 +60,7 @@ function WriteComment() {
           />
           <button
             onClick={sendComment}
-            className="px-12 py-3 bg-[#f29620] hover:bg-[#eba852] text-lg text-white rounded-md  transition duration-300 ease-in-out"
+            className="px-7 md:px-12 py-2 md:py-3 bg-[#f29620] hover:bg-[#eba852] text-lg text-white rounded-md  transition duration-300 ease-in-out"
           >
             Send
           </button>
@@ -74,7 +74,7 @@ function WriteComment() {
 
 const Post = () => {
   const { user, setUser } = useStateContext();
-  console.log("user");
+
   const userId = user?.userId;
   const pathname = usePathname();
   const threadId = pathname.split("/forum/")[1].split("/")[0];
@@ -99,7 +99,7 @@ const Post = () => {
   };
   return (
     <div className="bg-white font-normal font-poppins p-4 rounded-md">
-      <h1 className=" text-3xl font-semibold mb-3 underline text-[#182822] leading-normal">
+      <h1 className=" text-[20px] sm:text-[24px] break-words md:text-2xl lg:text-3xl font-semibold mb-3 underline text-[#182822] leading-normal">
         {data?.title}
       </h1>
 
@@ -107,18 +107,20 @@ const Post = () => {
         <img
           src={data?.avatar}
           alt="janet andrews"
-          className="w-12 h-12 rounded-full"
+          className="md:w-12 md:h-12 h-9 w-9 rounded-full"
         />
         <div className="">
-          <p className="text-lg">{data?.userName}</p>
-          <p className="text-xs text-gray-500">{formatDate(data?.date)}</p>
+          <p className=" sm:text-base text-sm break-words">{data?.userName}</p>
+          <p className="text-xs text-gray-500 break-words">
+            {formatDate(data?.date)}
+          </p>
         </div>
       </div>
       <p className="text-[#000] font-light leading-relaxed">{data?.tcontent}</p>
-      <div className="flex items-center justify-between">
-        <div className="flex justify-start  items-center gap-10 mt-4">
+      <div className="flex items-center justify-between mt-4">
+        <div className="flex justify-start  items-center gap-5 lg:gap-10 ">
           <button
-            className="flex items-center text-gray-600 "
+            className="flex items-center justify-center text-gray-600 "
             onClick={() => handleLikeFunction()}
           >
             <FaHeart className="text-[20px] mr-2" />
@@ -128,10 +130,12 @@ const Post = () => {
           </button>
 
           <h3 className="font-semibold -mb-1">
-            {data?.replies.length} Comments
+            {data?.replies.length > 1
+              ? `${data?.replies.length} Comments`
+              : `${data?.replies.length} Comment`}
           </h3>
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 sm:gap-5">
           <FaFacebookF className="text-[18px] cursor-pointer" />
           <FaLinkedinIn className="text-[18px] cursor-pointer" />
           <FaXTwitter className="text-[18px] cursor-pointer" />
@@ -176,7 +180,7 @@ const Comment = ({ RuserName, content, rAvatar, timeOfReply }) => {
 
 const SpecificPost = () => {
   return (
-    <div className="w-[80%] py-20 mx-auto font-poppins">
+    <div className="w-[90%] md:w-[80%] py-10 md:py-20 mx-auto font-poppins">
       <Post />
     </div>
   );
