@@ -23,7 +23,7 @@ const ContactForm = () => {
       style={{
         boxShadow: "0px 5px 43px 0px rgba(17, 29, 25, 0.12)",
       }}
-      className="w-[70%] p-10 font-poppins"
+      className="w-full md:w-[80%] lg:w-[70%] py-10 px-5 sm:p-10 font-poppins"
     >
       <h1 className="font-bold text-2xl">
         Get In Touch With Your Nearest Local Business Sales Executive!!
@@ -32,7 +32,7 @@ const ContactForm = () => {
         Contact Us And We Will Respond Within The Next Two Working Days.
       </p>
       <form className="w-full mt-10 ">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Input
             label="Name"
             type="text"
@@ -44,11 +44,6 @@ const ContactForm = () => {
             type="email"
             placeholder="Please write your email"
           />
-          <Input
-            label="Phone number"
-            type="number"
-            placeholder="Please write your number"
-          />
         </div>
         <TextArea
           value={textValue}
@@ -58,7 +53,7 @@ const ContactForm = () => {
           label="Your Query"
         />
 
-        <button className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm">
+        <button className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-md sm:rounded-sm">
           Submit Request
           <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
             <IoIosArrowRoundForward className="text-[27px] font-bold" />
