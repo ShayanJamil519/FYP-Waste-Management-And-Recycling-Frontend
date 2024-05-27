@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useStateContext } from "@/app/StateContext";
 import Login from "./Login";
 import SignUp from "./Signup";
@@ -10,22 +10,24 @@ import jwt from "jsonwebtoken";
 
 import ProfileDropdown from "../Dashboard/ProfileDropdown";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { FaSortDown } from "react-icons/fa6";
 
 const headerLinks = [
   {
     linkText: "Home",
     linkTo: "/",
   },
+  {
+    linkText: "Recycling Points",
+    linkTo: "/recycling-points",
+  },
+  {
+    linkText: "Land Fills",
+    linkTo: "/landfills",
+  },
+];
 
-  // {
-  //   linkText: "Company",
-  //   linkTo: "/company",
-  // },
-
-  // {
-  //   linkText: "Services",
-  //   linkTo: "/services",
-  // },
+const dropDownLinks = [
   {
     linkText: "About Us",
     linkTo: "/about",
@@ -34,22 +36,76 @@ const headerLinks = [
     linkText: "Community Forum",
     linkTo: "/forum",
   },
-
   {
     linkText: "Contact Us",
     linkTo: "/contact",
   },
 ];
 
+function DropdownMenu() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={toggleDropdown}
+        className=" flex justify-center items-center gap-1  "
+      >
+        More <FaSortDown className="-mt-[6px] text-[18px] " />
+      </button>
+      {dropdownOpen && (
+        <div className="absolute -left-4 mt-2 w-48 bg-white border border-gray-200 shadow-lg">
+          {dropDownLinks.map((item, index) => (
+            <div
+              onClick={toggleDropdown}
+              key={index}
+              className="flex hover:bg-gray-100   justify-start w-full items-start flex-col"
+            >
+              <Link
+                className={`px-4 py-2 ${
+                  pathname === item.linkTo ? "text-[#32A632]" : "text-[#000]"
+                }`}
+                key={index}
+                href={item.linkTo}
+              >
+                {item.linkText}
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const {
     isLoggedIn,
     setIsLoggedIn,
     setUser,
     openLoginModal,
-    setOpenLoginModal,
     openSignupModal,
   } = useStateContext();
   const [openNavbar, setOpenNavbar] = useState(false);
@@ -102,7 +158,7 @@ const Header = () => {
                 >
                   <Link
                     className={`${
-                      router.pathname === item.linkTo
+                      pathname === item.linkTo
                         ? "text-[#32A632]"
                         : "text-[#000]"
                     }`}
@@ -112,17 +168,19 @@ const Header = () => {
                     {item.linkText}
                   </Link>
 
-                  {router.pathname === item.linkTo && (
-                    <div className="bg-[#32A632] h-[1px] w-[80%]"></div>
+                  {pathname === item.linkTo && (
+                    <div className="bg-[#32A632] h-[2px] rounded-full -mb-1 w-[80%]"></div>
                   )}
                 </div>
               ))}
             </div>
+
+            <DropdownMenu />
           </div>
 
           <div className="flex justify-between items-center gap-3 md:gap-5">
             <div className="flex justify-between items-center gap-3 md:gap-5">
-              <button className="hidden lg:block outline-none border-[1px] py-2 px-4 rounded-[40px] border-[#000] text-[#000]">
+              <button className="hidden lg:block hover:bg-[#32A632] hover:text-[#fff] hover:border-[#32A632] outline-none border-[1px] py-2 px-4 rounded-[40px] border-[#000] text-[#000]">
                 <Link href="/complain">Make a Complain</Link>
               </button>
               {isLoggedIn ? (
@@ -130,7 +188,6 @@ const Header = () => {
               ) : (
                 <button
                   className="outline-none lg:text-base text-[14px] py-[5px] sm:py-2 px-3 sm:px-4  rounded-[40px] bg-[#32A632] text-[#fff]"
-                  // onClick={() => setOpenLoginModal(true)}
                   onClick={() => router.push("/login")}
                 >
                   Login/Signup
@@ -172,7 +229,7 @@ const Header = () => {
           <Link
             href={"/complain"}
             onClick={handleNavbar}
-            className="text-center text-sm py-2 px-4  text-[#000] bg-[#32A632] hover:shadow-lg block w-full mb-2 rounded-[16px] capitalize shadow-none"
+            className="transition duration-600 ease-in-out  text-center text-sm py-2 px-4  text-[#000] bg-[#32A632] hover:shadow-lg block w-full mb-2 rounded-[16px] capitalize shadow-none"
           >
             <span>Make a Complain</span>
           </Link>

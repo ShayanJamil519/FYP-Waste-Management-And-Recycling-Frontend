@@ -1,4 +1,4 @@
-import Topics from "@/components/Forums/Topics";
+import Landfills from "@/components/Landfills";
 import Hero from "@/components/Shared/Hero";
 import React from "react";
 
@@ -10,7 +10,7 @@ const page = () => {
         bgImage="/home/hero__slider1.jpg"
         page="showSearch"
       />
-      <Topics />
+      <Landfills />
     </div>
   );
 };

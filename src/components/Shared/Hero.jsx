@@ -17,7 +17,7 @@ const Hero = ({ title, bgImage, page }) => {
         {title}
       </h1>
 
-      {page === "forum" && (
+      {page === "showSearch" && (
         <div className="mt-3 lg:mt-4 flex w-[90%] md:w-fit mx-auto justify-center items-center bg-white rounded-lg font-poppins">
           <input
             type="text"
