@@ -8,7 +8,7 @@ import ImageSlider from "../ImageSlider";
 import { useAddResponseToComplaint } from "../../../hooks/complain-hook";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
-
+import MapComponent from "./Map";
 import { FaSpinner } from "react-icons/fa";
 
 const Images = [
@@ -21,7 +21,8 @@ const Images = [
 ];
 
 
-const EditComplainModal = ({ setOpenEditComplainModal, complaintId }) => {
+const EditComplainModal = ({ setOpenEditComplainModal, complaintId , latitude , longitude}) => {
+  console.log(latitude)
   const router = useRouter();
   const [isLooading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -161,6 +162,7 @@ const EditComplainModal = ({ setOpenEditComplainModal, complaintId }) => {
             rows={6}
             label="Please write your details"
           />
+          <MapComponent latitude={latitude} longitude={longitude} />
 
 <div className="grid place-items-center mt-6">
           {isLooading ? (

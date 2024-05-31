@@ -10,6 +10,7 @@ import { useGetComplaintsInDistrict, useDeleteComplaint } from "../../../hooks/c
 import DataLoader from "@/components/Shared/DataLoader";
 import UploadReportButton from "@/components/Shared/UploadReportButton";
 
+
 const ComplainsTable = () => {
   const district = "south";
   const paginate = usePagination();
@@ -17,6 +18,8 @@ const ComplainsTable = () => {
   const deleteComplaintMutation = useDeleteComplaint();
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
   const [selectedComplaintId, setSelectedComplaintId] = useState(null);
+  const [selectedLatitude, setSelectedLatitude] = useState(null);
+  const [selectedLongitude, setSelectedLongitude] = useState(null);
   const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
 
 
@@ -52,11 +55,13 @@ const ComplainsTable = () => {
     }
   };
 
-  const handleEditComplaint = (complaintId) => {
+  const handleEditComplaint = (complaintId,latitude,longitude) => {
     console.log("Itemmmmmmmmmmmmmm")
     console.log(visibleItems)
     setOpenEditComplainModal(true);
     setSelectedComplaintId(complaintId);
+    setSelectedLatitude(latitude);
+    setSelectedLongitude(longitude);
     // You can use the complaintId here or pass it to the modal component
   };
   // Check loading and error states
@@ -167,7 +172,7 @@ const ComplainsTable = () => {
                 <div className=" flex gap-3 justify-start items-center text-[20px]">
                   <MdEdit
                     className="cursor-pointer"
-                    onClick={() => handleEditComplaint(item._id)}
+                    onClick={() => handleEditComplaint(item._id,item.latitude,item.longitude)}
                     // onClick={() => setOpenEditComplainModal(true)}
                   />
                   <MdDelete 
@@ -192,6 +197,8 @@ const ComplainsTable = () => {
         <EditComplainModal
           setOpenEditComplainModal={setOpenEditComplainModal}
           complaintId={selectedComplaintId}
+          latitude={selectedLatitude}
+          longitude={selectedLongitude}
         />
       )}
     </div>
