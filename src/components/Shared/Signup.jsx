@@ -59,7 +59,7 @@ const SignUp = () => {
     email: "",
     password: "",
     district: "",
-    subDivision: "",
+    subDivison: "",
     area: "",
     avatar: "",
     avatara: "",
@@ -82,6 +82,7 @@ const SignUp = () => {
 
   const handleSelectChange = (event) => {
     const { name, value } = event.target;
+    console.log(name , value)
     setUserData({
       ...userData,
       [name]: value,
@@ -90,6 +91,7 @@ const SignUp = () => {
   const subDivisions = allowedSubDivision[userData.district];
 
   const handleSubmit = async (event) => {
+    console.log(userData)
     event.preventDefault();
     setIsLoading(true);
     addMutate(
@@ -326,8 +328,8 @@ const SignUp = () => {
                 <select
                   id="subDivision-select"
                   required
-                  name="subDivision"
-                  value={userData.subDivision}
+                  name="subDivison"
+                  value={userData.subDivison}
                   onChange={handleSelectChange}
                   className="text-[10px] col-span-2 py-3 lg:text-base px-2 md:px-4 w-full outline-none rounded-lg  bg-[#EAEAEA]"
                   disabled={!userData.district}
