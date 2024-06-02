@@ -133,6 +133,11 @@ export const sidebarLinksUser = [
     linkIcon: <RxDashboard />,
   },
   {
+    linkText: `Complaints`,
+    linkTo: "/dashboard/user/complaints",
+    linkIcon: <RxDashboard />,
+  },
+  {
     linkText: `Claim Incentives`,
     linkTo: "/dashboard/user/claim-incentives",
     linkIcon: <RxDashboard />,
