@@ -8,6 +8,7 @@ import { StateProvider } from "./StateContext";
 import Header from "@/components/Shared/Header";
 import Footer from "@/components/Shared/Footer";
 import { usePathname } from "next/navigation";
+import ChatBot from "@/components/Shared/ChatBot";
 
 // import { StateProvider } from "@/Context/StateContext";
 
@@ -31,6 +32,7 @@ export default function LayoutWrapper({ children }) {
         <QueryClientProvider client={queryClient}>
           {!pathname?.includes("/dashboard") && <Header />}
           {children}
+          <ChatBot />
           {showFooter && <Footer />}
         </QueryClientProvider>
       </StateProvider>
