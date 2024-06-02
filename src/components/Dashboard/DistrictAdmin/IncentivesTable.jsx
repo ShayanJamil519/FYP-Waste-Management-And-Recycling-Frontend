@@ -7,6 +7,7 @@ import {
   useGetSubdivisionsAndUserCounts,
   useGetSubdivisionComplaints,
   useGetPredictData,
+  useCreateIncentive,
 } from "../../../hooks/incentives";
 import DataLoader from "@/components/Shared/DataLoader";
 import UploadReportButton from "@/components/Shared/UploadReportButton";
@@ -15,40 +16,49 @@ import { useStateContext } from "@/app/StateContext";
 import { useEffect } from "react";
 
 const IncentivesTable = () => {
+  const { user } = useStateContext();
+  const [incentiveData, setIncentiveData] = useState({
+    subDivision: user?.subDivision,
+    tokenBalance: ""
+  });
+
+  const { mutate: incentiveMutate } = useCreateIncentive(
+    JSON.stringify(incentiveData)
+  );
+
   const currentDate = new Date();
-const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
-// console.log(currentMonth); 
+  const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
+  // console.log(currentMonth);
   const district = "south";
   const [data, setData] = useState({});
   // https://cheerful-eel-garment.cyclic.app
 
+  const { mutate : addMutate} = useGetPredictData(JSON.stringify(data));
 
-  const { mutate: addMutate } = useGetPredictData(JSON.stringify(data));
-  
   const [openReviewIncentiveModal, setOpenReviewIncentiveModal] =
     useState(false);
   const paginate = usePagination();
 
   // const {data:prediction, refetch} = useGetPredictData(data);
-  const { data:data1, isLoading, isError } =
-    useGetSubdivisionsAndUserCounts(district);
-  const { data:data2 } = useGetSubdivisionComplaints(district);
-  console.log("DATA22222222222222222")
-  console.log(data2)
+  const {
+    data: data1,
+    isLoading,
+    isError,
+  } = useGetSubdivisionsAndUserCounts(district);
+  const { data: data2 } = useGetSubdivisionComplaints(district);
+  console.log("DATA22222222222222222");
+  console.log(data2);
 
-  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
-    data1
-  );
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(data1);
   const handleButtonClick = async (product) => {
-
-    console.log("product")
-    console.log(product)
+    console.log("product");
+    console.log(product);
     const findSubdivisionData = (data, subdivision) => {
-      return data[subdivision];  
+      return data[subdivision];
     };
-    
+
     const subdivisionData = findSubdivisionData(data2, product.subdivision);
-    
+
     if (subdivisionData) {
       console.log(`Data for ${product.subdivision}:`, subdivisionData);
     } else {
@@ -60,14 +70,12 @@ const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() 
         avgPlasticPercentage,
         avgGlassPercentage,
         avgMetalloids,
-        subdivision
+        subdivision,
       } = product;
-      
-      const {
-        total: subdivisionTotal,
-        valid: subdivisionValid
-      } = subdivisionData;
-      
+
+      const { total: subdivisionTotal, valid: subdivisionValid } =
+        subdivisionData;
+
       // Now, you can use these variables to assign values to your target variables
       const recyclablePercentage = avgRecyclablePercentage;
       const plasticPercentage = avgPlasticPercentage;
@@ -75,37 +83,106 @@ const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() 
       const Metalloids = avgMetalloids;
       const complaints = subdivisionTotal;
       const validcomplaints = subdivisionValid;
-      setData({recyclablePercentage,plasticPercentage,glassPercentage,Metalloids,complaints,validcomplaints})
+      setData({
+        recyclablePercentage,
+        plasticPercentage,
+        glassPercentage,
+        Metalloids,
+        complaints,
+        validcomplaints,
+      });
 
-    addMutate(
-      {},
-      {
-        onSuccess: async (response) => {
-          console.log(response.data)
-          await IncentivesContractInteraction.CalculateIncentives(
-            subdivision,
-            response.data,
-            currentMonth
-          );
-          console.log("chandioooooooooooo")
-                    
-        },
-        onError: (response) => {
-          console.error("An error occurred:");
-          console.log(response);
-          console.log(response.response.data.message);
-        },
-      }
-    );
-      console.log("ATAD")
-      console.log(data)
+      addMutate(
+        {},
+        {
+          onSuccess: async (response) => {
+            console.log(response.data);
+            setIncentiveData({
+              ...incentiveData,
+              tokenBalance: response.data[0],
+            });
+            // useCreateIncentive(
+            //   JSON.stringify(incentiveData));
+            await IncentivesContractInteraction.CalculateIncentives(
+              subdivision,
+              response.data,
+              currentMonth
+            );
+            console.log("chandioooooooooooo");
+          },
+          onError: (response) => {
+            console.error("An error occurred:");
+            console.log(response);
+            console.log(response.response.data.message);
+          },
+        }
+      );
+
+
+      incentiveMutate(
+        {},
+        {
+          onSuccess: async (response) => {
+            console.log(response.data);
+
+            console.log("Alhamdolillah");
+          },
+          onError: (response) => {
+            console.error("An error occurred:");
+            console.log(response);
+            console.log(response.response.data.message);
+          },
+        }
+      );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      console.log("ATAD");
+      console.log(data);
       // const {data:prediction, refetch} = useGetPredictData(data);
       // const {data:prediction} = useGetPredictData(data);
       // refetch();
       // Handle success, e.g., show a success message or update state
     } catch (error) {
-      console.log("ERROR")
-      console.log(error)
+      console.log("ERROR");
+      console.log(error);
     }
   };
 

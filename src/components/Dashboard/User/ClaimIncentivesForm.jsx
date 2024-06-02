@@ -4,11 +4,13 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import { FaSpinner } from "react-icons/fa";
 import { useState } from "react";
 import { useStateContext } from "@/app/StateContext";
+import { useGetIncentive  } from "../../../hooks/incentives";
 import IncentivesContractInteraction from "@/utils/incentivesContractIntegration";
 
 const ClaimIncentivesForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const { user } = useStateContext();
+  const { data,  isError } = useGetIncentive(user?.userId);
+  const [isLoading, setIsLoading] = useState(false);
   const currentDate = new Date();
   const amount = 8;
   const subdivision = "liyari";
@@ -18,6 +20,8 @@ const ClaimIncentivesForm = () => {
     // event.preventDefault();
     setIsLoading(true);
     try {
+      console.log("ye lo chandioo")
+      console.log(data)
       await IncentivesContractInteraction.ClaimTokens(
         subdivision,
         currentMonth,

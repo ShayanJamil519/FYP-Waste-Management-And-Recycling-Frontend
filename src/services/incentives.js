@@ -5,6 +5,38 @@ import Cookies from "js-cookie";
 const token = typeof window !== "undefined" && Cookies.get("jwt");
 
 class Incentives {
+
+  async getTokenIncentive(id) {
+    const { data } = await axios.get(
+      `${apiUrl}/get-incentive/${id}`,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return data;
+  }
+
+
+  async createIncentive(incentiveData) {
+    console.log("Hello");
+    console.log(token);
+    const res = await axios.post(
+      `${apiUrl}/create-incentive`,
+      incentiveData,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  }
+
   async getSubdivisionsAndUserCounts(district) {
     try {
       console.log("Service");
