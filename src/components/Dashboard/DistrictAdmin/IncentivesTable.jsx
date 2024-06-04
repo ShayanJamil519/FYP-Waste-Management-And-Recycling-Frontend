@@ -7,6 +7,7 @@ import {
   useGetSubdivisionsAndUserCounts,
   useGetSubdivisionComplaints,
   useGetPredictData,
+
   useCreateIncentive,
 } from "../../../hooks/incentives";
 import DataLoader from "@/components/Shared/DataLoader";
@@ -21,6 +22,7 @@ const IncentivesTable = () => {
     subDivision: user?.subDivision,
     tokenBalance: ""
   });
+
 
   const { mutate: incentiveMutate } = useCreateIncentive(
     JSON.stringify(incentiveData)
@@ -134,6 +136,8 @@ const IncentivesTable = () => {
           },
         }
       );
+
+
 
 
 

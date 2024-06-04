@@ -6,6 +6,26 @@ const token = typeof window !== "undefined" && Cookies.get("jwt");
 
 class Incentives {
 
+  async updateIncentive(incentiveData,id) {
+    try {
+      console.log("UPDATE SERVICE")
+      const response = await axios.post(
+        `${apiUrl}/update-incentive/${id}`,
+        incentiveData,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message || "Internal server error");
+    }
+  }
+
+
   async getTokenIncentive(id) {
     const { data } = await axios.get(
       `${apiUrl}/get-incentive/${id}`,
