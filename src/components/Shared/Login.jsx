@@ -19,7 +19,7 @@ const Login = () => {
   const pathname = usePathname();
 
   const [userData, setUserData] = useState({
-    name: "",
+    email: "",
     password: "",
   });
 
@@ -82,7 +82,7 @@ const Login = () => {
               <div className="mt-4">
                 <input
                   type="email"
-                  name="name"
+                  name="email"
                   required
                   onChange={handleInputChange}
                   placeholder="Enter your email address"
