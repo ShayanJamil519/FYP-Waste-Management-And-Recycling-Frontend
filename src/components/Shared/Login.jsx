@@ -19,14 +19,14 @@ const Login = () => {
   const pathname = usePathname();
 
   const [userData, setUserData] = useState({
-    name: "",
+    email: "",
     password: "",
   });
 
   const { mutate: addMutate } = useUserLogin(JSON.stringify(userData));
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { email, value } = event.target;
     setUserData({
       ...userData,
       [name]: value,
@@ -85,7 +85,7 @@ const Login = () => {
               <div className="mt-4">
                 <input
                   type="email"
-                  name="name"
+                  name="email"
                   required
                   onChange={handleInputChange}
                   placeholder="Enter your email address"
