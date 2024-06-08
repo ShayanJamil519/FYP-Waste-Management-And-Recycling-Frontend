@@ -26,7 +26,7 @@ const Login = () => {
   const { mutate: addMutate } = useUserLogin(JSON.stringify(userData));
 
   const handleInputChange = (event) => {
-    const { email, value } = event.target;
+    const { name, value } = event.target;
     setUserData({
       ...userData,
       [name]: value,
