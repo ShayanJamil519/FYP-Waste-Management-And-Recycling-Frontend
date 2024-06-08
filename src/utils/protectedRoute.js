@@ -36,6 +36,12 @@ const ProtectedRoute = ({ children }) => {
         user: sidebarLinksUser[0]?.linkTo,
       };
 
+      if (pathname === "/login" || pathname === "/signup") {
+        router.push("/");
+        setLoading(false);
+        return;
+      }
+
       const allowedBasePath = rolePaths[userRole];
 
       if (pathname.startsWith(allowedBasePath)) {

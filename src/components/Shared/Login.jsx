@@ -44,7 +44,11 @@ const Login = () => {
           toast.success(response?.data?.message);
           setOpenLoginModal(false);
           setIsLoggedIn(true);
-          if (pathname !== "/" || pathname !== "/signup") {
+          if (
+            pathname !== "/" ||
+            pathname !== "/signup" ||
+            pathname !== "/login"
+          ) {
             router.back();
           }
           setIsLoading(false);

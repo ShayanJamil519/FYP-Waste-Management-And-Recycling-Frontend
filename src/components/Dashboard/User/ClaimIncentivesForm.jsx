@@ -13,26 +13,24 @@ const ClaimIncentivesForm = () => {
   });
 
   const { user } = useStateContext();
-  console.log({ userrrrrrrrrrrrrr: user });
+
   let id = user?.userId;
   const { mutate: updateMutate } = useUpdateIncentive(
     JSON.stringify(incentivesData),
     id
   );
-  console.log("USER");
-  console.log(user);
-  console.log(id);
+
   const { data, isError } = useGetIncentive(id);
-  console.log("ye lo chandioo");
-  console.log(data);
+
+  console.log({ data });
+
   const [isLoading, setIsLoading] = useState(false);
   const currentDate = new Date();
   const amount = 8;
   const subdivision = user?.subdivision;
   const currentMonth = currentDate.getMonth() + 1;
-  console.log(currentMonth);
+
   const handleButtonClick = async () => {
-    console.log("INSIDE BUTTON");
     // event.preventDefault();
     setIsLoading(true);
     try {
@@ -41,8 +39,6 @@ const ClaimIncentivesForm = () => {
         {
           onSuccess: async (response) => {
             console.log(response.data);
-
-            console.log("Alhamdolillah2");
           },
           onError: (response) => {
             console.error("An error occurred:");
@@ -57,32 +53,27 @@ const ClaimIncentivesForm = () => {
         currentMonth,
         amount
       );
-      console.log("successsssss");
+
       setIsLoading(false);
-      // // If the transaction is successful, call the addMutate function
-      // addMutate(
-      //   {},
-      //   {
-      //     onSuccess: (response) => {
-      //       toast.success(response?.data?.message);
-      //       setIsLoading(false);
-      //     },
-      //     onError: (response) => {
-      //       toast.error(response.response.data.message);
-      //       setIsLoading(false);
-      //     },
-      //   }
-      // );
     } catch (error) {
-      // toast.error(error.message);
+      toast.error(error.message);
       setIsLoading(false);
-      console.log("ERORRRRRRRR AA GAYA");
+      console.log("ERORRRRRRRR AA GAYA", error);
     }
   };
 
   return (
     <div className=" p-10 font-poppins bg-[#fff] ">
-      <div className="grid place-items-center mt-6">
+      {data && data.exists ? (
+        <h1 className="text-lg ">
+          You have already claimed x tokens of your subdivision named{" "}
+          {subdivision}
+        </h1>
+      ) : (
+        <h1 className="text-lg ">Please claim tokens of your subdivision</h1>
+      )}
+
+      <div className="grid place-items-center ">
         {isLoading ? (
           <button
             type="submit"
