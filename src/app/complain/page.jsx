@@ -9,13 +9,6 @@ const ComplainForm = dynamic(
   }
 );
 
-const MapComponent = dynamic(
-  () => import("@/components/Complain/mapComponent"),
-  {
-    ssr: false,
-  }
-);
-
 import Hero from "@/components/Shared/Hero";
 
 const page = () => {
@@ -27,7 +20,6 @@ const page = () => {
         <Action />
         <div className="lg:w-[70%] w-full">
           <ComplainForm />
-          <MapComponent />
         </div>
       </div>
     </>
