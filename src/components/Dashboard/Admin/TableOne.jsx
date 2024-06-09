@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+
 const brandData = [
   {
     logo: "/home/karachi.jpg",
@@ -44,6 +45,7 @@ const brandData = [
 ];
 
 const TableOne = () => {
+
   return (
     <div className="rounded-sm border  bg-white px-5 pt-6 pb-2  sm:px-7 xl:pb-1 font-poppins">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">

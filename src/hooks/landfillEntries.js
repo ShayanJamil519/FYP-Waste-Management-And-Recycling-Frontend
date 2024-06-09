@@ -31,7 +31,7 @@ const useNewLandfill = (data) => {
   const queryClient = useQueryClient();
   return useMutation(
     () => {
-      //return LandfillEntry.useNewLandfilll(data);
+      return LandfillEntry.useNewLandfilll(data);
     },
     {
       onSuccess: () => {

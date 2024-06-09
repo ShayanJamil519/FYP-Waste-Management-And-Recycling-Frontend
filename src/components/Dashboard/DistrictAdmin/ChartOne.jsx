@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
+import { useStateContext } from "@/app/StateContext";
+import { useGetMonthlyComplaintsSummary } from "../../../hooks/districtAdmin-hook";
 
 const options = {
   legend: {
@@ -22,7 +24,6 @@ const options = {
       left: 0,
       opacity: 0.1,
     },
-
     toolbar: {
       show: false,
     },
@@ -49,10 +50,6 @@ const options = {
     width: [2, 2],
     curve: "straight",
   },
-  // labels: {
-  //   show: false,
-  //   position: "top",
-  // },
   grid: {
     xaxis: {
       lines: {
@@ -84,20 +81,7 @@ const options = {
   },
   xaxis: {
     type: "category",
-    categories: [
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-    ],
+    categories: [],
     axisBorder: {
       show: false,
     },
@@ -117,27 +101,43 @@ const options = {
 };
 
 const ChartOne = () => {
-  const [state, setState] = useState({
-    series: [
-      {
-        name: "Complaints Resolved",
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
-      },
+  const { user } = useStateContext();
+  const district = user?.district;
+  const { data, isLoading, error } = useGetMonthlyComplaintsSummary(district);
+  console.log("chartOne")
+  console.log(data)
+  const [series, setSeries] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-      {
-        name: "Complaints Made",
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
-      },
-    ],
-  });
+  useEffect(() => {
+    if (data && data.totalComplaints && data.resolvedComplaints) {
+      const totalComplaintsData = data.totalComplaints;
+      const resolvedComplaintsData = data.resolvedComplaints;
+      const monthsData = [
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+      ];
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
+      setSeries([
+        { name: "Complaints Resolved", data: resolvedComplaintsData },
+        { name: "Complaints Made", data: totalComplaintsData },
+      ]);
+      setCategories(monthsData);
+    }
+  }, [data]);
 
-  handleReset;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7 pb-5 shadow-sm sm:px-7 xl:col-span-8">
@@ -163,8 +163,14 @@ const ChartOne = () => {
       <div>
         <div id="chartOne" className="-ml-5 h-[355px] w-[105%]">
           <ReactApexChart
-            options={options}
-            series={state.series}
+            options={{
+              ...options,
+              xaxis: {
+                ...options.xaxis,
+                categories: categories,
+              },
+            }}
+            series={series}
             type="area"
             width="100%"
             height="100%"

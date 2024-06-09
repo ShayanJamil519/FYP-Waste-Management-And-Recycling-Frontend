@@ -1,6 +1,12 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
+import { useStateContext } from "@/app/StateContext";
+import {
+  useGetTotalWasteLast7Days,
+  useGetWasteRecycledByDistrict,
+} from "../../../hooks/districtAdmin-hook"; // Adjust the path as needed
 
 const options = {
   colors: ["#3C50E0", "#80CAEE"],
@@ -16,7 +22,6 @@ const options = {
       enabled: false,
     },
   },
-
   responsive: [
     {
       breakpoint: 1536,
@@ -42,7 +47,6 @@ const options = {
   dataLabels: {
     enabled: false,
   },
-
   xaxis: {
     categories: ["M", "T", "W", "T", "F", "S", "S"],
   },
@@ -52,7 +56,6 @@ const options = {
     fontFamily: "Satoshi",
     fontWeight: 500,
     fontSize: "14px",
-
     markers: {
       radius: 99,
     },
@@ -63,25 +66,49 @@ const options = {
 };
 
 const ChartTwo = () => {
+  const { user } = useStateContext();
+  const district = user?.district;
+
+  const { data: totalWasteData, isLoading: totalWasteLoading, error: totalWasteError } = useGetTotalWasteLast7Days(district);
+  const { data: recycledWasteData, isLoading: recycledWasteLoading, error: recycledWasteError } = useGetWasteRecycledByDistrict(district);
+
+  console.log("data1")
+  console.log(totalWasteData)
+  console.log("data2")
+  console.log(recycledWasteData)
   const [state, setState] = useState({
     series: [
       {
         name: "Waste generated",
-        data: [44, 55, 41, 67, 22, 43, 65],
+        data: [],
       },
       {
         name: "Waste Recycled",
-        data: [13, 23, 20, 8, 13, 27, 15],
+        data: [],
       },
     ],
   });
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
+  useEffect(() => {
+    if (Array.isArray(totalWasteData) && Array.isArray(recycledWasteData)) {
+      setState((prevState) => ({
+        ...prevState,
+        series: [
+          {
+            ...prevState.series[0],
+            data: totalWasteData,
+          },
+          {
+            ...prevState.series[1],
+            data: recycledWasteData,
+          },
+        ],
+      }));
+    }
+  }, [totalWasteData, recycledWasteData]);
+
+  if (totalWasteLoading || recycledWasteLoading) return <div>Loading...</div>;
+  if (totalWasteError || recycledWasteError) return <div>Error: {totalWasteError || recycledWasteError}</div>;
 
   return (
     <div className="col-span-12 rounded-sm border  bg-white p-7 xl:col-span-4 font-poppins">

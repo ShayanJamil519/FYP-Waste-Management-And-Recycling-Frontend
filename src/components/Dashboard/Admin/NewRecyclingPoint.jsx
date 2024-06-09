@@ -13,9 +13,29 @@ import { RxCross1 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 
 const NewRecyclingPoint = () => {
+  const allowedSubDivision = {
+    south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
+    east: [
+      "gulzar e hijri",
+      "jamshed quarters",
+      "ferozabad",
+      "gulshan e iqbal",
+    ],
+    west: ["orangi", "mangopir", "mominabad"],
+    korangi: ["korangi", "landhi", "model colony", "shah faisal"],
+    malir: ["airport", "gadap", "ibrahim hyderi", "murad memon", "shah mureed"],
+    central: [
+      "gulberg",
+      "liaquatabad",
+      "new karachi",
+      "nazimabad",
+      "north nazimabad",
+    ],
+    keamari: ["baldia", "site", "harbour", "mauripur"],
+  };
   const router = useRouter();
-  const subDivisionOptions = ["Division 1", "Division 2", "Division 3"];
-  const districtOptions = ["District 1", "District 2", "District 3"];
+  // const subDivisionOptions = ["Division 1", "Division 2", "Division 3"];
+  // const districtOptions = ["District 1", "District 2", "District 3"];
   const { user } = useStateContext();
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -27,7 +47,7 @@ const NewRecyclingPoint = () => {
     subdivision: "",
     image: "",
   });
-
+  const subDivisions = allowedSubDivision[data.district];
   const { mutate: addMutate } = useNewRecyclingPoint(JSON.stringify(data));
 
   const handleInputChange = (event) => {
@@ -156,29 +176,6 @@ const NewRecyclingPoint = () => {
           />
           <div>
             <label
-              htmlFor="subdivision-select"
-              className="font-semibold text-sm text-[#202725] mb-1"
-            >
-              Select Your SubDivision
-            </label>
-            <select
-              id="subdivision-select"
-              name="subdivision"
-              required
-              value={data.subdivision}
-              onChange={handleSelectChange}
-              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
-            >
-              <option value="">Select SubDivision</option>
-              {subDivisionOptions.map((subdivision, index) => (
-                <option key={index} value={subdivision}>
-                  {subdivision}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label
               htmlFor="district-select"
               className="font-semibold text-sm text-[#202725] mb-1"
             >
@@ -193,13 +190,40 @@ const NewRecyclingPoint = () => {
               className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
             >
               <option value="">Select District</option>
-              {districtOptions.map((district, index) => (
+              {Object.keys(allowedSubDivision).map((district, index) => (
                 <option key={index} value={district}>
                   {district}
                 </option>
               ))}
             </select>
           </div>
+          <div>
+            <label
+              htmlFor="subdivision-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your SubDivision
+            </label>
+            <select
+              id="subdivision-select"
+              name="subdivision"
+              required
+              value={data.subdivision}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+              disabled={!data.district}
+            >
+              <option value="">Select SubDivision</option>
+              {subDivisions &&
+                subDivisions.map((subDivision, index) => (
+                  <option key={index} value={subDivision}>
+                    {subDivision}
+                  </option>
+                ))}
+             
+            </select>
+          </div>
+          
         </div>
         <div className="grid place-items-center mt-6">
           {isLoading ? (
