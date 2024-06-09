@@ -25,9 +25,11 @@ export default function LayoutWrapperDashboard({ children }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  console.log({ user });
+
   useEffect(() => {
     const token = typeof window !== "undefined" ? Cookies.get("jwt") : null;
-    console.log("url");
+
     const url = `${pathname}?${searchParams}`;
     console.log(url);
     if (token) {

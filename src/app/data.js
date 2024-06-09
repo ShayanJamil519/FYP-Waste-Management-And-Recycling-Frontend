@@ -2,30 +2,6 @@ import { RxDashboard } from "react-icons/rx";
 import { FaServicestack, FaTruckPickup } from "react-icons/fa6";
 import { MdOutlineEvent } from "react-icons/md";
 
-export const sidebarLinksDistrictAdmin = [
-  {
-    linkText: `Dashboard`,
-    linkTo: "/dashboard/district-admin",
-    linkIcon: <RxDashboard />,
-  },
-  {
-    linkText: `Complains`,
-    linkTo: "/dashboard/district-admin/all-complaints",
-    linkIcon: <RxDashboard />,
-  },
-  {
-    linkText: `Incentives`,
-    linkTo: "/dashboard/district-admin/all-incentives",
-    linkIcon: <RxDashboard />,
-  },
-
-  {
-    linkText: `Community Waste Movements`,
-    linkTo: "/dashboard/district-admin/community-waste-movements",
-    linkIcon: <RxDashboard />,
-  },
-];
-
 export const generateSidebarLinksUser = (id) => {
   const sidebarLinks = [
     {
@@ -68,6 +44,30 @@ export const sidebarLinksRecyclingPointAdmin = [
   {
     linkText: `Output Entries`,
     linkTo: "/dashboard/recycling-point-admin/recycling-output-entries",
+    linkIcon: <RxDashboard />,
+  },
+];
+
+export const sidebarLinksDistrictAdmin = [
+  {
+    linkText: `Dashboard`,
+    linkTo: "/dashboard/district-admin",
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Complains`,
+    linkTo: "/dashboard/district-admin/all-complaints",
+    linkIcon: <RxDashboard />,
+  },
+  {
+    linkText: `Incentives`,
+    linkTo: "/dashboard/district-admin/all-incentives",
+    linkIcon: <RxDashboard />,
+  },
+
+  {
+    linkText: `Community Waste Movements`,
+    linkTo: "/dashboard/district-admin/community-waste-movements",
     linkIcon: <RxDashboard />,
   },
 ];

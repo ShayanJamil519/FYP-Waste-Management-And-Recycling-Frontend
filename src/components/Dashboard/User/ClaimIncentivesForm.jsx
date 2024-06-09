@@ -13,25 +13,24 @@ const ClaimIncentivesForm = () => {
   });
 
   const { user } = useStateContext();
+
   let id = user?.userId;
   const { mutate: updateMutate } = useUpdateIncentive(
     JSON.stringify(incentivesData),
     id
   );
-  console.log("USER");
-  console.log(user);
-  console.log(id);
+
   const { data, isError } = useGetIncentive(id);
-  console.log("ye lo chandioo");
-  console.log(data);
+
+  console.log({ data });
+
   const [isLoading, setIsLoading] = useState(false);
   const currentDate = new Date();
   const amount = 8;
-  const subdivision = "liyari";
+  const subdivision = user?.subdivision;
   const currentMonth = currentDate.getMonth() + 1;
-  console.log(currentMonth);
+
   const handleButtonClick = async () => {
-    console.log("INSIDE BUTTON");
     // event.preventDefault();
     setIsLoading(true);
     try {
@@ -40,8 +39,6 @@ const ClaimIncentivesForm = () => {
         {
           onSuccess: async (response) => {
             console.log(response.data);
-
-            console.log("Alhamdolillah2");
           },
           onError: (response) => {
             console.error("An error occurred:");
@@ -56,77 +53,27 @@ const ClaimIncentivesForm = () => {
         currentMonth,
         amount
       );
-      console.log("successsssss");
+
       setIsLoading(false);
-      // // If the transaction is successful, call the addMutate function
-      // addMutate(
-      //   {},
-      //   {
-      //     onSuccess: (response) => {
-      //       toast.success(response?.data?.message);
-      //       setIsLoading(false);
-      //     },
-      //     onError: (response) => {
-      //       toast.error(response.response.data.message);
-      //       setIsLoading(false);
-      //     },
-      //   }
-      // );
     } catch (error) {
-      // toast.error(error.message);
+      toast.error(error.message);
       setIsLoading(false);
-      console.log("ERORRRRRRRR AA GAYA");
+      console.log("ERORRRRRRRR AA GAYA", error);
     }
   };
 
   return (
     <div className=" p-10 font-poppins bg-[#fff] ">
-      {/* <h1 className="font-bold text-2xl">Make a request</h1>
-      <p className="text-sm mt-3 leading-6 text-[#62706b]">
-        Please complete the form below, to request a quote, and we’ll be in
-        touch. Or you can call us and our specialists will provide help!
-      </p> */}
+      {data && data.exists ? (
+        <h1 className="text-lg ">
+          You have already claimed x tokens of your subdivision named{" "}
+          {subdivision}
+        </h1>
+      ) : (
+        <h1 className="text-lg ">Please claim tokens of your subdivision</h1>
+      )}
 
-      {/* <div className="grid grid-cols-1 gap-5">
-          <Input
-            name="userId"
-            label="Enter Your ID"
-            type="text"
-            placeholder="Please write you details"
-          />
-        </div> */}
-
-      {/* <div className="grid place-items-center mt-6">
-          {isLoading ? (
-            <button
-              type="submit"
-              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
-              disabled
-            >
-              <FaSpinner className="animate-spin mr-2 text-white" />
-              <span className={"text-white"}>Loading...</span>
-            </button>
-          ) : (
-            <button
-              // onClick={resetForm}
-              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-              onClick={() => handleButtonClick()}
-              
-            >
-              Claim
-              <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
-                <IoIosArrowRoundForward className="text-[27px] font-bold" />
-              </span>{" "}
-              <style jsx>{`
-                button:hover span {
-                  background-color: #fff;
-                  color: #257830;
-                }
-              `}</style>
-            </button>
-          )}
-        </div> */}
-      <div className="grid place-items-center mt-6">
+      <div className="grid place-items-center ">
         {isLoading ? (
           <button
             type="submit"

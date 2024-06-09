@@ -52,8 +52,9 @@ const SignUp = () => {
   const districtOptions = ["malir", "DistrictB", "DistrictC"];
   const subDivisionOptions = ["airport", "DivisionB", "DivisionC"];
   const [avatar, setAvatar] = useState(null);
+  const [nicPreview, setNicPreview] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
+
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -82,7 +83,7 @@ const SignUp = () => {
 
   const handleSelectChange = (event) => {
     const { name, value } = event.target;
-    console.log(name , value)
+    console.log(name, value);
     setUserData({
       ...userData,
       [name]: value,
@@ -91,7 +92,7 @@ const SignUp = () => {
   const subDivisions = allowedSubDivision[userData.district];
 
   const handleSubmit = async (event) => {
-    console.log(userData)
+    console.log(userData);
     event.preventDefault();
     setIsLoading(true);
     addMutate(
@@ -131,7 +132,6 @@ const SignUp = () => {
   };
 
   const handleAddressChange2 = async (event) => {
-    console.log("handleAvatar22");
     const { name, value } = event.target;
     if (name === "avatara") {
       const reader = new FileReader();
@@ -140,6 +140,7 @@ const SignUp = () => {
         console.log("handleAvatar222");
         if (reader.readyState === 2) {
           setUserData({ ...userData, [name]: reader.result });
+          setNicPreview(reader.result);
         }
       };
 
@@ -151,11 +152,15 @@ const SignUp = () => {
 
   const removeAvatar = () => {
     setAvatar(null);
-    // Update userData state if necessary
   };
 
-  // ===================
+  const removeNICAvatar = () => {
+    setNicPreview(null);
+  };
+
+  // =========================
   // Matamask wallet connection
+  // =========================
   const connectwalletHandler = () => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -207,19 +212,6 @@ const SignUp = () => {
           <h2 className="font-extrabold font-paralucent text-[20px]  lg:text-3xl">
             Sign up with Us
           </h2>
-          <div className="flex mt-1 sm:mt-1 lg:mt-6">
-            <div
-              className="bg-[#EAEAEA] rounded-md cursor-pointer w-full py-3 flex items-center gap-5 justify-center "
-              // onClick={handleGoogleLogin}
-            >
-              <FcGoogle className="text-[30px]" />
-              <p className="text-[13px] sm:text-base"> Signup With Google</p>
-            </div>
-          </div>
-          <div className="flex mt-3 sm:mt-2 gap-2 sm:gap-5 justify-start items-center">
-            <p className="text-[10px] sm:text-sm">Or Continue With Email</p>
-            <div className="h-[1px] bg-[#C9C6C6] w-1/2 sm:w-[60%]"></div>
-          </div>
 
           <form onSubmit={handleSubmit} className="w-full">
             <div className="my-3">
@@ -345,42 +337,50 @@ const SignUp = () => {
               </div>
             </div>
             <div className="my-3">
-              <label htmlFor="address-upload" className="cursor-pointer">
-                <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
-                  <FaUpload className="text-2xl" />
-                  <p className="text-center sm:text-base text-[14px]">
-                    Upload your Cnic For Address Verification
-                  </p>
-                  <p className="text-xs mt-2">
-                    Click to browse your image here
-                  </p>
+              {nicPreview ? (
+                <div className="">
+                  <div className="w-full sm:w-[300px] h-32 mx-auto relative">
+                    <img
+                      src={nicPreview}
+                      alt="Avatar"
+                      className="rounded-sm w-full h-full  "
+                    />
+                    <button
+                      onClick={removeNICAvatar}
+                      className="absolute  top-0 right-0 p-[5px] bg-gray-200 rounded-full"
+                    >
+                      <RxCross1 className="text-[#000] text-[14px] " />
+                    </button>
+                  </div>
                 </div>
-              </label>
-
-              <input
-                id="address-upload"
-                required
-                name="avatara"
-                type="file"
-                accept="image/*"
-                onChange={handleAddressChange2}
-                className="hidden"
-              />
-            </div>
-            {/* <div className="grid place-items-center mt-6">
-              {isLoading ? (
-                <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
               ) : (
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={`bg-[#32A632] text-[10px] lg:text-lg text-white rounded-full py-3 lg:py-2 px-24`}
-                >
-                  Sign Up
-                </button>
+                <>
+                  <label htmlFor="address-upload" className="cursor-pointer">
+                    <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
+                      <FaUpload className="text-2xl" />
+                      <p className="text-center sm:text-base text-[14px]">
+                        Upload your Cnic For Address Verification
+                      </p>
+                      <p className="text-xs mt-2">
+                        Click to browse your image here
+                      </p>
+                    </div>
+                  </label>
+
+                  <input
+                    id="address-upload"
+                    required
+                    name="avatara"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAddressChange2}
+                    className="hidden"
+                  />
+                </>
               )}
-            </div> */}
-            <div className="grid place-items-center mt-6">
+            </div>
+
+            <div className="grid place-items-center mt-3">
               {isLoading ? (
                 <button
                   type="submit"
