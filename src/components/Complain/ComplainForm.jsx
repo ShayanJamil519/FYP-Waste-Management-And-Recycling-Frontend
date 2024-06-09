@@ -7,14 +7,22 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useStateContext } from "@/app/StateContext";
-import { FaUpload } from "react-icons/fa6";
+import { FaChevronDown, FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
+import dynamic from "next/dynamic";
+
 import "@tensorflow/tfjs-backend-cpu";
 import * as tf from "@tensorflow/tfjs-core";
 
 import * as tflite from "@tensorflow/tfjs-tflite";
 import "./complain.css";
+const MapComponent = dynamic(
+  () => import("@/components/Complain/mapComponent"),
+  {
+    ssr: false,
+  }
+);
 
 const MAX_DETECTIONS = 5;
 const THRESHOLD = 0.4;
@@ -105,12 +113,20 @@ const ComplainForm = () => {
   };
   const subDivisions = allowedSubDivision[userData.district];
 
-  const handleSubmit = async (event) => {
-    console.log("image here");
-    console.log(image);
+  console.log({ imageeeeeoutside: userData.image });
 
-    //const processedImage = tf.cast(tf.expandDims(resizedImage), 'int32');
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    console.log("Hellllllllllllllllllllllll");
+
+    console.log({ imageeeee: userData.image });
+
+    if (!image) {
+      toast.error("Please upload an image");
+      return;
+    }
+
     setIsLoading(true);
     addMutate(
       {},
@@ -210,7 +226,11 @@ const ComplainForm = () => {
           }
         };
         img.src = reader.result;
-        setUserData({ ...userData, [name]: reader.result });
+
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          image: reader.result,
+        }));
         setImage(reader.result);
       };
 
@@ -236,10 +256,6 @@ const ComplainForm = () => {
         <div id="image-container" className="relative sm:m-10">
           <div id="my-3">
             {image ? (
-              // <div className="">
-              //   <div className="w-24 h-24 mx-auto relative"></div>
-              // </div>
-
               <div id="image-container-prediction" className="relative w-full">
                 <div
                   style={{
@@ -284,15 +300,6 @@ const ComplainForm = () => {
           </div>
         </div>
         <div className="grid mt-3 sm:mt-0 md:grid-cols-2 gap-5">
-          <Input
-            name="userId"
-            label="Enter Your ID"
-            type="text"
-            value={userData.userId}
-            placeholder="Please write you details"
-            onChange={handleInputChange}
-          />
-
           <div>
             <label
               htmlFor="district-select"
@@ -300,36 +307,27 @@ const ComplainForm = () => {
             >
               Select Your District
             </label>
-            {/* <select
-              id="district-select"
-              name="district"
-              required
-              value={userData.district}
-              onChange={handleSelectChange}
-              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
-            >
-              <option value="">Select District</option>
-              {districtOptions.map((district, index) => (
-                <option key={index} value={district}>
-                  {district}
-                </option>
-              ))}
-            </select> */}
-            <select
-              id="district-select"
-              name="district"
-              required
-              value={userData.district}
-              onChange={handleSelectChange}
-              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
-            >
-              <option value="">Select District</option>
-              {Object.keys(allowedSubDivision).map((district, index) => (
-                <option key={index} value={district}>
-                  {district}
-                </option>
-              ))}
-            </select>
+
+            <div className="relative inline-block w-full cursor-pointer">
+              <select
+                id="district-select"
+                name="district"
+                required
+                value={userData.district}
+                onChange={handleSelectChange}
+                className="outline-none appearance-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+              >
+                <option value="">Select District</option>
+                {Object.keys(allowedSubDivision).map((district, index) => (
+                  <option key={index} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-2 text-[16px] flex items-center px-2 text-[#202725]">
+                <FaChevronDown />
+              </div>
+            </div>
           </div>
 
           <div>
@@ -339,47 +337,64 @@ const ComplainForm = () => {
             >
               Select Your Sub Division
             </label>
-            <select
-              id="subDivision-select"
-              required
-              name="subDivision"
-              value={userData.subDivision}
-              onChange={handleSelectChange}
-              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df]"
-              disabled={!userData.district}
-            >
-              <option value="">Select SubDivision</option>
-              {subDivisions &&
-                subDivisions.map((subDivision, index) => (
-                  <option key={index} value={subDivision}>
-                    {subDivision}
-                  </option>
-                ))}
-            </select>
+            <div className="relative inline-block w-full cursor-pointer">
+              <select
+                id="subDivision-select"
+                required
+                name="subDivision"
+                value={userData.subDivision}
+                onChange={handleSelectChange}
+                className="outline-none text-sm appearance-none  p-4 w-full rounded-md border-2 border-[#d9e4df]"
+                disabled={!userData.district}
+              >
+                <option value="">Select SubDivision</option>
+                {subDivisions &&
+                  subDivisions.map((subDivision, index) => (
+                    <option key={index} value={subDivision}>
+                      {subDivision}
+                    </option>
+                  ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-2 text-[16px] flex items-center px-2 text-[#202725]">
+                <FaChevronDown />
+              </div>
+            </div>
           </div>
+        </div>
 
+        <div className="w-full mt-3">
           <Input
             name="area"
             label="Enter Your Area"
             type="text"
+            required
             value={userData.area}
-            placeholder="Please write you details"
+            placeholder="Please enter your area"
             onChange={handleInputChange}
           />
-          <Input
+        </div>
+
+        <div className="w-full my-3">
+          <p className="font-semibold text-sm text-[#202725] mb-1">
+            Write your query
+          </p>
+          <textarea
             name="description"
             onChange={handleInputChange}
             value={userData.description}
-            placeholder="Enter your text here..."
-            label="Your Query"
+            required
+            className="outline-none min-h-[150px] sm:min-h-[200px] text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
           />
         </div>
-        <div className="grid place-items-center mt-6">
+
+        <MapComponent />
+
+        <div className="grid place-items-center ">
           {isLoading ? (
             <button
               type="submit"
               className=" mt-3 sm:mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-md sm:rounded-sm"
-              disabled
+              // disabled
             >
               <FaSpinner className="animate-spin mr-2 text-white" />
               <span className={"text-white"}>Loading...</span>

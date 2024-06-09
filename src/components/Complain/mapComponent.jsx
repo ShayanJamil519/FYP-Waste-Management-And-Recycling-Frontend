@@ -6,7 +6,7 @@ const MapComponent = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const mapStyles = {
-    height: "400px",
+    height: "250px",
     width: "100%",
   };
 
@@ -19,9 +19,9 @@ const MapComponent = () => {
 
   const handleConfirmLocation = () => {
     if (selectedLocation) {
-      console.log("LOCATION")
-      console.log(selectedLocation.lat)
-      console.log(selectedLocation.lng)
+      console.log("LOCATION");
+      console.log(selectedLocation.lat);
+      console.log(selectedLocation.lng);
       localStorage.setItem("latitude", selectedLocation.lat);
       localStorage.setItem("longitude", selectedLocation.lng);
     }
@@ -37,7 +37,12 @@ const MapComponent = () => {
       >
         {selectedLocation && <Marker position={selectedLocation} />}
       </GoogleMap>
-      <button onClick={handleConfirmLocation}>Confirm Location</button>
+      <div
+        className="cursor-pointer w-fit mt-3 font-semibold text-sm mb-1 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-3 rounded-md sm:rounded-sm"
+        onClick={handleConfirmLocation}
+      >
+        Confirm Location on Map
+      </div>
     </LoadScript>
   );
 };
