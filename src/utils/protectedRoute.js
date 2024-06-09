@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
     const token = typeof window !== "undefined" ? Cookies.get("jwt") : null;
 
     if (!token) {
-      if (pathname !== "/") {
+      if (pathname.startsWith("/dashboard")) {
         router.push("/login");
       }
     } else {
