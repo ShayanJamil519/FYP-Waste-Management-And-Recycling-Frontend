@@ -118,9 +118,11 @@ const ComplainForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    console.log("Hellllllllllllllllllllllll");
+
     console.log({ imageeeee: userData.image });
 
-    if (userData?.image === "") {
+    if (!image) {
       toast.error("Please upload an image");
       return;
     }
@@ -224,7 +226,11 @@ const ComplainForm = () => {
           }
         };
         img.src = reader.result;
-        setUserData({ ...userData, [name]: reader.result });
+
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          image: reader.result,
+        }));
         setImage(reader.result);
       };
 
@@ -388,7 +394,7 @@ const ComplainForm = () => {
             <button
               type="submit"
               className=" mt-3 sm:mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-md sm:rounded-sm"
-              disabled
+              // disabled
             >
               <FaSpinner className="animate-spin mr-2 text-white" />
               <span className={"text-white"}>Loading...</span>

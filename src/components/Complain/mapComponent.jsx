@@ -37,12 +37,12 @@ const MapComponent = () => {
       >
         {selectedLocation && <Marker position={selectedLocation} />}
       </GoogleMap>
-      <button
-        className="mt-3 font-semibold text-sm mb-1 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-3 rounded-md sm:rounded-sm"
+      <div
+        className="cursor-pointer w-fit mt-3 font-semibold text-sm mb-1 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-3 rounded-md sm:rounded-sm"
         onClick={handleConfirmLocation}
       >
         Confirm Location on Map
-      </button>
+      </div>
     </LoadScript>
   );
 };
