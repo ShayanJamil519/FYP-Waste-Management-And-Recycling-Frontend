@@ -20,7 +20,7 @@ const useCreateThread = (data) => {
   console.log("HOOK")
   return useMutation((threadId) => ThreadEntry.likeById(threadId));
 };*/
-const useLikeThread2 = () => {
+const useLikeThread = () => {
   
   const mutation = useMutation((userData) =>
     ThreadEntry.likeById2(userData)
@@ -92,5 +92,5 @@ export {
   useGetAThread,
   useGetAllThreads,
   useReplyThread,
-  useLikeThread2
+  useLikeThread
 };

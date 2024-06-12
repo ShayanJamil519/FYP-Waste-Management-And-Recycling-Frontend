@@ -56,10 +56,10 @@
 "use client";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { getAllRecyclingPoints } from "../../hooks/user-hook";
+import { useGetAllRecyclingPoints } from "../../hooks/user-hook";
 
 const RecyclingPoints = () => {
-  const { data, isLoading, error } = getAllRecyclingPoints();
+  const { data, isLoading, error } = useGetAllRecyclingPoints();
   console.log(data)
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

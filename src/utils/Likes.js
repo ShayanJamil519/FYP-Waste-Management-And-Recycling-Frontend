@@ -4,10 +4,7 @@ import { useLikeThread } from "../hooks/thread-hook";
 import { useStateContext } from "@/app/StateContext";
 
 const Likes = ({ numberOfLikes, threadId }) => {
-    console.log("in alike component")
-    console.log(threadId)
-    //const { mutate: addMutate } = useLikeThread(JSON.stringify(threadId));
-    //const likeMutation = useLikeThread();
+
     const { user, setUser } = useStateContext();
     const userId = user._id
     const { addResponse, isLoading, isError, error } =
@@ -26,26 +23,7 @@ const Likes = ({ numberOfLikes, threadId }) => {
         }
       };
 
-    /*const handleLikeFunction = () => {
-        addMutate(
-          {},
-          {
-            onSuccess: (response) => {
-              console.log(response)
-              toast.success(response?.data?.message);
-              setThreadList(response?.data?.threads);
-              setIsLoading(false);
-            },
-            onError: (response) => {
-              console.error("An error occurred:");
-              console.log(response);
-              console.log(response.response.data.message);
-              toast.error(response.response.data.message);
-              setIsLoading(false);
-            },
-          }
-        );
-    };*/
+    
 
     return (
         <div className='likes__container'>

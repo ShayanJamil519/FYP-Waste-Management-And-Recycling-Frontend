@@ -56,10 +56,10 @@
 "use client";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { getAllLandfillPoints } from "../../hooks/user-hook"; // Adjust the path as needed
+import { useGetAllLandfillPoints } from "../../hooks/user-hook"; // Adjust the path as needed
 
 const Landfills = () => {
-  const { data, isLoading, error } = getAllLandfillPoints();
+  const { data, isLoading, error } = useGetAllLandfillPoints();
   console.log(data)
 
   if (isLoading) return <div>Loading...</div>;
