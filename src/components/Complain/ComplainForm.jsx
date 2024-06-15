@@ -73,7 +73,6 @@ const ComplainForm = () => {
   const [image, setImage] = useState(null);
   const { user } = useStateContext();
   const [latitude, setLatitude] = useState(null);
-  const districtOptions = ["District 1", "District 2", "District 3"];
   const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
@@ -118,9 +117,6 @@ const ComplainForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Hellllllllllllllllllllllll");
-
-    console.log({ imageeeee: userData.image });
 
     if (!image) {
       toast.error("Please upload an image");
@@ -267,7 +263,12 @@ const ComplainForm = () => {
                   className={`prediction_box absolute border-4 border-red-600`}
                 >
                   <p className="absolute top-0 left-0 text-red-600 text-lg">
-                    {`${detectionDimension.predictionName} + ${detectionDimension.predictionValue}`}
+                    {`${detectionDimension.predictionName === undefined 
+                  ? "No waste Detected " 
+                  : detectionDimension.predictionName }
+                   + ${detectionDimension.predictionValue === undefined 
+                    ? " " 
+                    : detectionDimension.predictionValue}`}
                   </p>
                 </div>
 
@@ -290,7 +291,6 @@ const ComplainForm = () => {
             )}
             <input
               id="avatar-upload"
-              required
               name="image"
               type="file"
               accept="image/*"
