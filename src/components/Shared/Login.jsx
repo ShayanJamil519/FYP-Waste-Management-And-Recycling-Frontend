@@ -47,7 +47,9 @@ const Login = () => {
           if (
             pathname !== "/" ||
             pathname !== "/signup" ||
-            pathname !== "/login"
+            pathname !== "/login" ||
+            pathname !== "/forgot-password" ||
+            pathname.startsWith !== "/reset-password"
           ) {
             router.back();
           }

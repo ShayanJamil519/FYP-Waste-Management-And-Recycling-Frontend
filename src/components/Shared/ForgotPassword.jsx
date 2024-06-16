@@ -1,29 +1,19 @@
 "use client";
-import { FaTimes } from "react-icons/fa";
-import { useStateContext } from "@/app/StateContext";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { useUserLogin } from "../../hooks/auth-hook";
+import { useUserForgotPassword } from "../../hooks/auth-hook";
 import { IoIosArrowBack, IoIosArrowRoundForward } from "react-icons/io";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 
 const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { setIsLoggedIn, setOpenSignupModal, setOpenLoginModal } =
-    useStateContext();
-
-  const router = useRouter();
-  const pathname = usePathname();
 
   const [userData, setUserData] = useState({
     email: "",
-    password: "",
   });
 
-  const { mutate: addMutate } = useUserLogin(JSON.stringify(userData));
+  const { mutate: addMutate } = useUserForgotPassword(JSON.stringify(userData));
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -42,15 +32,7 @@ const ForgotPassword = () => {
       {
         onSuccess: (response) => {
           toast.success(response?.data?.message);
-          setOpenLoginModal(false);
-          setIsLoggedIn(true);
-          if (
-            pathname !== "/" ||
-            pathname !== "/signup" ||
-            pathname !== "/login"
-          ) {
-            router.back();
-          }
+
           setIsLoading(false);
         },
         onError: (response) => {

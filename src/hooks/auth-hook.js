@@ -50,38 +50,38 @@ const useUserLogin = (userData) => {
   );
 };
 
-const useGetAllUsers = () => {
-  console.log("DAAAAAAAATA222")
-  return useQuery(["allUsers"],
-  AuthService.getAllUsers);
+const useUserForgotPassword = (userData) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return AuthService.ForgotPassword(userData);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("forgotPassword");
+      },
+    }
+  );
 };
-// const useUserForgotPassword = (email) => {
-//   const queryClient = useQueryClient();
-//   return useMutation(
-//     () => {
-//       return AuthService.forgotPasswordUser(email);
-//     },
-//     {
-//       onSuccess: () => {
-//         queryClient.invalidateQueries("forgotPassword");
-//       },
-//     }
-//   );
-// };
 
-// const useUserResetPassword = (userData, token) => {
-//   const queryClient = useQueryClient();
-//   return useMutation(
-//     () => {
-//       return AuthService.resetPasswordUser(userData, token);
-//     },
-//     {
-//       onSuccess: () => {
-//         queryClient.invalidateQueries("resetPassword");
-//       },
-//     }
-//   );
-// };
+const useUserResetPassword = (userData) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return AuthService.ResetPassword(userData);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("resetPassword");
+      },
+    }
+  );
+};
+
+const useGetAllUsers = () => {
+  console.log("DAAAAAAAATA222");
+  return useQuery(["allUsers"], AuthService.getAllUsers);
+};
 
 // const useContactUs = (data) => {
 //   const queryClient = useQueryClient();
@@ -102,6 +102,8 @@ export {
   useUserLogin,
   useUserId,
   useGetAllUsers,
+  useUserForgotPassword,
+  useUserResetPassword,
   // useUserForgotPassword,
   // useUserResetPassword,
   // useContactUs,

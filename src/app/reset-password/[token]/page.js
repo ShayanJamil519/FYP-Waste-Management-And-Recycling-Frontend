@@ -1,7 +1,7 @@
 import ResetPassword from "@/components/Shared/ResetPassword";
 import ProtectedRoute from "@/utils/protectedRoute";
 
-const page = () => {
+const page = ({ params }) => {
   return (
     <ProtectedRoute>
       <div
@@ -13,7 +13,7 @@ const page = () => {
       >
         {/* Left */}
         <div className="w-full sm:w-[80%] md:w-[70%] lg:w-[45%] mx-auto">
-          <ResetPassword />
+          <ResetPassword token={params.token} />
         </div>
       </div>
     </ProtectedRoute>

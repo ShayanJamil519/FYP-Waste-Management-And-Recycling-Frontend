@@ -5,25 +5,26 @@ import Cookies from "js-cookie";
 const token = typeof window !== "undefined" && Cookies.get("jwt");
 
 class AuthService {
-
   async getAllUsers() {
     try {
-      console.log("DAAAAAAAATA333")
-      const {data} = await axios.get(`${apiUrl}/get-all-users
-      `, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("DAAAAAAAATA444")
-      console.log(data)
+      console.log("DAAAAAAAATA333");
+      const { data } = await axios.get(
+        `${apiUrl}/get-all-users
+      `,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("DAAAAAAAATA444");
+      console.log(data);
       return data;
     } catch (error) {
       throw error;
     }
-  };
-
+  }
 
   async getMyId() {
     console.log("sasdf");
@@ -77,19 +78,26 @@ class AuthService {
    * @returns
    */
 
-  //   async forgotPasswordUser(email) {
-  //     console.log(email);
-  //     const res = await axios.put(
-  //       `${apiUrl}/api/auth/forgotPassword`,
-  //       { email },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     return res;
-  //   }
+  async ForgotPassword(userData) {
+    const res = await axios.post(`${apiUrl}/forgotPassword`, userData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return res;
+  }
+
+  async ResetPassword(userData) {
+    const res = await axios.post(`${apiUrl}/resetPassword`, userData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log({ resp: res.data });
+
+    return res;
+  }
 
   //   /**
   //    *resetPasswordUser

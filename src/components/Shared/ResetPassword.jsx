@@ -1,30 +1,24 @@
 "use client";
-import { FaTimes } from "react-icons/fa";
-import { useStateContext } from "@/app/StateContext";
-import Link from "next/link";
 import { toast } from "react-toastify";
-import { useUserLogin } from "../../hooks/auth-hook";
-import { IoIosArrowBack, IoIosArrowRoundForward } from "react-icons/io";
+import { useUserResetPassword } from "../../hooks/auth-hook";
+import { IoIosArrowRoundForward } from "react-icons/io";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 
-const ResetPassword = () => {
+const ResetPassword = ({ token }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { setIsLoggedIn, setOpenSignupModal, setOpenLoginModal } =
-    useStateContext();
 
   const router = useRouter();
-  const pathname = usePathname();
 
   const [userData, setUserData] = useState({
-    email: "",
     newPassword: "",
     confirmNewPassword: "",
   });
 
-  const { mutate: addMutate } = useUserLogin(JSON.stringify(userData));
+  const { mutate: addMutate } = useUserResetPassword(
+    JSON.stringify({ token, newPassword: userData?.newPassword })
+  );
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -43,16 +37,11 @@ const ResetPassword = () => {
       {
         onSuccess: (response) => {
           toast.success(response?.data?.message);
-          setOpenLoginModal(false);
-          setIsLoggedIn(true);
-          if (
-            pathname !== "/" ||
-            pathname !== "/signup" ||
-            pathname !== "/login"
-          ) {
-            router.back();
-          }
+
           setIsLoading(false);
+          setTimeout(() => {
+            router.push("/login");
+          }, 600);
         },
         onError: (response) => {
           toast.error(response.response.data.message);
@@ -70,15 +59,6 @@ const ResetPassword = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="mt-4 flex flex-col gap-y-4">
-          <input
-            type="email"
-            name="email"
-            required
-            onChange={handleInputChange}
-            placeholder="Enter your email address"
-            className="text-[10px] lg:text-base px-2 md:px-4 w-full py-3 rounded-lg outline-none bg-[#EAEAEA]"
-          />
-
           <input
             type="password"
             name="newPassword"
