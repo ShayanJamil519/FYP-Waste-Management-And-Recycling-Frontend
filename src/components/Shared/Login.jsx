@@ -102,11 +102,22 @@ const Login = () => {
                 />
               </div>
 
-              <div className="grid place-items-center mt-6 font-poppins">
+              <p className="mt-4 mb-2 font-poppins text-xs  ">
+                Forgot your password?
+                <Link
+                  className="font-semibold text-sm text-[#32A632] mx-1"
+                  href="/forgot-password"
+                >
+                  Click
+                </Link>
+                here to reset it.
+              </p>
+
+              <div className="grid place-items-center mt-2  font-poppins">
                 {isLoading ? (
                   <button
                     type="submit"
-                    className="lg:mt-4 mt-2 w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 lg:py-4 py-3 rounded-md"
+                    className=" w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 lg:py-4 py-3 rounded-md"
                     disabled
                   >
                     <FaSpinner className="animate-spin mr-2 text-white" />
@@ -116,7 +127,7 @@ const Login = () => {
                   <button
                     type="submit"
                     // onClick={resetForm}
-                    className="lg:mt-4 mt-2 w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 lg:py-4 py-3 rounded-md"
+                    className=" w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 lg:py-4 py-3 rounded-md"
                   >
                     login
                     <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
@@ -132,7 +143,7 @@ const Login = () => {
                 )}
               </div>
             </form>
-            <p className="text-center my-4 sm:mt-7 font-semibold  text-[10px] lg:text-sm">
+            <p className="text-center my-4 sm:mt-4 font-semibold  text-[10px] lg:text-sm">
               Not With Us?
               <Link
                 href="/signup"

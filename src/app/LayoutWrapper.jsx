@@ -22,7 +22,9 @@ export default function LayoutWrapper({ children }) {
   const showFooter =
     !pathname?.includes("/dashboard") &&
     !pathname?.includes("/login") &&
-    !pathname?.includes("/signup");
+    !pathname?.includes("/signup") &&
+    !pathname?.includes("/forgot-password") &&
+    !pathname?.startsWith("/reset-password");
 
   return (
     <>
