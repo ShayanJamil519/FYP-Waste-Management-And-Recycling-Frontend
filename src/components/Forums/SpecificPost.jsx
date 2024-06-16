@@ -7,7 +7,6 @@ import {
   useGetAThread,
   useReplyThread,
   useLikeThread,
-  useLikeThread2,
 } from "../../hooks/thread-hook";
 import { useStateContext } from "@/app/StateContext";
 import { toast } from "react-toastify";
@@ -87,7 +86,7 @@ const Post = () => {
 
   const { data, isError } = useGetAThread(threadId);
   console.log(data);
-  const { addResponse, isLoading, error } = useLikeThread2();
+  const { addResponse, isLoading, error } = useLikeThread();
 
   const handleLikeFunction = async () => {
     try {
