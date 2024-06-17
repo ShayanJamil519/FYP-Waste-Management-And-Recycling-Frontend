@@ -7,7 +7,6 @@ import {
   useGetSubdivisionsAndUserCounts,
   useGetSubdivisionComplaints,
   useGetPredictData,
-
   useCreateIncentive,
 } from "../../../hooks/incentives";
 import DataLoader from "@/components/Shared/DataLoader";
@@ -15,14 +14,17 @@ import UploadReportButton from "@/components/Shared/UploadReportButton";
 import { useStateContext } from "@/app/StateContext";
 
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const IncentivesTable = () => {
   const { user } = useStateContext();
-  const [incentiveData, setIncentiveData] = useState({
-    subDivision: user?.subDivision,
-    tokenBalance: ""
-  });
 
+  console.log({ user });
+
+  const [incentiveData, setIncentiveData] = useState({
+    subDivision: user?.subdivision,
+    tokenBalance: "",
+  });
 
   const { mutate: incentiveMutate } = useCreateIncentive(
     JSON.stringify(incentiveData)
@@ -30,31 +32,25 @@ const IncentivesTable = () => {
 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
-  // console.log(currentMonth);
-  const district = "south";
+
   const [data, setData] = useState({});
-  // https://cheerful-eel-garment.cyclic.app
 
-  const { mutate : addMutate} = useGetPredictData(JSON.stringify(data));
+  const { mutate: addMutate } = useGetPredictData(JSON.stringify(data));
 
-  const [openReviewIncentiveModal, setOpenReviewIncentiveModal] =
-    useState(false);
   const paginate = usePagination();
 
-  // const {data:prediction, refetch} = useGetPredictData(data);
   const {
     data: data1,
     isLoading,
     isError,
-  } = useGetSubdivisionsAndUserCounts(district);
-  const { data: data2 } = useGetSubdivisionComplaints(district);
-  console.log("DATA22222222222222222");
-  console.log(data2);
+  } = useGetSubdivisionsAndUserCounts(user?.district);
+
+  const { data: data2 } = useGetSubdivisionComplaints(user?.district);
+
+  console.log({ data1, data2 });
 
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(data1);
   const handleButtonClick = async (product) => {
-    console.log("product");
-    console.log(product);
     const findSubdivisionData = (data, subdivision) => {
       return data[subdivision];
     };
@@ -78,7 +74,6 @@ const IncentivesTable = () => {
       const { total: subdivisionTotal, valid: subdivisionValid } =
         subdivisionData;
 
-      // Now, you can use these variables to assign values to your target variables
       const recyclablePercentage = avgRecyclablePercentage;
       const plasticPercentage = avgPlasticPercentage;
       const glassPercentage = avgGlassPercentage;
@@ -98,28 +93,23 @@ const IncentivesTable = () => {
         {},
         {
           onSuccess: async (response) => {
-            console.log(response.data);
             setIncentiveData({
               ...incentiveData,
               tokenBalance: response.data[0],
             });
-            // useCreateIncentive(
-            //   JSON.stringify(incentiveData));
+
             await IncentivesContractInteraction.CalculateIncentives(
               subdivision,
               response.data,
               currentMonth
             );
-            console.log("chandioooooooooooo");
           },
           onError: (response) => {
-            console.error("An error occurred:");
-            console.log(response);
-            console.log(response.response.data.message);
+            console.log({ response: response?.response?.data?.message });
+            toast.error(response.response.data.message);
           },
         }
       );
-
 
       incentiveMutate(
         {},
@@ -132,73 +122,22 @@ const IncentivesTable = () => {
           onError: (response) => {
             console.error("An error occurred:");
             console.log(response);
-            console.log(response.response.data.message);
+            toast.error(response.response.data.message);
           },
         }
       );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      console.log("ATAD");
-      console.log(data);
-      // const {data:prediction, refetch} = useGetPredictData(data);
-      // const {data:prediction} = useGetPredictData(data);
-      // refetch();
-      // Handle success, e.g., show a success message or update state
     } catch (error) {
-      console.log("ERROR");
-      console.log(error);
+      toast.error(error?.message);
     }
   };
 
-  // The rest of your component code goes here
-  // recyclablePercentage, plasticPercentage, glassPercentage, Metalloids, complaints, validcomplaints
   return (
     <div>
       {/* Table */}
       <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
         <div className="py-4 px-4 md:px-6 xl:px-7.5">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Incentive Details For South District
+            Incentive details for {user?.district} district
           </h4>
         </div>
 

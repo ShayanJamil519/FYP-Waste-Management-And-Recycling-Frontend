@@ -1,6 +1,8 @@
 import { RxDashboard } from "react-icons/rx";
 import { FaServicestack, FaTruckPickup } from "react-icons/fa6";
 import { MdOutlineEvent } from "react-icons/md";
+import { TbReport, TbRecycle } from "react-icons/tb";
+import { GoGift } from "react-icons/go";
 
 export const generateSidebarLinksUser = (id) => {
   const sidebarLinks = [
@@ -57,18 +59,18 @@ export const sidebarLinksDistrictAdmin = [
   {
     linkText: `Complains`,
     linkTo: "/dashboard/district-admin/all-complaints",
-    linkIcon: <RxDashboard />,
+    linkIcon: <TbReport />,
   },
   {
     linkText: `Incentives`,
     linkTo: "/dashboard/district-admin/all-incentives",
-    linkIcon: <RxDashboard />,
+    linkIcon: <GoGift />,
   },
 
   {
     linkText: `Community Waste Movements`,
     linkTo: "/dashboard/district-admin/community-waste-movements",
-    linkIcon: <RxDashboard />,
+    linkIcon: <TbRecycle />,
   },
 ];
 

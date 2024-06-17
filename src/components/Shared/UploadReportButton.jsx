@@ -3,9 +3,14 @@ import html2canvas from "html2canvas";
 import { uploadFileToIPFS } from "@/utils/uploadFileToIPFS";
 import { toast } from "react-toastify";
 import WasteManagementContractInteraction from "@/utils/wasteMangementContractInteraction";
+import { useState } from "react";
+import { FaSpinner } from "react-icons/fa6";
 
 const UploadReportButton = ({ tableRef, reportType }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleCaptureAndUpload = async () => {
+    setLoading(true);
     if (tableRef.current) {
       try {
         const canvas = await html2canvas(tableRef.current, {
@@ -27,12 +32,16 @@ const UploadReportButton = ({ tableRef, reportType }) => {
             );
 
             toast.success("Report Uploaded to IPFS");
+            setLoading(false);
           } catch (error) {
             toast.error(error?.message);
+          } finally {
+            setLoading(false);
           }
         });
       } catch (error) {
         toast.error(error);
+        setLoading(false);
       }
     }
   };
@@ -40,9 +49,16 @@ const UploadReportButton = ({ tableRef, reportType }) => {
   return (
     <button
       onClick={handleCaptureAndUpload}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      disabled={loading}
+      className={` ${
+        loading && "opacity-70"
+      } bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
     >
-      Upload Report
+      {loading ? (
+        <FaSpinner className="animate-spin  text-white" />
+      ) : (
+        "Upload Report"
+      )}
     </button>
   );
 };

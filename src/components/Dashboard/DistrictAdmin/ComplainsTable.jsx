@@ -6,13 +6,18 @@ import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import EditComplainModal from "./EditComplainModal";
-import { useGetComplaintsInDistrict, useDeleteComplaint } from "../../../hooks/complain-hook";
+import {
+  useGetComplaintsInDistrict,
+  useDeleteComplaint,
+} from "../../../hooks/complain-hook";
 import DataLoader from "@/components/Shared/DataLoader";
 import UploadReportButton from "@/components/Shared/UploadReportButton";
-
+import { toast } from "react-toastify";
+import { useStateContext } from "@/app/StateContext";
 
 const ComplainsTable = () => {
-  const district = "south";
+  const { user } = useStateContext();
+
   const paginate = usePagination();
   const tableRef = useRef();
   const deleteComplaintMutation = useDeleteComplaint();
@@ -20,21 +25,17 @@ const ComplainsTable = () => {
   const [selectedComplaintId, setSelectedComplaintId] = useState(null);
   const [selectedLatitude, setSelectedLatitude] = useState(null);
   const [selectedLongitude, setSelectedLongitude] = useState(null);
-  const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
-
-
+  const { data, isLoading, isError } = useGetComplaintsInDistrict(
+    user?.district
+  );
 
   const truncateDescription = (description, maxLength) => {
     if (description.length <= maxLength) {
-        return description;
+      return description;
     } else {
-        // Find the last space before maxLength
-        let lastSpaceIndex = description.lastIndexOf(' ', maxLength);
-        // Truncate the description and add ellipsis
-        return description.substring(0, 5) + '...';
+      return description.substring(0, maxLength) + "...";
     }
-}
-
+  };
 
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
@@ -42,29 +43,24 @@ const ComplainsTable = () => {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
-  }
-
+  };
 
   const handleDeleteComplaint = async (complaintId) => {
     try {
-
       await deleteComplaintMutation.mutateAsync(complaintId);
-      // Handle success, e.g., show a success message or update state
+      toast.success("Complaint deleted successfully");
     } catch (error) {
-      // Handle error, e.g., display error message
+      toast.error("Failed to delete complaint");
     }
   };
 
-  const handleEditComplaint = (complaintId,latitude,longitude) => {
-    console.log("Itemmmmmmmmmmmmmm")
-    console.log(visibleItems)
+  const handleEditComplaint = (complaintId, latitude, longitude) => {
     setOpenEditComplainModal(true);
     setSelectedComplaintId(complaintId);
     setSelectedLatitude(latitude);
     setSelectedLongitude(longitude);
-    // You can use the complaintId here or pass it to the modal component
   };
-  // Check loading and error states
+
   if (isLoading) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
@@ -74,7 +70,11 @@ const ComplainsTable = () => {
   }
 
   if (isError) {
-    return <div>Error loading complaints</div>;
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        Error loading complaints
+      </div>
+    );
   }
 
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(
@@ -90,7 +90,7 @@ const ComplainsTable = () => {
       >
         <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Top items
+            All complaints for the {user?.district} district
           </h4>
           <UploadReportButton
             tableRef={tableRef}
@@ -132,37 +132,42 @@ const ComplainsTable = () => {
               >
                 <div className="col-span-1 flex items-center">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                    <div className=" w-20 h-20 rounded-md">
-                      <img src={item?.image?.url} alt="item" />
+                    <div className=" w-20 h-12 rounded-md">
+                      <img
+                        src={item?.image?.url}
+                        alt="item"
+                        className="w-full h-full rounded-md"
+                      />
                     </div>
-                    {/* <p className="text-sm text-black dark:text-white">
-                      {item?.district}
-                    </p> */}
                   </div>
                 </div>
-                <div className="hidden items-center sm:flex">
-                <p className="text-sm text-black dark:text-white">
-                      {item?.district}
-                    </p>
+                <div className="hidden col-span- items-center sm:flex">
+                  <p className="text-sm text-black dark:text-white">
+                    {item?.district}
+                  </p>
                 </div>
                 <div className="hidden items-center sm:flex">
                   <p className="text-sm text-black dark:text-white">
-                    {truncateDescription(item?.area,10)}
+                    {truncateDescription(item?.area, 10)}
                   </p>
                 </div>
                 <div className=" flex items-center col-span-2">
                   <p className="text-sm text-black dark:text-white ">
-                    {truncateDescription(item?.description,12)}
+                    {truncateDescription(item?.description, 25)}
                   </p>
                 </div>
                 <div className=" flex items-center">
                   <p className="text-sm text-black dark:text-white">
                     {item?.response.length > 0 ? (
                       item?.response.map((_i, index) => (
-                        <span key={index}>{truncateDescription(formatDate(_i?.date),6)}</span>
+                        <span key={index}>
+                          {truncateDescription(formatDate(_i?.date), 6)}
+                        </span>
                       ))
                     ) : (
-                      <span>{truncateDescription("No Response Found",12)}</span>
+                      <span>
+                        {truncateDescription("No Response Found", 12)}
+                      </span>
                     )}
                   </p>
                 </div>
@@ -172,12 +177,18 @@ const ComplainsTable = () => {
                 <div className=" flex gap-3 justify-start items-center text-[20px]">
                   <MdEdit
                     className="cursor-pointer"
-                    onClick={() => handleEditComplaint(item._id,item.latitude,item.longitude)}
+                    onClick={() =>
+                      handleEditComplaint(
+                        item._id,
+                        item.latitude,
+                        item.longitude
+                      )
+                    }
                     // onClick={() => setOpenEditComplainModal(true)}
                   />
-                  <MdDelete 
-                  className="cursor-pointer"
-                  onClick={() => handleDeleteComplaint(item._id)} 
+                  <MdDelete
+                    className="cursor-pointer"
+                    onClick={() => handleDeleteComplaint(item._id)}
                   />
                 </div>
               </div>
@@ -185,11 +196,13 @@ const ComplainsTable = () => {
         </div>
       </div>
       {/* Pagination */}
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={goToPage}
-      />
+      {visibleItems?.length > 5 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={goToPage}
+        />
+      )}
 
       {/* Edit Modal */}
 

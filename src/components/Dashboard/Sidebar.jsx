@@ -15,7 +15,7 @@ const Sidebar = ({ sidebarLinks }) => {
   return (
     <aside
       ref={sidebar}
-      className={`font-poppins absolute left-0 top-0 z-9999 flex h-screen w-[22%] flex-col overflow-y-hidden bg-black text-[#fff] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`font-poppins absolute left-0 top-0 z-9999 flex h-screen w-[24%] flex-col overflow-y-hidden bg-black text-[#fff] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -65,7 +65,7 @@ const Sidebar = ({ sidebarLinks }) => {
                   // className={` ${"bg-[#f1f1f138]"}  cursor-pointer relative flex items-center gap-2.5 rounded-md py-2 px-4 font-medium duration-300 ease-in-out hover:bg-[#f1f1f138] `}
                   className={` ${
                     pathname === item.linkTo && "bg-[#f1f1f138]"
-                  }  cursor-pointer relative flex items-center gap-2.5 rounded-md py-2 px-4 font-medium duration-300 ease-in-out hover:bg-[#f1f1f138] `}
+                  }  cursor-pointer relative flex items-center gap-2.5 rounded-md py-3 px-4 font-medium duration-300 ease-in-out hover:bg-[#f1f1f138] `}
                 >
                   <span className="text-[20px]">{item.linkIcon}</span>{" "}
                   <span> {item.linkText}</span>
