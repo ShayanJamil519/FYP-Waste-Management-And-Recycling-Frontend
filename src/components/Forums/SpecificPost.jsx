@@ -2,16 +2,19 @@
 import { postsData } from "@/app/data";
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import { useStateContext } from "@/app/StateContext";
 import { FaFacebookF, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import {
   useGetAThread,
   useReplyThread,
   useLikeThread,
 } from "../../hooks/thread-hook";
-import { useStateContext } from "@/app/StateContext";
 import { toast } from "react-toastify";
 import { usePathname, useRouter } from "next/navigation";
 import DataLoader from "../Shared/DataLoader";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+
+
 
 const formatDate = (isoDate) => {
   const date = new Date(isoDate);
@@ -23,16 +26,40 @@ const formatDate = (isoDate) => {
 
 // ===============================
 function WriteComment() {
+  const queryClient = useQueryClient();
+  const pathname = usePathname();
+  const threadId = pathname.split("/forum/")[1].split("/")[0];
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
   const [comment, setComment] = useState("");
+  const { user } = useStateContext();
+  const { addResponsee, error } =
+useReplyThread();
+
+//console.log(user)
+const [userData, setUserData] = useState({
+  userId: user.userId,
+  content: "",
+  RuserName: user.name,
+  rAvatar: user.image
+});
+
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
+    setUserData({
+      ...userData,
+      ["content"]: e.target.value,
+    });
+    //console.log(comment)
+    //console.log(userData)
   };
 
-  const sendComment = () => {
+   const  sendComment = () => {
     // Here you would handle the submission of the comment
-    console.log(comment);
+    console.log(userData);
+    addResponsee(threadId,userData);
+    toast.success("Reply added succesfully");
+    queryClient.invalidateQueries(['allThread', threadId]);
     // After sending the comment:
     setComment(""); // Clear the comment input after sending
     setIsCommentBoxOpen(!isCommentBoxOpen);
@@ -74,9 +101,10 @@ function WriteComment() {
 const Post = () => {
   const { user, setUser } = useStateContext();
 
-  const userId = user?.userId;
+
   const pathname = usePathname();
   const threadId = pathname.split("/forum/")[1].split("/")[0];
+  const userId = user?.userId;
   const [userData, setUserData] = useState({
     userId: userId,
     threadId: threadId,
