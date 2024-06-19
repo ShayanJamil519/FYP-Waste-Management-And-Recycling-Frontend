@@ -50,13 +50,12 @@ const MapComponent = () => {
 const WrappedMapComponent = () => {
   return (
     <>
-      {typeof window?.google === undefined ? (
+
         <LoadScript googleMapsApiKey="AIzaSyCLNX0Qokx5Fu3s8kqN1NAp3tABdIr8xzE">
           <MapComponent />
         </LoadScript>
-      ) : (
+
         <MapComponent />
-      )}
     </>
   );
 };
