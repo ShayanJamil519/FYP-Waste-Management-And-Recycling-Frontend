@@ -7,22 +7,14 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useStateContext } from "@/app/StateContext";
-import { FaChevronDown, FaUpload } from "react-icons/fa6";
+import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
-import dynamic from "next/dynamic";
-
 import "@tensorflow/tfjs-backend-cpu";
 import * as tf from "@tensorflow/tfjs-core";
 
 import * as tflite from "@tensorflow/tfjs-tflite";
 import "./complain.css";
-const WrappedMapComponent = dynamic(
-  () => import("@/components/Complain/mapComponent"),
-  {
-    ssr: false,
-  }
-);
 
 const MAX_DETECTIONS = 5;
 const THRESHOLD = 0.4;
@@ -43,29 +35,12 @@ const classColors = {
   "Medical Waste": "#FF6D00",
 };
 
+
+
+
 const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
   const router = useRouter();
-  const allowedSubDivision = {
-    south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
-    east: [
-      "gulzar e hijri",
-      "jamshed quarters",
-      "ferozabad",
-      "gulshan e iqbal",
-    ],
-    west: ["orangi", "mangopir", "mominabad"],
-    korangi: ["korangi", "landhi", "model colony", "shah faisal"],
-    malir: ["airport", "gadap", "ibrahim hyderi", "murad memon", "shah mureed"],
-    central: [
-      "gulberg",
-      "liaquatabad",
-      "new karachi",
-      "nazimabad",
-      "north nazimabad",
-    ],
-    keamari: ["baldia", "site", "harbour", "mauripur"],
-  };
 
   const [detectionDimension, setDetectionDimension] = useState({});
 
@@ -73,6 +48,7 @@ const ComplainForm = () => {
   const [image, setImage] = useState(null);
   const { user } = useStateContext();
   const [latitude, setLatitude] = useState(null);
+  const districtOptions = ["District 1", "District 2", "District 3"];
   const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
@@ -90,7 +66,6 @@ const ComplainForm = () => {
     latitude: parseFloat(localStorage.getItem("latitude")),
     longitude: parseFloat(localStorage.getItem("longitude")),
     image: "",
-    subDivision: "",
   });
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
@@ -110,18 +85,13 @@ const ComplainForm = () => {
       [name]: value,
     });
   };
-  const subDivisions = allowedSubDivision[userData.district];
-
-  console.log({ imageeeeeoutside: userData.image });
 
   const handleSubmit = async (event) => {
+    console.log("image here");
+    console.log(image);
+
+    //const processedImage = tf.cast(tf.expandDims(resizedImage), 'int32');
     event.preventDefault();
-
-    if (!image) {
-      toast.error("Please upload an image");
-      return;
-    }
-
     setIsLoading(true);
     addMutate(
       {},
@@ -157,9 +127,10 @@ const ComplainForm = () => {
             parentElement.style.position = "relative";
             boxContainer1.classList.add("box-container");
 
+
             let predictionImage =
               document.getElementsByClassName("image-prediction")[0];
-            console.log({ predictionImage });
+             console.log({predictionImage})
 
             const tensor = tf.browser.fromPixels(img);
             const resizedImage = tf.image.resizeBilinear(tensor, [448, 448]);
@@ -214,6 +185,8 @@ const ComplainForm = () => {
                   width: x_max - x_min,
                   height: y_max - y_min,
                 });
+
+                
               }
             }
           } catch (error) {
@@ -221,11 +194,7 @@ const ComplainForm = () => {
           }
         };
         img.src = reader.result;
-
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          image: reader.result,
-        }));
+        setUserData({ ...userData, [name]: reader.result });
         setImage(reader.result);
       };
 
@@ -235,22 +204,27 @@ const ComplainForm = () => {
     }
   };
 
+
   return (
     <div
       style={{
         boxShadow: "0px 5px 43px 0px rgba(17, 29, 25, 0.12)",
       }}
-      className=" sm:p-10 px-4 py-7 w-full font-poppins "
+      className=" p-10 font-poppins"
     >
       <h1 className="font-bold text-2xl">Make a request</h1>
       <p className="text-sm mt-3 leading-6 text-[#62706b]">
         Please complete the form below, to request a quote, and we’ll be in
         touch. Or you can call us and our specialists will provide help!
       </p>
-      <form className="w-full  mt-10 " onSubmit={handleSubmit}>
-        <div id="image-container" className="relative sm:m-10">
+      <form className="w-full mt-10 " onSubmit={handleSubmit}>
+        <div id="image-container" className="relative">
           <div id="my-3">
             {image ? (
+              // <div className="">
+              //   <div className="w-24 h-24 mx-auto relative"></div>
+              // </div>
+
               <div id="image-container-prediction" className="relative w-full">
                 <div
                   style={{
@@ -262,16 +236,7 @@ const ComplainForm = () => {
                   className={`prediction_box absolute border-4 border-red-600`}
                 >
                   <p className="absolute top-0 left-0 text-red-600 text-lg">
-                    {`${
-                      detectionDimension.predictionName === undefined
-                        ? "No waste Detected "
-                        : detectionDimension.predictionName
-                    }
-                   + ${
-                     detectionDimension.predictionValue === undefined
-                       ? " "
-                       : detectionDimension.predictionValue
-                   }`}
+                    {`${detectionDimension.predictionName} + ${detectionDimension.predictionValue}`}
                   </p>
                 </div>
 
@@ -279,6 +244,8 @@ const ComplainForm = () => {
                   src={image}
                   alt="image/logo"
                   className="image-prediction"
+                  
+                  
                 />
               </div>
             ) : (
@@ -294,6 +261,7 @@ const ComplainForm = () => {
             )}
             <input
               id="avatar-upload"
+              required
               name="image"
               type="file"
               accept="image/*"
@@ -302,7 +270,16 @@ const ComplainForm = () => {
             />
           </div>
         </div>
-        <div className="grid mt-3 sm:mt-0 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-2 gap-5">
+          <Input
+            name="userId"
+            label="Enter Your ID"
+            type="text"
+            value={userData.userId}
+            placeholder="Please write you details"
+            onChange={handleInputChange}
+          />
+          
           <div>
             <label
               htmlFor="district-select"
@@ -310,106 +287,49 @@ const ComplainForm = () => {
             >
               Select Your District
             </label>
-
-            <div className="relative inline-block w-full cursor-pointer">
-              <select
-                id="district-select"
-                name="district"
-                required
-                value={userData.district}
-                onChange={handleSelectChange}
-                className="outline-none appearance-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
-              >
-                <option value="">Select District</option>
-                {Object.keys(allowedSubDivision).map((district, index) => (
-                  <option key={index} value={district}>
-                    {district}
-                  </option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-2 text-[16px] flex items-center px-2 text-[#202725]">
-                <FaChevronDown />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="district-select"
-              className="font-semibold text-sm text-[#202725] mb-1"
+            <select
+              id="district-select"
+              name="district"
+              required
+              value={userData.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
             >
-              Select Your Sub Division
-            </label>
-            <div className="relative inline-block w-full cursor-pointer">
-              <select
-                id="subDivision-select"
-                required
-                name="subDivision"
-                value={userData.subDivision}
-                onChange={handleSelectChange}
-                className="outline-none text-sm appearance-none  p-4 w-full rounded-md border-2 border-[#d9e4df]"
-                disabled={!userData.district}
-              >
-                <option value="">Select SubDivision</option>
-                {subDivisions &&
-                  subDivisions.map((subDivision, index) => (
-                    <option key={index} value={subDivision}>
-                      {subDivision}
-                    </option>
-                  ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-2 text-[16px] flex items-center px-2 text-[#202725]">
-                <FaChevronDown />
-              </div>
-            </div>
+              <option value="">Select District</option>
+              {districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
-
-        <div className="w-full mt-3">
           <Input
             name="area"
             label="Enter Your Area"
             type="text"
-            required
             value={userData.area}
-            placeholder="Please enter your area"
+            placeholder="Please write you details"
             onChange={handleInputChange}
           />
-        </div>
-
-        <div className="w-full my-3">
-          <p className="font-semibold text-sm text-[#202725] mb-1">
-            Write your query
-          </p>
-          <textarea
+          <Input
             name="description"
             onChange={handleInputChange}
             value={userData.description}
-            required
-            className="outline-none min-h-[150px] sm:min-h-[200px] text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            placeholder="Enter your text here..."
+            label="Your Query"
           />
         </div>
-
-        <WrappedMapComponent />
-
-        <div className="grid place-items-center ">
+        <div className="grid place-items-center mt-6">
           {isLoading ? (
-            <button
-              type="submit"
-              className=" mt-3 sm:mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-md sm:rounded-sm"
-              // disabled
-            >
-              <FaSpinner className="animate-spin mr-2 text-white" />
-              <span className={"text-white"}>Loading...</span>
-            </button>
+            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
           ) : (
             <button
-              type="submit"
               // onClick={resetForm}
-              className="mt-3 sm:mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-md sm:rounded-sm"
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
             >
               Submit Complain
-              <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
+              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
                 <IoIosArrowRoundForward className="text-[27px] font-bold" />
               </span>{" "}
               <style jsx>{`
