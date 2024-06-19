@@ -10,15 +10,9 @@ import { useStateContext } from "@/app/StateContext";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
-import dynamic from "next/dynamic";
 import "@tensorflow/tfjs-backend-cpu";
 import * as tf from "@tensorflow/tfjs-core";
-const WrappedMapComponent = dynamic(
-  () => import("@/components/Complain/mapComponent"),
-  {
-    ssr: false,
-  }
-);
+import WrappedMapComponent from "./mapComponent";
 
 import * as tflite from "@tensorflow/tfjs-tflite";
 import "./complain.css";
