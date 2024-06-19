@@ -27,14 +27,11 @@ const useLikeThread = () => {
   );
 
   const addResponse = async (userData) => {
-    try {
+
       console.log("assa")
       console.log(userData)
       const response = await mutation.mutateAsync(userData);
       return response;
-    } catch (error) {
-      throw new Error(error.message);
-    }
   };
 
   return {

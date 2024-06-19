@@ -54,15 +54,18 @@ const [userData, setUserData] = useState({
     //console.log(userData)
   };
 
-   const  sendComment = () => {
-    // Here you would handle the submission of the comment
-    console.log(userData);
-    addResponsee(threadId,userData);
-    toast.success("Reply added succesfully");
-    queryClient.invalidateQueries(['allThread', threadId]);
-    // After sending the comment:
-    setComment(""); // Clear the comment input after sending
-    setIsCommentBoxOpen(!isCommentBoxOpen);
+  const sendComment = async () => {
+    try {
+      console.log(userData);
+      await addResponsee(threadId, userData);
+      toast.success("Reply added successfully");
+      await queryClient.invalidateQueries(['allThread', threadId]);
+      setComment(""); 
+      setIsCommentBoxOpen(!isCommentBoxOpen);
+    } catch (error) {
+      console.error("Error adding comment:", error);
+      toast.error("Failed to add reply");
+    }
   };
 
   return (
@@ -105,25 +108,32 @@ const Post = () => {
   const pathname = usePathname();
   const threadId = pathname.split("/forum/")[1].split("/")[0];
   const userId = user?.userId;
+  const queryClient = useQueryClient();
   const [userData, setUserData] = useState({
     userId: userId,
     threadId: threadId,
   });
 
-  console.log(userId);
-
-  const { data, isError } = useGetAThread(threadId);
-  console.log(data);
+  const { data, isLoading : lll ,isError } = useGetAThread(threadId);
   const { addResponse, isLoading, error } = useLikeThread();
 
   const handleLikeFunction = async () => {
     try {
       console.log("s");
       await addResponse(JSON.stringify(userData));
+      await queryClient.invalidateQueries(['allThread', threadId]);
     } catch (error) {
       console.log(error);
+      toast.error(`Error: ${error}`);
     }
   };
+  if (lll) {
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        <DataLoader />
+      </div>
+    );
+  }
   return (
     <div className="bg-white font-normal font-poppins p-4 rounded-md">
       <h1 className=" text-[20px] sm:text-[24px] break-words md:text-2xl lg:text-3xl font-semibold mb-3 underline text-[#182822] leading-normal">
@@ -178,7 +188,7 @@ const Post = () => {
           </div>
 
           {data?.replies.map((comment) => (
-            <Comment key={comment} {...comment} />
+            <Comment key={comment._id} {...comment} />
           ))}
         </div>
       )}
