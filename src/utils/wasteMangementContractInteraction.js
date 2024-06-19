@@ -122,6 +122,10 @@ class WasteManagementContractInteraction {
   static async GetAllReportsByType(reportType) {
     return WasteManagementContract.getAllReportsByType(reportType);
   }
+
+  static async GetUserRole(userAddress) {
+    return WasteManagementContract.getUserRole(userAddress);
+  }
 }
 
 export default WasteManagementContractInteraction;

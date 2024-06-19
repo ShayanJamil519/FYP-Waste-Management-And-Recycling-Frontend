@@ -126,6 +126,11 @@ export const sidebarLinksAdmin = [
     linkTo: "/dashboard/admin/all-users",
     linkIcon: <RxDashboard />,
   },
+  {
+    linkText: `Assign Roles`,
+    linkTo: "/dashboard/admin/assign-roles",
+    linkIcon: <RxDashboard />,
+  },
 ];
 
 export const sidebarLinksUser = [
