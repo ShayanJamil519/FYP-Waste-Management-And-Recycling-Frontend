@@ -14,9 +14,11 @@ import DataLoader from "@/components/Shared/DataLoader";
 import UploadReportButton from "@/components/Shared/UploadReportButton";
 import { toast } from "react-toastify";
 import { useStateContext } from "@/app/StateContext";
+import {  useQueryClient } from "@tanstack/react-query";
 
 const ComplainsTable = () => {
   const { user } = useStateContext();
+  const queryClient = useQueryClient();
 
   const paginate = usePagination();
   const tableRef = useRef();
@@ -49,6 +51,7 @@ const ComplainsTable = () => {
   const handleDeleteComplaint = async (complaintId) => {
     try {
       await deleteComplaintMutation.mutateAsync(complaintId);
+      await queryClient.invalidateQueries(['complaint/get-complaints-district', threadId]);
       toast.success("Complaint deleted successfully");
     } catch (error) {
       toast.error("Failed to delete complaint");
@@ -160,17 +163,7 @@ const ComplainsTable = () => {
                 </div>
                 <div className=" flex items-center">
                   <p className="text-sm text-black dark:text-white">
-                    {item?.response.length > 0 ? (
-                      item?.response.map((_i, index) => (
-                        <span key={index}>
-                          {truncateDescription(formatDate(_i?.date), 6)}
-                        </span>
-                      ))
-                    ) : (
-                      <span>
-                        {truncateDescription("No Response Found", 12)}
-                      </span>
-                    )}
+                  {truncateDescription(item?.status, 25)}
                   </p>
                 </div>
                 <div className=" flex items-center">
