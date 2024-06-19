@@ -6,13 +6,10 @@ import DataLoader from "../Shared/DataLoader";
 import Pagination from "../Dashboard/Pagination";
 import Link from "next/link";
 
-const SpecificLandfill = ({ district }) => {
-  const decodedDistrict = decodeURIComponent(district);
-
+const SpecificLandfill = ({ landfillID }) => {
   const paginate = usePagination();
 
-  const { data, isLoading, isError } =
-    useGetComplaintsInDistrict(decodedDistrict);
+  const { data, isLoading, isError } = useGetComplaintsInDistrict(landfillID);
 
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(
     data && data?.complaints
@@ -37,7 +34,7 @@ const SpecificLandfill = ({ district }) => {
   if (visibleItems?.length === 0) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
-        No recycling points available for {decodedDistrict} district.
+        No recycling points available for {landfillID} district.
       </div>
     );
   }
@@ -48,7 +45,7 @@ const SpecificLandfill = ({ district }) => {
         Safe And Trusted Waste Collection Service
       </h6>
       <h1 className="font-paralucent text-[27px] md:text-3xl lg:text-4xl mt-3 mb-5 lg:w-2/4 mx-auto text-center text-[#182822] leading-normal">
-        Recycling Points in {decodedDistrict} district
+        Recycling Points in {landfillID} district
       </h1>
 
       <div className="w-[90%] md:w-[80%] mx-auto overflow-x-auto lg:overflow-hidden">

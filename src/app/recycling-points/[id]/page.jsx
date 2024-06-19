@@ -4,7 +4,7 @@ import React from "react";
 const page = ({ params }) => {
   return (
     <div>
-      <SpecificRecyclingPoint district={params?.district} />
+      <SpecificRecyclingPoint recyclingPointID={params?.id} />
     </div>
   );
 };
