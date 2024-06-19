@@ -10,8 +10,15 @@ import { useStateContext } from "@/app/StateContext";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
+import dynamic from "next/dynamic";
 import "@tensorflow/tfjs-backend-cpu";
 import * as tf from "@tensorflow/tfjs-core";
+const WrappedMapComponent = dynamic(
+  () => import("@/components/Complain/mapComponent"),
+  {
+    ssr: false,
+  }
+);
 
 import * as tflite from "@tensorflow/tfjs-tflite";
 import "./complain.css";
@@ -35,12 +42,29 @@ const classColors = {
   "Medical Waste": "#FF6D00",
 };
 
-
-
-
 const ComplainForm = () => {
   tflite.setWasmPath("tflite_wasm/");
   const router = useRouter();
+  const allowedSubDivision = {
+    south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
+    east: [
+      "gulzar e hijri",
+      "jamshed quarters",
+      "ferozabad",
+      "gulshan e iqbal",
+    ],
+    west: ["orangi", "mangopir", "mominabad"],
+    korangi: ["korangi", "landhi", "model colony", "shah faisal"],
+    malir: ["airport", "gadap", "ibrahim hyderi", "murad memon", "shah mureed"],
+    central: [
+      "gulberg",
+      "liaquatabad",
+      "new karachi",
+      "nazimabad",
+      "north nazimabad",
+    ],
+    keamari: ["baldia", "site", "harbour", "mauripur"],
+  };
 
   const [detectionDimension, setDetectionDimension] = useState({});
 
@@ -66,6 +90,7 @@ const ComplainForm = () => {
     latitude: parseFloat(localStorage.getItem("latitude")),
     longitude: parseFloat(localStorage.getItem("longitude")),
     image: "",
+    subDivision: "",
   });
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
@@ -85,6 +110,7 @@ const ComplainForm = () => {
       [name]: value,
     });
   };
+  const subDivisions = allowedSubDivision[userData.district];
 
   const handleSubmit = async (event) => {
     console.log("image here");
@@ -127,10 +153,9 @@ const ComplainForm = () => {
             parentElement.style.position = "relative";
             boxContainer1.classList.add("box-container");
 
-
             let predictionImage =
               document.getElementsByClassName("image-prediction")[0];
-             console.log({predictionImage})
+            console.log({ predictionImage });
 
             const tensor = tf.browser.fromPixels(img);
             const resizedImage = tf.image.resizeBilinear(tensor, [448, 448]);
@@ -185,8 +210,6 @@ const ComplainForm = () => {
                   width: x_max - x_min,
                   height: y_max - y_min,
                 });
-
-                
               }
             }
           } catch (error) {
@@ -204,21 +227,20 @@ const ComplainForm = () => {
     }
   };
 
-
   return (
     <div
       style={{
         boxShadow: "0px 5px 43px 0px rgba(17, 29, 25, 0.12)",
       }}
-      className=" p-10 font-poppins"
+      className=" sm:p-10 px-4 py-7 w-full font-poppins "
     >
       <h1 className="font-bold text-2xl">Make a request</h1>
       <p className="text-sm mt-3 leading-6 text-[#62706b]">
         Please complete the form below, to request a quote, and we’ll be in
         touch. Or you can call us and our specialists will provide help!
       </p>
-      <form className="w-full mt-10 " onSubmit={handleSubmit}>
-        <div id="image-container" className="relative">
+      <form className="w-full  mt-10 " onSubmit={handleSubmit}>
+        <div id="image-container" className="relative sm:m-10">
           <div id="my-3">
             {image ? (
               // <div className="">
@@ -244,8 +266,6 @@ const ComplainForm = () => {
                   src={image}
                   alt="image/logo"
                   className="image-prediction"
-                  
-                  
                 />
               </div>
             ) : (
@@ -279,7 +299,7 @@ const ComplainForm = () => {
             placeholder="Please write you details"
             onChange={handleInputChange}
           />
-          
+
           <div>
             <label
               htmlFor="district-select"
@@ -287,7 +307,7 @@ const ComplainForm = () => {
             >
               Select Your District
             </label>
-            <select
+            {/* <select
               id="district-select"
               name="district"
               required
@@ -301,8 +321,50 @@ const ComplainForm = () => {
                   {district}
                 </option>
               ))}
+            </select> */}
+            <select
+              id="district-select"
+              name="district"
+              required
+              value={userData.district}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
+            >
+              <option value="">Select District</option>
+              {Object.keys(allowedSubDivision).map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
             </select>
           </div>
+
+          <div>
+            <label
+              htmlFor="district-select"
+              className="font-semibold text-sm text-[#202725] mb-1"
+            >
+              Select Your Sub Division
+            </label>
+            <select
+              id="subDivision-select"
+              required
+              name="subDivision"
+              value={userData.subDivision}
+              onChange={handleSelectChange}
+              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df]"
+              disabled={!userData.district}
+            >
+              <option value="">Select SubDivision</option>
+              {subDivisions &&
+                subDivisions.map((subDivision, index) => (
+                  <option key={index} value={subDivision}>
+                    {subDivision}
+                  </option>
+                ))}
+            </select>
+          </div>
+
           <Input
             name="area"
             label="Enter Your Area"
@@ -319,17 +381,25 @@ const ComplainForm = () => {
             label="Your Query"
           />
         </div>
+        <WrappedMapComponent />
         <div className="grid place-items-center mt-6">
           {isLoading ? (
-            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+              disabled
+            >
+              <FaSpinner className="animate-spin mr-2 text-white" />
+              <span className={"text-white"}>Loading...</span>
+            </button>
           ) : (
             <button
-              // onClick={resetForm}
               type="submit"
+              // onClick={resetForm}
               className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
             >
               Submit Complain
-              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+              <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
                 <IoIosArrowRoundForward className="text-[27px] font-bold" />
               </span>{" "}
               <style jsx>{`
