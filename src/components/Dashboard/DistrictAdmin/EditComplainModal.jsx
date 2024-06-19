@@ -8,7 +8,7 @@ import ImageSlider from "../ImageSlider";
 import { useAddResponseToComplaint } from "../../../hooks/complain-hook";
 import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
-import MapComponent from "./Map";
+import WrappedMapComponent from "./Map";
 import { FaSpinner } from "react-icons/fa";
 
 const Images = [
@@ -20,9 +20,13 @@ const Images = [
   "/home/hero__slider1.jpg",
 ];
 
-
-const EditComplainModal = ({ setOpenEditComplainModal, complaintId , latitude , longitude}) => {
-  console.log(latitude)
+const EditComplainModal = ({
+  setOpenEditComplainModal,
+  complaintId,
+  latitude,
+  longitude,
+}) => {
+  console.log(latitude);
   const router = useRouter();
   const [isLooading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -162,29 +166,29 @@ const EditComplainModal = ({ setOpenEditComplainModal, complaintId , latitude , 
             rows={6}
             label="Please write your details"
           />
-          <MapComponent latitude={latitude} longitude={longitude} />
+          <WrappedMapComponent latitude={latitude} longitude={longitude} />
 
-<div className="grid place-items-center mt-6">
-          {isLooading ? (
-            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
-          ) : (
-            <button
-              type="submit"
-              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-            >
-              Submit
-              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
-                <IoIosArrowRoundForward className="text-[27px] font-bold" />
-              </span>{" "}
-              <style jsx>{`
-                button:hover span {
-                  background-color: #fff;
-                  color: #257830;
-                }
-              `}</style>
-            </button>
-          )}
-        </div>
+          <div className="grid place-items-center mt-6">
+            {isLooading ? (
+              <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+            ) : (
+              <button
+                type="submit"
+                className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+              >
+                Submit
+                <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+                  <IoIosArrowRoundForward className="text-[27px] font-bold" />
+                </span>{" "}
+                <style jsx>{`
+                  button:hover span {
+                    background-color: #fff;
+                    color: #257830;
+                  }
+                `}</style>
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </Modal>

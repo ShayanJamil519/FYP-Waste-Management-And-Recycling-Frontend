@@ -12,22 +12,34 @@ const MapComponent = ({ latitude, longitude }) => {
 
   return (
     <div style={{ height: "400px", width: "100%" }}>
-      <LoadScript googleMapsApiKey="AIzaSyCLNX0Qokx5Fu3s8kqN1NAp3tABdIr8xzE">
-        <GoogleMap
-          id="map"
-          mapContainerStyle={{
-            height: "100%",
-            width: "100%",
-          }}
-          zoom={zoom}
-          center={center}
-        >
-          {/* Marker */}
-          <Marker position={center} />
-        </GoogleMap>
-      </LoadScript>
+      <GoogleMap
+        id="map"
+        mapContainerStyle={{
+          height: "100%",
+          width: "100%",
+        }}
+        zoom={zoom}
+        center={center}
+      >
+        {/* Marker */}
+        <Marker position={center} />
+      </GoogleMap>
     </div>
   );
 };
 
-export default MapComponent;
+const WrappedMapComponent = ({ latitude, longitude }) => {
+  return (
+    <>
+      {window.google === undefined ? (
+        <LoadScript googleMapsApiKey="AIzaSyCLNX0Qokx5Fu3s8kqN1NAp3tABdIr8xzE">
+          <MapComponent latitude={latitude} longitude={longitude} />
+        </LoadScript>
+      ) : (
+        <MapComponent latitude={latitude} longitude={longitude} />
+      )}
+    </>
+  );
+};
+
+export default WrappedMapComponent;

@@ -24,7 +24,7 @@ const Pagination = ({
           />
         </button>
 
-        {pageNumbersToShow.map((number) => (
+        {pageNumbersToShow?.map((number) => (
           <button
             key={number}
             className={`${

@@ -17,7 +17,7 @@ import * as tf from "@tensorflow/tfjs-core";
 
 import * as tflite from "@tensorflow/tfjs-tflite";
 import "./complain.css";
-const MapComponent = dynamic(
+const WrappedMapComponent = dynamic(
   () => import("@/components/Complain/mapComponent"),
   {
     ssr: false,
@@ -116,7 +116,6 @@ const ComplainForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
 
     if (!image) {
       toast.error("Please upload an image");
@@ -263,12 +262,16 @@ const ComplainForm = () => {
                   className={`prediction_box absolute border-4 border-red-600`}
                 >
                   <p className="absolute top-0 left-0 text-red-600 text-lg">
-                    {`${detectionDimension.predictionName === undefined 
-                  ? "No waste Detected " 
-                  : detectionDimension.predictionName }
-                   + ${detectionDimension.predictionValue === undefined 
-                    ? " " 
-                    : detectionDimension.predictionValue}`}
+                    {`${
+                      detectionDimension.predictionName === undefined
+                        ? "No waste Detected "
+                        : detectionDimension.predictionName
+                    }
+                   + ${
+                     detectionDimension.predictionValue === undefined
+                       ? " "
+                       : detectionDimension.predictionValue
+                   }`}
                   </p>
                 </div>
 
@@ -387,7 +390,7 @@ const ComplainForm = () => {
           />
         </div>
 
-        <MapComponent />
+        <WrappedMapComponent />
 
         <div className="grid place-items-center ">
           {isLoading ? (

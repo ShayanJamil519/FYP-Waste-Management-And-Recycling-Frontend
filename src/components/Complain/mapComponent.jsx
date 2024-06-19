@@ -28,7 +28,7 @@ const MapComponent = () => {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyCLNX0Qokx5Fu3s8kqN1NAp3tABdIr8xzE">
+    <>
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={13}
@@ -43,8 +43,22 @@ const MapComponent = () => {
       >
         Confirm Location on Map
       </div>
-    </LoadScript>
+    </>
   );
 };
 
-export default MapComponent;
+const WrappedMapComponent = () => {
+  return (
+    <>
+      {window.google === undefined ? (
+        <LoadScript googleMapsApiKey="AIzaSyCLNX0Qokx5Fu3s8kqN1NAp3tABdIr8xzE">
+          <MapComponent />
+        </LoadScript>
+      ) : (
+        <MapComponent />
+      )}
+    </>
+  );
+};
+
+export default WrappedMapComponent;
