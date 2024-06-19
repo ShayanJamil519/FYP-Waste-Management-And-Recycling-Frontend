@@ -34,6 +34,7 @@ const UploadReportButton = ({ tableRef, reportType }) => {
             toast.success("Report Uploaded to IPFS");
             setLoading(false);
           } catch (error) {
+            console.log(error)
             toast.error(error?.message);
           } finally {
             setLoading(false);

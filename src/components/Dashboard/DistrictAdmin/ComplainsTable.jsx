@@ -25,6 +25,7 @@ const ComplainsTable = () => {
   const [selectedComplaintId, setSelectedComplaintId] = useState(null);
   const [selectedLatitude, setSelectedLatitude] = useState(null);
   const [selectedLongitude, setSelectedLongitude] = useState(null);
+  const [selectedimage, setSelectedimage] = useState(null);
   const { data, isLoading, isError } = useGetComplaintsInDistrict(
     user?.district
   );
@@ -54,11 +55,12 @@ const ComplainsTable = () => {
     }
   };
 
-  const handleEditComplaint = (complaintId, latitude, longitude) => {
+  const handleEditComplaint = (complaintId, latitude, longitude , image) => {
     setOpenEditComplainModal(true);
     setSelectedComplaintId(complaintId);
     setSelectedLatitude(latitude);
     setSelectedLongitude(longitude);
+    setSelectedimage(image)
   };
 
   if (isLoading) {
@@ -181,7 +183,8 @@ const ComplainsTable = () => {
                       handleEditComplaint(
                         item._id,
                         item.latitude,
-                        item.longitude
+                        item.longitude,
+                        item.image.url
                       )
                     }
                     // onClick={() => setOpenEditComplainModal(true)}
@@ -212,6 +215,7 @@ const ComplainsTable = () => {
           complaintId={selectedComplaintId}
           latitude={selectedLatitude}
           longitude={selectedLongitude}
+          imagee = {selectedimage}
         />
       )}
     </div>

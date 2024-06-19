@@ -20,19 +20,14 @@ const Images = [
   "/home/hero__slider1.jpg",
 ];
 
-const EditComplainModal = ({
-  setOpenEditComplainModal,
-  complaintId,
-  latitude,
-  longitude,
-}) => {
-  console.log(latitude);
+
+const EditComplainModal = ({ setOpenEditComplainModal, complaintId , latitude , longitude , imagee}) => {
+  console.log(imagee)
   const router = useRouter();
   const [isLooading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [info, setInfo] = useState({
-    time: "",
-    date: "",
+
     comments: "",
     image: "",
   });
@@ -69,6 +64,7 @@ const EditComplainModal = ({
     console.log("complaintttttttttID");
     console.log(complaintId);
     setIsLoading(true);
+    console.log(info)
     try {
       await addResponse(complaintId, info);
       setIsLoading(false);
@@ -94,10 +90,10 @@ const EditComplainModal = ({
   return (
     <Modal onClose={() => setOpenEditComplainModal(false)}>
       <div className="h-[90vh] overflow-y-auto p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md border-2 border-[#000] font-urbanist w-[97%] sm:w-[65%] md:w-[55%] lg:w-[80%] mx-auto">
-        <h1 className="font-bold text-3xl">Edit Complain</h1>
+        <h1 className="font-bold text-3xl">Add Response to a complain</h1>
         <p className="text-sm mt-3 leading-6 text-[#62706b]">
-          Please complete the form below, to request a quote, and we’ll be in
-          touch. Or you can call us and our specialists will provide help!
+          Please complete the form below, to update a user about response on
+          their complain
         </p>
         <form className="w-full mt-10" onSubmit={handleAddResponse}>
           <div className="my-3">
@@ -121,7 +117,7 @@ const EditComplainModal = ({
               <label htmlFor="avatar-upload" className="cursor-pointer">
                 <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
                   <FaUpload className="text-2xl" />
-                  <p>Upload your image</p>
+                  <p>Upload image of the location</p>
                   <p className="text-xs mt-2">
                     Click to browse your image here
                   </p>
@@ -139,24 +135,7 @@ const EditComplainModal = ({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-5">
-            <Input
-              name="time"
-              label="Time"
-              type="text"
-              value={info.time}
-              onChange={handleInputChange}
-              placeholder="Please write your details"
-            />
-            <Input
-              name="date"
-              label="Date"
-              type="text"
-              value={info.date}
-              onChange={handleInputChange}
-              placeholder="Please write your details"
-            />
-          </div>
+          
 
           <TextArea
             name="comments"
@@ -166,29 +145,34 @@ const EditComplainModal = ({
             rows={6}
             label="Please write your details"
           />
+          
+        <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center justify-center text-gray-700">
+          <img src={imagee} alt="Location" className="w-full h-full object-cover rounded-md" />
+        </div>
+      
           <WrappedMapComponent latitude={latitude} longitude={longitude} />
 
-          <div className="grid place-items-center mt-6">
-            {isLooading ? (
-              <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
-            ) : (
-              <button
-                type="submit"
-                className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-              >
-                Submit
-                <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
-                  <IoIosArrowRoundForward className="text-[27px] font-bold" />
-                </span>{" "}
-                <style jsx>{`
-                  button:hover span {
-                    background-color: #fff;
-                    color: #257830;
-                  }
-                `}</style>
-              </button>
-            )}
-          </div>
+<div className="grid place-items-center mt-6">
+          {isLooading ? (
+            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+          ) : (
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Submit
+              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
+        </div>
         </form>
       </div>
     </Modal>
