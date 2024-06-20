@@ -1,5 +1,5 @@
 "use client";
-import { useGetComplaintsInDistrict } from "@/hooks/complain-hook";
+import { useGetASpecificLandfillEntry } from "@/hooks/landfillEntries";
 import usePagination from "@/utils/usePagination";
 import React from "react";
 import DataLoader from "../Shared/DataLoader";
@@ -8,11 +8,14 @@ import Link from "next/link";
 
 const SpecificLandfill = ({ landfillID }) => {
   const paginate = usePagination();
-
-  const { data, isLoading, isError } = useGetComplaintsInDistrict(landfillID);
+  console.log("Hey B")
+  console.log(landfillID)
+  const { data, isLoading, isError } = useGetASpecificLandfillEntry(landfillID);
+  console.log("Heyyy")
+  console.log(data)
 
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(
-    data && data?.complaints
+    data && data?.entries
   );
 
   if (isLoading) {
@@ -34,7 +37,7 @@ const SpecificLandfill = ({ landfillID }) => {
   if (visibleItems?.length === 0) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
-        No recycling points available for {landfillID} district.
+        No recycling point entries  available for this Landfill.
       </div>
     );
   }
@@ -112,7 +115,7 @@ const SpecificLandfill = ({ landfillID }) => {
                     </p>
                   </div>
                   <div className="hidden items-center sm:flex">
-                    <p className="text-sm text-black dark:text-white">area</p>
+                    <p className="text-sm text-black dark:text-white">{item?.admin}</p>
                   </div>
                   <div className=" flex items-center col-span-2">
                     <p className="text-sm text-black dark:text-white ">

@@ -76,6 +76,10 @@ const useGetAllLandfillEntries = () => {
   LandfillEntry.getAllLandfillEntries);
 };
 
+const useGetASpecificLandfillEntry = (landfillId) => {
+
+  return useQuery(["allLandfillEntries", landfillId], () => LandfillEntry.getSpecificLandfillEntries(landfillId));
+};
 
 
-export { useNewLandfill, useGetAllLandfills , useInputEntry, useDeleteLandfill, useDeleteLandfillEntry, useAddResponseToLandfill, useGetAllLandfillEntries};
+export { useNewLandfill,useGetASpecificLandfillEntry,  useGetAllLandfills , useInputEntry, useDeleteLandfill, useDeleteLandfillEntry, useAddResponseToLandfill, useGetAllLandfillEntries};

@@ -50,7 +50,7 @@ const Landfills = () => {
                 {point.district}
               </p>
               <button
-                onClick={() => router.push(`/landfills/${point?.district}`)}
+                onClick={() => router.push(`/landfills/${point?.admin}`)}
                 className="flex justify-center items-center gap-3 transition duration-500 ease-in-out hover:bg-[#257830] text-[#20332c] hover:text-[#fff] outline-none border-2 hover:border-[#257830] border-[#20332c] px-5 py-3 rounded-sm"
               >
                 View

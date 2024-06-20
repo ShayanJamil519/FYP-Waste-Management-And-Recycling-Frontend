@@ -120,6 +120,23 @@ class LandfillEntry {
     }
   };
 
+  async getSpecificLandfillEntries(landfillId) {
+    try {
+      console.log("Entry Service1 ")
+      const {data} = await axios.get(`${apiUrl}/landfill/getLandfillEntriesByAdmin/${landfillId}`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("DAAAAAAAATA")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   async NewLandfill(data) {
     console.log("HelloJee");
     console.log(apiUrl);
