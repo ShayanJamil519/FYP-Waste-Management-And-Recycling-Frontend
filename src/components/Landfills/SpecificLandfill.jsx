@@ -7,6 +7,16 @@ import Pagination from "../Dashboard/Pagination";
 import Link from "next/link";
 
 const SpecificLandfill = ({ landfillID }) => {
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+
   const paginate = usePagination();
   console.log("Hey B")
   console.log(landfillID)
@@ -48,7 +58,7 @@ const SpecificLandfill = ({ landfillID }) => {
         Safe And Trusted Waste Collection Service
       </h6>
       <h1 className="font-paralucent text-[27px] md:text-3xl lg:text-4xl mt-3 mb-5 lg:w-2/4 mx-auto text-center text-[#182822] leading-normal">
-        Recycling Points in {landfillID} district
+        Following are the Landfill Entries in of a specific landfill point 
       </h1>
 
       <div className="w-[90%] md:w-[80%] mx-auto overflow-x-auto lg:overflow-hidden">
@@ -76,16 +86,13 @@ const SpecificLandfill = ({ landfillID }) => {
               <p className="font-medium">Area</p>
             </div>
             <div className=" flex items-center col-span-2">
-              <p className="font-medium">Description</p>
+              <p className="font-medium">Subdivison</p>
             </div>
             <div className=" flex items-center">
-              <p className="font-medium">Response</p>
+              <p className="font-medium">Quantity Received</p>
             </div>
             <div className=" flex items-center">
               <p className="font-medium">Date</p>
-            </div>
-            <div className=" flex items-center">
-              <p className="font-medium">Actions</p>
             </div>
           </div>
 
@@ -100,39 +107,37 @@ const SpecificLandfill = ({ landfillID }) => {
                   <div className="col-span-1 flex items-center">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                       <div className=" w-20 h-12 rounded-md">
-                        {/* <img
+                        { <img
                         src={item?.image?.url}
                         alt="item"
                         className="w-full h-full rounded-md"
-                      /> */}
-                        image
+                      /> }
+                       
                       </div>
                     </div>
                   </div>
                   <div className="hidden col-span- items-center sm:flex">
                     <p className="text-sm text-black dark:text-white">
-                      district
+                      {item?.district}
                     </p>
                   </div>
                   <div className="hidden items-center sm:flex">
-                    <p className="text-sm text-black dark:text-white">{item?.admin}</p>
+                    <p className="text-sm text-black dark:text-white">{item?.area}</p>
                   </div>
                   <div className=" flex items-center col-span-2">
                     <p className="text-sm text-black dark:text-white ">
-                      description
+                      {item?.sourceSubdivision}
                     </p>
                   </div>
                   <div className=" flex items-center">
                     <p className="text-sm text-black dark:text-white">
-                      response
+                      {item?.quantityReceived}
                     </p>
                   </div>
                   <div className=" flex items-center">
-                    <p className="text-sm text-meta-3">date hai</p>
+                    <p className="text-sm text-meta-3">{formatDate(item?.date)}</p>
                   </div>
-                  <div className=" flex gap-3 justify-start items-center text-[20px]">
-                    icon hoga
-                  </div>
+
                 </div>
               ))}
           </div>
