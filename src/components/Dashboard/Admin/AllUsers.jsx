@@ -57,9 +57,7 @@ const AllUsers = () => {
           <div className="col-span-3 flex items-center">
             <p className="font-medium">District</p>
           </div>
-          <div className=" hidden items-center sm:flex">
-            <p className="font-medium">Area</p>
-          </div>
+
           <div className=" flex items-center">
             <p className="font-medium">Description</p>
           </div>
@@ -91,11 +89,7 @@ const AllUsers = () => {
                   </p>
                 </div>
               </div>
-              <div className="hidden items-center sm:flex">
-                <p className="text-sm text-black dark:text-white">
-                  {product.area}
-                </p>
-              </div>
+
               <div className=" flex items-center">
                 <p className="text-sm text-black dark:text-white">
                   {product.email}

@@ -110,7 +110,7 @@ const AllLandfillsTable = () => {
               <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className=" w-20 h-20 rounded-md">
-                    <img src={product?.image} alt="" />
+                    <img src={product?.image?.url} alt="" />
                   </div>
                   {/* <p className="text-sm text-black dark:text-white">
                     {item?.district}
