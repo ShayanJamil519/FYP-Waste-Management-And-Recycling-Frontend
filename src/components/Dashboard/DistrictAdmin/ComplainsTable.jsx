@@ -23,6 +23,7 @@ const ComplainsTable = () => {
   const paginate = usePagination();
   const tableRef = useRef();
   const deleteComplaintMutation = useDeleteComplaint();
+  const district = user?.district
   const [openEditComplainModal, setOpenEditComplainModal] = useState(false);
   const [selectedComplaintId, setSelectedComplaintId] = useState(null);
   const [selectedLatitude, setSelectedLatitude] = useState(null);
@@ -51,7 +52,7 @@ const ComplainsTable = () => {
   const handleDeleteComplaint = async (complaintId) => {
     try {
       await deleteComplaintMutation.mutateAsync(complaintId);
-      await queryClient.invalidateQueries(['complaint/get-complaints-district', threadId]);
+      await queryClient.invalidateQueries(['complaint/get-complaints-district', district]);
       toast.success("Complaint deleted successfully");
     } catch (error) {
       toast.error("Failed to delete complaint");
@@ -182,10 +183,7 @@ const ComplainsTable = () => {
                     }
                     // onClick={() => setOpenEditComplainModal(true)}
                   />
-                  <MdDelete
-                    className="cursor-pointer"
-                    onClick={() => handleDeleteComplaint(item._id)}
-                  />
+
                 </div>
               </div>
             ))}
@@ -214,5 +212,10 @@ const ComplainsTable = () => {
     </div>
   );
 };
-
+/*
+                  <MdDelete
+                    className="cursor-pointer"
+                    onClick={() => handleDeleteComplaint(item._id)}
+                  />
+*/
 export default ComplainsTable;

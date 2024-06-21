@@ -10,6 +10,8 @@ import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import WrappedMapComponent from "./Map";
 import { FaSpinner } from "react-icons/fa";
+import { useStateContext } from "@/app/StateContext";
+import {  useQueryClient } from "@tanstack/react-query";
 
 const Images = [
   "/home/hero__slider1.jpg",
@@ -23,7 +25,9 @@ const Images = [
 
 const EditComplainModal = ({ setOpenEditComplainModal, complaintId , latitude , longitude , imagee}) => {
   console.log(imagee)
+  const { user } = useStateContext();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [isLooading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [info, setInfo] = useState({
@@ -67,6 +71,7 @@ const EditComplainModal = ({ setOpenEditComplainModal, complaintId , latitude , 
     console.log(info)
     try {
       await addResponse(complaintId, info);
+      await queryClient.invalidateQueries(['complaint/get-complaints-district', user?.district]);
       setIsLoading(false);
       setOpenEditComplainModal(false);
       // Optionally, you can add a redirect or any other logic here after successful response
