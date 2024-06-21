@@ -88,7 +88,15 @@ const useGetAllOutputEntries = () => {
   return useQuery(["allOutputEntries"],
   RecyclingEntry.getAllOutputEntries);
 };
+const useGetASpecificRecyclingIEntry = (landfillId) => {
 
+  return useQuery(["allRecyclingEntries", landfillId], () => RecyclingEntry.getSpecificRecyclingIEntries(landfillId));
+};
+
+const useGetASpecificRecyclingOEntry = (landfillId) => {
+  console.log("hookkkkk")
+  return useQuery(["allRecyclingEntries2", landfillId], () => RecyclingEntry.getSpecificRecyclingOEntries(landfillId));
+};
 
 export {
   useInputEntry,
@@ -98,5 +106,7 @@ export {
   useAddResponseToRecyclingPoint,
   useDeleteRecyclingPoint,
   useGetAllInputEntries,
-  useGetAllOutputEntries
+  useGetAllOutputEntries,
+  useGetASpecificRecyclingIEntry,
+  useGetASpecificRecyclingOEntry
 };

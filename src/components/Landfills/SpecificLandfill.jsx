@@ -65,7 +65,7 @@ const SpecificLandfill = ({ landfillID }) => {
         <div className="rounded-sm border border-stroke bg-white shadow-default   font-poppins ">
           <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
             <h4 className="text-xl font-semibold text-black dark:text-white">
-              koi bhi heading daaldai relevant
+              Landfill Entries
             </h4>
             <Link
               href="#"

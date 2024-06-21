@@ -127,6 +127,40 @@ class RecyclingEntry {
     }
   };
 
+  async getSpecificRecyclingIEntries(landfillId) {
+    try {
+      console.log("Entry Service1 ")
+      const {data} = await axios.get(`${apiUrl}/recycling/getRecyclingEntriesByAdmin/${landfillId}`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("DAAAAAAAATA")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  async getSpecificRecyclingOEntries(landfillId) {
+    try {
+      console.log("Entry Service  2 ")
+      const {data} = await axios.get(`${apiUrl}/recycling/getRecyclingOutputEntriesByAdmin/${landfillId}`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("DAAAAAAAATA")
+      console.log(data)
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
 
 
   async outputEntry(data) {
@@ -144,5 +178,7 @@ class RecyclingEntry {
     return res;
   }
 }
+
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default new RecyclingEntry();
