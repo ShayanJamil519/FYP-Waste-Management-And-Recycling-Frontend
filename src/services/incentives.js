@@ -42,8 +42,7 @@ class Incentives {
 
 
   async createIncentive(incentiveData) {
-    console.log("Hello");
-    console.log(token);
+
     const res = await axios.post(
       `${apiUrl}/create-incentive`,
       incentiveData,

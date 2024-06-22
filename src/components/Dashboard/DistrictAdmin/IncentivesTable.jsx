@@ -18,11 +18,12 @@ import { toast } from "react-toastify";
 
 const IncentivesTable = () => {
   const { user } = useStateContext();
+  const subdivison = user?.subdivison
 
-  console.log({ user });
+  console.log(subdivison)
 
   const [incentiveData, setIncentiveData] = useState({
-    subDivision: user?.subdivision,
+    subDivision: "",
     tokenBalance: "",
   });
 
@@ -45,23 +46,24 @@ const IncentivesTable = () => {
     isError,
   } = useGetSubdivisionsAndUserCounts(user?.district);
 
+
   const { data: data2 } = useGetSubdivisionComplaints(user?.district);
 
-  console.log({ data1, data2 });
 
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(data1);
   const handleButtonClick = async (product) => {
     const findSubdivisionData = (data, subdivision) => {
       return data[subdivision];
     };
-
+  
     const subdivisionData = findSubdivisionData(data2, product.subdivision);
-
+  
     if (subdivisionData) {
       console.log(`Data for ${product.subdivision}:`, subdivisionData);
     } else {
       console.log(`${product.subdivision} not found`);
     }
+  
     try {
       const {
         avgRecyclablePercentage,
@@ -70,16 +72,18 @@ const IncentivesTable = () => {
         avgMetalloids,
         subdivision,
       } = product;
-
-      const { total: subdivisionTotal, valid: subdivisionValid } =
-        subdivisionData;
-
+  
+      const { total: subdivisionTotal, valid: subdivisionValid } = subdivisionData;
+  
       const recyclablePercentage = avgRecyclablePercentage;
       const plasticPercentage = avgPlasticPercentage;
       const glassPercentage = avgGlassPercentage;
       const Metalloids = avgMetalloids;
       const complaints = subdivisionTotal;
       const validcomplaints = subdivisionValid;
+  
+      console.log(recyclablePercentage, plasticPercentage, glassPercentage, Metalloids, complaints, validcomplaints);
+  
       setData({
         recyclablePercentage,
         plasticPercentage,
@@ -88,15 +92,37 @@ const IncentivesTable = () => {
         complaints,
         validcomplaints,
       });
-
-      addMutate(
+  
+      const response = await addMutate(
         {},
         {
           onSuccess: async (response) => {
-            setIncentiveData({
-              ...incentiveData,
+
+            setIncentiveData(prevState => ({
+              ...prevState,
+              subDivision: product.subdivision,
               tokenBalance: response.data[0],
-            });
+            }));
+            console.log("SAd");
+            console.log(product.subdivision)
+            console.log(response.data[0]);
+  
+           
+  
+            await incentiveMutate(
+              {},
+              {
+                onSuccess: async (response) => {
+                  console.log(response.data);
+                  console.log("Alhamdolillah");
+                },
+                onError: (response) => {
+                  console.error("An error occurred:");
+                  console.log(response);
+                  toast.error(response.response.data.message);
+                },
+              }
+            );
 
             await IncentivesContractInteraction.CalculateIncentives(
               subdivision,
@@ -111,25 +137,30 @@ const IncentivesTable = () => {
         }
       );
 
-      incentiveMutate(
-        {},
-        {
-          onSuccess: async (response) => {
-            console.log(response.data);
-
-            console.log("Alhamdolillah");
-          },
-          onError: (response) => {
-            console.error("An error occurred:");
-            console.log(response);
-            toast.error(response.response.data.message);
-          },
-        }
-      );
+      
     } catch (error) {
       toast.error(error?.message);
     }
   };
+
+  useEffect(() => {
+    console.log("useEffect called")
+    if (incentiveData.subDivision && incentiveData.tokenBalance) {
+      console.log("isnide useEfffect")
+      // Ensure incentiveData is complete before triggering mutation
+      incentiveMutate(incentiveData, {
+        onSuccess: (response) => {
+          console.log("Incentive mutation successful:", response.data);
+          console.log("Alhamdolillah");
+        },
+        onError: (error) => {
+          console.error("An error occurred:", error);
+          toast.error(error.response?.data?.message || "Failed to create incentive.");
+        },
+      });
+    }
+  }, [incentiveData]);
+  
 
   return (
     <div>
