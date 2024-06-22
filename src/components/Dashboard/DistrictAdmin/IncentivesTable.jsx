@@ -106,23 +106,7 @@ const IncentivesTable = () => {
             console.log("SAd");
             console.log(product.subdivision)
             console.log(response.data[0]);
-  
-           
-  
-            await incentiveMutate(
-              {},
-              {
-                onSuccess: async (response) => {
-                  console.log(response.data);
-                  console.log("Alhamdolillah");
-                },
-                onError: (response) => {
-                  console.error("An error occurred:");
-                  console.log(response);
-                  toast.error(response.response.data.message);
-                },
-              }
-            );
+
 
             await IncentivesContractInteraction.CalculateIncentives(
               subdivision,
