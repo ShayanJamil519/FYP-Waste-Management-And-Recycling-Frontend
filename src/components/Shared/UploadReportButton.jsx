@@ -5,8 +5,22 @@ import { toast } from "react-toastify";
 import WasteManagementContractInteraction from "@/utils/wasteMangementContractInteraction";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa6";
+import {
+  useNewUpdateUrl
+} from "@/hooks/landfillEntries";
+
+import {
+  useNewUpdateRUrl
+} from "@/hooks/recyclePointEntries";
 
 const UploadReportButton = ({ tableRef, reportType }) => {
+
+  const [data, setData] = useState({
+    latestUrl: "",
+  });
+
+  const { mutate: addMutate } = useNewUpdateUrl(JSON.stringify(data));
+  const { mutate: addMutate1 } = useNewUpdateRUrl(JSON.stringify(data));
   const [loading, setLoading] = useState(false);
 
   const handleCaptureAndUpload = async () => {
@@ -21,8 +35,14 @@ const UploadReportButton = ({ tableRef, reportType }) => {
           // other options as needed...
         });
         canvas.toBlob(async (blob) => {
-          // Upload captured image as blob
+
           const response = await uploadFileToIPFS(blob);
+          console.log("ipfs")
+          console.log(response?.data?.IpfsHash)
+          setData(prevData => ({
+            ...prevData,
+            latestUrl: response?.data?.IpfsHash,
+          }));
 
           try {
             await WasteManagementContractInteraction.AddWeeklyReport(
@@ -32,6 +52,33 @@ const UploadReportButton = ({ tableRef, reportType }) => {
             );
 
             toast.success("Report Uploaded to IPFS");
+            if (reportType =="landfillEntries"){
+              addMutate(
+                {},
+                {
+                  onSuccess: (response) => {
+                    console.log("OnSuccess")
+
+                  },
+                  onError: (response) => {
+                    console.log("OnError")
+                  },
+                }
+              );
+            }else if(reportType =="recyclingOutputEntries" || reportType =="recyclingInputEntries"){
+              addMutate1(
+                {},
+                {
+                  onSuccess: (response) => {
+                    console.log("OnSuccess")
+
+                  },
+                  onError: (response) => {
+                    console.log("OnError")
+                  },
+                }
+              );
+            }
             setLoading(false);
           } catch (error) {
             console.log(error)

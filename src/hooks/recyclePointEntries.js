@@ -29,6 +29,20 @@ const useAddResponseToRecyclingPoint = () => {
   };
 };
 
+const useNewUpdateRUrl = (data) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return RecyclingEntry.UpdateUrl(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("signup");
+      },
+    }
+  );
+};
+
 const useInputEntry = (data) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -108,5 +122,6 @@ export {
   useGetAllInputEntries,
   useGetAllOutputEntries,
   useGetASpecificRecyclingIEntry,
-  useGetASpecificRecyclingOEntry
+  useGetASpecificRecyclingOEntry,
+  useNewUpdateRUrl
 };

@@ -154,6 +154,23 @@ class LandfillEntry {
     return res;
   }
 
+
+  async UpdateUrl(data) {
+    console.log("in serv")
+    console.log(data)
+    const res = await axios.post(
+      `${apiUrl}/landfill/updateLandfillLatestUrl`,
+      data,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  }
+
 }
 // eslint-disable-next-line import/no-anonymous-default-export
 export default new LandfillEntry();

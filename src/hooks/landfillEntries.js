@@ -41,6 +41,21 @@ const useNewLandfill = (data) => {
   );
 };
 
+
+const useNewUpdateUrl = (data) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return LandfillEntry.UpdateUrl(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("signup");
+      },
+    }
+  );
+};
+
 const useAddResponseToLandfill = () => {
   const mutation = useMutation(({ id, data }) =>
     LandfillEntry.addResponseToLandfill(id, data)
@@ -82,4 +97,4 @@ const useGetASpecificLandfillEntry = (landfillId) => {
 };
 
 
-export { useNewLandfill,useGetASpecificLandfillEntry,  useGetAllLandfills , useInputEntry, useDeleteLandfill, useDeleteLandfillEntry, useAddResponseToLandfill, useGetAllLandfillEntries};
+export { useNewLandfill,useGetASpecificLandfillEntry,  useGetAllLandfills , useInputEntry, useDeleteLandfill, useDeleteLandfillEntry, useAddResponseToLandfill, useGetAllLandfillEntries , useNewUpdateUrl};
