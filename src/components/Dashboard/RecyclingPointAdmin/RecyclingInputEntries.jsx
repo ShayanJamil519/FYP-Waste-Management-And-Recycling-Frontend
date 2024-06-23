@@ -3,23 +3,23 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import RecyclingInputEntryModal from "./RecyclingInputEntryModal";
-import { useGetAllInputEntries} from "@/hooks/recyclePointEntries";
+import { useGetAllInputEntries } from "@/hooks/recyclePointEntries";
 import DataLoader from "@/components/Shared/DataLoader";
-
+import UploadReportButton from "@/components/Shared/UploadReportButton";
 
 const RecyclingInputEntries = () => {
+  const tableRef = useRef();
+  const paginate = usePagination();
   const [openRecyclingInputEntryModal, setOpenRecyclingInputEntryModal] =
     useState(false);
-    const { data, isLoading, isError } = useGetAllInputEntries();
-  const paginate = usePagination();
+  const { data, isLoading, isError } = useGetAllInputEntries();
 
-  const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(data && data?.inputEntries);
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
+    data && data?.inputEntries
+  );
 
-    console.log("entriesData");
-  console.log(data);
   if (isLoading) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
@@ -29,7 +29,11 @@ const RecyclingInputEntries = () => {
   }
 
   if (isError) {
-    return <div>Error loading Landfill Entries</div>;
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        Error loading recycling input entries
+      </div>
+    );
   }
 
   const formatDate = (isoDate) => {
@@ -38,16 +42,23 @@ const RecyclingInputEntries = () => {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
-  }
+  };
 
   return (
     <div>
       {/* Table */}
-      <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
-        <div className="py-4 px-4 md:px-6 xl:px-7.5">
+      <div
+        ref={tableRef}
+        className="rounded-sm border border-stroke bg-white shadow-default  font-poppins "
+      >
+        <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Top Products
           </h4>
+          <UploadReportButton
+            tableRef={tableRef}
+            reportType="recyclingInputEntries"
+          />
         </div>
 
         <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
@@ -109,7 +120,9 @@ const RecyclingInputEntries = () => {
                 </p>
               </div>
               <div className=" flex items-center">
-                <p className="text-sm text-meta-3">{formatDate(product.dateAndTime)}</p>
+                <p className="text-sm text-meta-3">
+                  {formatDate(product.dateAndTime)}
+                </p>
               </div>
               {/* <div className=" flex gap-3 justify-start items-center text-[20px]">
                 <MdEdit

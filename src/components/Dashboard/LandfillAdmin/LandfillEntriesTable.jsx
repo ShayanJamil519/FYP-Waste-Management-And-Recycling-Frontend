@@ -3,12 +3,17 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LandfillEntryModal from "./LandfillEntryModal";
-import { useGetAllLandfillEntries,useDeleteLandfillEntry } from "@/hooks/landfillEntries";
+import {
+  useGetAllLandfillEntries,
+  useDeleteLandfillEntry,
+} from "@/hooks/landfillEntries";
 import DataLoader from "@/components/Shared/DataLoader";
+import UploadReportButton from "@/components/Shared/UploadReportButton";
 
 const LandfillEntriesTable = () => {
+  const tableRef = useRef();
   const [openLandfillEntryModal, setOpenLandfillEntryModal] = useState(false);
   const { data, isLoading, isError } = useGetAllLandfillEntries();
   const deleteLandfillMutation = useDeleteLandfillEntry();
@@ -16,8 +21,7 @@ const LandfillEntriesTable = () => {
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(
     data && data?.landfillinputEntries
   );
-  console.log("entriesData");
-  console.log(data);
+
   if (isLoading) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
@@ -27,7 +31,11 @@ const LandfillEntriesTable = () => {
   }
 
   if (isError) {
-    return <div>Error loading Landfill Entries</div>;
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        Error loading landfill entries
+      </div>
+    );
   }
 
   const handleDeleteLandfill = async (id) => {
@@ -42,11 +50,18 @@ const LandfillEntriesTable = () => {
   return (
     <div>
       {/* Table */}
-      <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
-        <div className="py-4 px-4 md:px-6 xl:px-7.5">
+      <div
+        ref={tableRef}
+        className="rounded-sm border border-stroke bg-white shadow-default  font-poppins "
+      >
+        <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Top Products
           </h4>
+          <UploadReportButton
+            tableRef={tableRef}
+            reportType="landfillEntries"
+          />
         </div>
 
         <div className="grid grid-cols-6 border-t border-stroke py-4 px-4  sm:grid-cols-7 md:px-6 2xl:px-7">
@@ -113,11 +128,11 @@ const LandfillEntriesTable = () => {
                 <p className="text-sm text-meta-3">{product.area}</p>
               </div>
               {/* <div className=" flex  items-center text-[20px]"> */}
-                {/* <MdEdit
+              {/* <MdEdit
                   className="cursor-pointer"
                   onClick={() => setOpenLandfillEntryModal(true)}
                 /> */}
-                {/* <MdDelete
+              {/* <MdDelete
                   className="cursor-pointer"
                   onClick={() => handleDeleteLandfill(product._id)}
                 />

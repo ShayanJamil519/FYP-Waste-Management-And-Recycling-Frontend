@@ -3,44 +3,54 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import RecyclingOutputEntryModal from "./RecyclingOutputEntryModal";
 import { useGetAllOutputEntries } from "@/hooks/recyclePointEntries";
 import DataLoader from "@/components/Shared/DataLoader";
-
+import UploadReportButton from "@/components/Shared/UploadReportButton";
 
 const RecyclingOutputEntries = () => {
+  const tableRef = useRef();
+  const paginate = usePagination();
+  const { data, isLoading, isError } = useGetAllOutputEntries();
   const [openRecyclingOutputEntryModal, setOpenRecyclingOutputEntryModal] =
     useState(false);
-    const { data, isLoading, isError } = useGetAllOutputEntries();
-  const paginate = usePagination();
 
-  const { currentPage, totalPages, visibleItems, goToPage } =
-    paginate(data && data?.outputEntries);
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
+    data && data?.outputEntries
+  );
 
-    console.log("entriesData");
-    console.log(data);
-    if (isLoading) {
-      return (
-        <div className="w-full h-[70vh] flex justify-center items-center">
-          <DataLoader />
-        </div>
-      );
-    }
-  
-    if (isError) {
-      return <div>Error loading Landfill Entries</div>;
-    }
-  
+  if (isLoading) {
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        <DataLoader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="w-full h-[70vh] flex justify-center items-center">
+        Error loading recycling output entries
+      </div>
+    );
+  }
 
   return (
     <div>
       {/* Table */}
-      <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
-        <div className="py-4 px-4 md:px-6 xl:px-7.5">
+      <div
+        ref={tableRef}
+        className="rounded-sm border border-stroke bg-white shadow-default  font-poppins "
+      >
+        <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Top Products
           </h4>
+          <UploadReportButton
+            tableRef={tableRef}
+            reportType="recyclingOutputEntries"
+          />
         </div>
         <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
           <div className="col-span-1 flex items-center">
