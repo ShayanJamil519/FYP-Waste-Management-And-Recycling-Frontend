@@ -43,6 +43,20 @@ const useNewUpdateRUrl = (data) => {
   );
 };
 
+const useNewUpdateRUrlO = (data) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return RecyclingEntry.UpdateUrlO(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("signup");
+      },
+    }
+  );
+};
+
 const useInputEntry = (data) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -123,5 +137,6 @@ export {
   useGetAllOutputEntries,
   useGetASpecificRecyclingIEntry,
   useGetASpecificRecyclingOEntry,
-  useNewUpdateRUrl
+  useNewUpdateRUrl,
+  useNewUpdateRUrlO
 };

@@ -10,7 +10,8 @@ import {
 } from "@/hooks/landfillEntries";
 
 import {
-  useNewUpdateRUrl
+  useNewUpdateRUrl , 
+  useNewUpdateRUrlO
 } from "@/hooks/recyclePointEntries";
 
 const UploadReportButton = ({ tableRef, reportType }) => {
@@ -21,6 +22,7 @@ const UploadReportButton = ({ tableRef, reportType }) => {
 
   const { mutate: addMutate } = useNewUpdateUrl(JSON.stringify(data));
   const { mutate: addMutate1 } = useNewUpdateRUrl(JSON.stringify(data));
+  const { mutate: addMutate2 } = useNewUpdateRUrlO(JSON.stringify(data));
   const [loading, setLoading] = useState(false);
 
   const handleCaptureAndUpload = async () => {
@@ -65,8 +67,21 @@ const UploadReportButton = ({ tableRef, reportType }) => {
                   },
                 }
               );
-            }else if(reportType =="recyclingOutputEntries" || reportType =="recyclingInputEntries"){
+            }else if(reportType =="recyclingInputEntries"){
               addMutate1(
+                {},
+                {
+                  onSuccess: (response) => {
+                    console.log("OnSuccess")
+
+                  },
+                  onError: (response) => {
+                    console.log("OnError")
+                  },
+                }
+              );
+            } else if (reportType =="recyclingOutputEntries"){
+              addMutate2(
                 {},
                 {
                   onSuccess: (response) => {

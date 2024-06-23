@@ -177,6 +177,23 @@ class RecyclingEntry {
     return res;
   }
 
+
+  async UpdateUrlO(data) {
+    console.log("in serv")
+    console.log(data)
+    const res = await axios.post(
+      `${apiUrl}/recycling/updateRecyclingLatestUrlO`,
+      data,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  }
+
   async outputEntry(data) {
 
     const res = await axios.post(

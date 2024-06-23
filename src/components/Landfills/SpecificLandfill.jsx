@@ -28,6 +28,10 @@ const SpecificLandfill = ({ landfillID }) => {
     data && data?.entries
   );
 
+  const url = data?.url
+  console.log("url")
+  console.log(url)
+
   if (isLoading) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
