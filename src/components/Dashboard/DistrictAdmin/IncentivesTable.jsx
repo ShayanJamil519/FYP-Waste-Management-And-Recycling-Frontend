@@ -17,6 +17,11 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const IncentivesTable = () => {
+
+  const findSubdivisionData = (data, subdivision) => {
+    return data?.[subdivision];
+  };
+
   const { user } = useStateContext();
   const subdivison = user?.subdivison
 
@@ -52,9 +57,7 @@ const IncentivesTable = () => {
 
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(data1);
   const handleButtonClick = async (product) => {
-    const findSubdivisionData = (data, subdivision) => {
-      return data[subdivision];
-    };
+    
   
     const subdivisionData = findSubdivisionData(data2, product.subdivision);
   
@@ -173,37 +176,42 @@ const IncentivesTable = () => {
 
         {/* Table Body */}
         <div className="h-[55vh] overflow-auto">
-          {visibleItems.map((product, key) => (
-            <div
-              className=" grid grid-cols-7 border-t border-stroke py-6 px-4  sm:grid-cols-7 md:px-6 2xl:px-7"
-              key={key}
-            >
-              <div className="col-span-2 flex items-center">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <p className="text-sm text-black dark:text-white">
-                    {product.subdivision}
-                  </p>
-                </div>
-              </div>
-              <div className="hidden items-center justify-center sm:flex">
-                <p className="text-sm text-black dark:text-white">
-                  {product.userCount}
-                </p>
-              </div>
-              <div className=" flex items-center justify-center col-span-2">
-                <p className="text-sm text-black dark:text-white ">
-                  {product.tokens}
-                </p>
-              </div>
+        {visibleItems.map((product, key) => {
+  const subdivisionData = findSubdivisionData(data2, product.subdivision);
+  const tokenBalance = subdivisionData?.tokenBalance;
 
-              <button
-                className="px-3 py-2 col-span-2 w-fit  text-[16px] text-[#fff] bg-[#296d8d] rounded-md"
-                onClick={() => handleButtonClick(product)}
-              >
-                Calculate Incentives
-              </button>
-            </div>
-          ))}
+  return (
+    <div
+      className="grid grid-cols-7 border-t border-stroke py-6 px-4 sm:grid-cols-7 md:px-6 2xl:px-7"
+      key={key}
+    >
+      <div className="col-span-2 flex items-center">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <p className="text-sm text-black dark:text-white">
+            {product.subdivision}
+          </p>
+        </div>
+      </div>
+      <div className="hidden items-center justify-center sm:flex">
+        <p className="text-sm text-black dark:text-white">
+          {product.userCount}
+        </p>
+      </div>
+      <div className="flex items-center justify-center col-span-2">
+        <p className="text-sm text-black dark:text-white">
+          {tokenBalance === 0 ? "No tokens allocated" : tokenBalance}
+        </p>
+      </div>
+      <button
+        className="px-3 py-2 col-span-2 w-fit text-[16px] text-[#fff] bg-[#296d8d] rounded-md"
+        onClick={() => handleButtonClick(product)}
+        disabled={tokenBalance !== 0}
+      >
+        Calculate Incentives
+      </button>
+    </div>
+  );
+})}
         </div>
       </div>
       {/* Pagination */}
