@@ -9,8 +9,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { ethers } from "ethers";
 
 const Login = () => {
+  const [defaultAccount, setDefaultAccount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { setIsLoggedIn, setOpenSignupModal, setOpenLoginModal } =
     useStateContext();
@@ -35,6 +37,11 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!defaultAccount) {
+      toast.error("Please connect your wallet");
+      return;
+    }
 
     setIsLoading(true);
     addMutate(
@@ -63,6 +70,21 @@ const Login = () => {
     );
   };
 
+  const connectwalletHandler = () => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      provider.send("eth_requestAccounts", []).then(async () => {
+        await accountChangedHandler(provider.getSigner());
+      });
+    } else {
+      toast.error("Please Install Metamask!!!");
+    }
+  };
+  const accountChangedHandler = async (newAccount) => {
+    const address = await newAccount.getAddress();
+    setDefaultAccount(address);
+  };
+
   return (
     <div className=" flex items-center justify-center w-full h-full ">
       <div className="  bg-white rounded-xl  ">
@@ -71,19 +93,16 @@ const Login = () => {
             <h2 className="font-paralucent text-center text-[20px] lg:text-3xl mt-7 lg:my-4">
               Login
             </h2>
-            <div className="flex mt-3 sm:mt-1 lg:mt-6">
+
+            <div className="col-span-2 mb-4">
               <div
-                className="bg-[#EAEAEA] rounded-md cursor-pointer w-full py-3 flex items-center gap-3 sm:gap-5 justify-center "
-                // onClick={handleGoogleLogin}
+                className="text-[10px]  py-3 lg:text-base cursor-pointer px-2 md:px-4 text-center w-full rounded-lg  bg-[#EAEAEA]"
+                onClick={connectwalletHandler}
               >
-                <FcGoogle className=" text-[24px] sm:text-[30px]" />
-                <p className="text-[13px] sm:text-base"> Login With Google</p>
+                {defaultAccount ? defaultAccount : " Connect your wallet"}
               </div>
             </div>
-            <div className="flex mt-3 sm:mt-2 gap-2 sm:gap-5 justify-start items-center font-poppins">
-              <p className="text-[10px] sm:text-sm">Or Continue With Email</p>
-              <div className="h-[1px] bg-[#C9C6C6] w-1/2 sm:w-[54%]"></div>
-            </div>
+
             <form onSubmit={handleSubmit}>
               <div className="mt-4">
                 <input
@@ -119,7 +138,7 @@ const Login = () => {
                 {isLoading ? (
                   <button
                     type="submit"
-                    className=" w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 lg:py-4 py-3 rounded-md"
+                    className=" w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 lg:py-3 py-3 rounded-md"
                     disabled
                   >
                     <FaSpinner className="animate-spin mr-2 text-white" />
@@ -129,7 +148,7 @@ const Login = () => {
                   <button
                     type="submit"
                     // onClick={resetForm}
-                    className=" w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 lg:py-4 py-3 rounded-md"
+                    className=" w-full flex justify-center items-center font-semibold text-sm sm:text-lg gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 lg:py-3 py-3 rounded-md"
                   >
                     login
                     <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
