@@ -8,19 +8,7 @@ const useUserId = () => {
   return useQuery({ queryKey: ["user"], queryFn: () => AuthService.getMyId() });
 };
 
-// const useUserId = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation(
-//     () => {
-//       return AuthService.getMyId();
-//     },
-//     {
-//       onSuccess: () => {
-//         queryClient.invalidateQueries("userId");
-//       },
-//     }
-//   );
-// };
+
 
 const useUserSignup = (userData) => {
   const queryClient = useQueryClient();
@@ -83,19 +71,31 @@ const useGetAllUsers = () => {
   return useQuery(["allUsers"], AuthService.getAllUsers);
 };
 
-// const useContactUs = (data) => {
-//   const queryClient = useQueryClient();
-//   return useMutation(
-//     () => {
-//       return AuthService.contactUs(data);
-//     },
-//     {
-//       onSuccess: () => {
-//         queryClient.invalidateQueries("contact");
-//       },
-//     }
-//   );
-// };
+const useUpdate = () => {
+  console.log("hookkk")
+  const mutation = useMutation(({ threadId ,data}) =>
+    AuthService.updateRole(threadId , data)
+  );
+
+  const addResponsee = async (threadId , data) => {
+    try {
+      console.log("assaaaa")
+      console.log(threadId)
+      console.log(data)
+      const response = await mutation.mutateAsync({ threadId , data });
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {
+    addResponsee,
+    isLoading: mutation.isLoading,
+    isError: mutation.isError,
+    error: mutation.error,
+  };
+};
 
 export {
   useUserSignup,
@@ -104,7 +104,5 @@ export {
   useGetAllUsers,
   useUserForgotPassword,
   useUserResetPassword,
-  // useUserForgotPassword,
-  // useUserResetPassword,
-  // useContactUs,
+  useUpdate
 };

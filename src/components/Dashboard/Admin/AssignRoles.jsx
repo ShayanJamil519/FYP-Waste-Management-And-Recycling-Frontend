@@ -9,7 +9,9 @@ import WasteManagementContractInteraction from "@/utils/wasteMangementContractIn
 
 import { FaSpinner } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa6";
-
+import {
+  useUpdate
+} from "../../../hooks/auth-hook";
 const rolesData = [
   {
     value: 0,
@@ -17,7 +19,7 @@ const rolesData = [
   },
   {
     value: 1,
-    text: "RecyclableAdmin",
+    text: "RecyclingPointAdmin",
   },
   {
     value: 2,
@@ -25,7 +27,7 @@ const rolesData = [
   },
   {
     value: 3,
-    text: "User",
+    text: "user",
   },
   {
     value: 4,
@@ -33,13 +35,34 @@ const rolesData = [
   },
 ];
 
+
+
 const AssignRoles = () => {
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState({
     address: "",
     role: "",
   });
+
+  const [userData, setUserData] = useState({
+    role : ""
+  });
+
+  const getRoleText = (value) => {
+    console.log("role")
+    const role = rolesData.find(role => role.value == value);
+    console.log(role.text)
+    setUserData(prevState => ({
+      ...prevState,
+      role: role.text
+    }));
+    return role ? role.text : 'Role not found';
+  }
+
+  const { addResponsee, error } =
+  useUpdate();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,11 +71,24 @@ const AssignRoles = () => {
       ...data,
       [name]: value,
     });
+    console.log("val")
+    console.log(value)
+    const role = rolesData.find(role => role.value == value);
+    console.log(role.text)
+    setUserData(prevState => ({
+      ...prevState,
+      role: role.text
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    const threadId = data?.address
+    const role = getRoleText(data?.role)
+    console.log("userData")
+    console.log(userData)
+    await addResponsee(threadId, userData);
     try {
       await WasteManagementContractInteraction.AssignUserRole(
         data?.address,

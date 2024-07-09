@@ -88,6 +88,24 @@ class AuthService {
     return res;
   }
 
+  async updateRole(threadId, data) {
+    try {
+      const response = await axios.post(`${apiUrl}/user-role/${threadId}`,
+      data ,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error)
+      throw new Error("Internal server error");
+    }
+  }
+
   async ResetPassword(userData) {
     const res = await axios.post(`${apiUrl}/resetPassword`, userData, {
       headers: {
@@ -99,33 +117,7 @@ class AuthService {
     return res;
   }
 
-  //   /**
-  //    *resetPasswordUser
-  //    * @returns
-  //    */
-
-  //   async resetPasswordUser(userData, token) {
-  //     console.log(userData);
-  //     const res = await axios.put(
-  //       `${apiUrl}/api/auth/resetPassword/${token}`,
-  //       userData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     return res;
-  //   }
-
-  //   async contactUs(data) {
-  //     const res = await axios.post(`${apiUrl}/api/contact/contactUs`, data, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     return res;
-  //   }
+ 
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

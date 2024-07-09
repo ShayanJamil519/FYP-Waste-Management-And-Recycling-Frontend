@@ -88,28 +88,6 @@ class ThreadEntry {
     }
   }
 
-  /*async likeById(threadId) {
-    try {
-      console.log("service")
-      console.log(threadId)
-      const response = await axios.post(
-        `${apiUrl}/thread/like/${threadId}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(response)
-      return response.data;
-    } catch (error) {
-      throw (
-        error.response.data.message ||
-        "Something went wrong while liking the thread."
-      );
-    }
-  }*/
   async outputEntry(data) {
 
     const res = await axios.post(
