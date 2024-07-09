@@ -28,9 +28,14 @@ const SpecificLandfill = ({ landfillID }) => {
     data && data?.entries
   );
 
-  const url = data?.url
-  console.log("url")
+  const url = "https://ipfs.io/ipfs/" + data?.url
   console.log(url)
+
+  const handleButtonClick = () => {
+    
+    window.open(url, "_blank"); // "_blank" opens the link in a new tab
+  };
+  
 
   if (isLoading) {
     return (
@@ -75,7 +80,9 @@ const SpecificLandfill = ({ landfillID }) => {
               href="#"
               className="bg-[#f29620] text-[#fff] py-2 px-3 rounded-md text-sm"
             >
+              <button onClick={handleButtonClick} >
               View Blockchain Data
+              </button>
             </Link>
           </div>
 

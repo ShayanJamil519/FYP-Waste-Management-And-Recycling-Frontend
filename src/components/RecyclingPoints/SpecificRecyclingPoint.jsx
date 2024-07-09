@@ -27,16 +27,28 @@ const SpecificRecyclingPoint = ({ recyclingPointID }) => {
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(
     data && data?.entries
   );
-  console.log("fsfs")
-  console.log(data2)
-  //console.log(visibleItems)
-
-
+  console.log("visible")
+  console.log(visibleItems)
+  //console.log(data2)
 
   const { currentPage : currentPage2, totalPages :totalPages2 , visibleItems : visibleItems2, goToPage  :  goToPage2} = paginate(
     data2 && data2?.entries
   );
   console.log(visibleItems2)
+  const url = "https://ipfs.io/ipfs/" + data?.url
+  console.log(url)
+
+
+  const url1 = "https://ipfs.io/ipfs/" + data2?.url
+  console.log(url1)
+
+  const handleButtonClick = () => {
+    window.open(url, "_blank"); 
+  };
+
+  const handleButtonClick1 = () => {
+    window.open(url1, "_blank"); 
+  };
   if (isLoading) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
@@ -80,7 +92,10 @@ const SpecificRecyclingPoint = ({ recyclingPointID }) => {
               href="#"
               className="bg-[#f29620] text-[#fff] py-2 px-3 rounded-md text-sm"
             >
+
+                           <button onClick={handleButtonClick} >
               View Blockchain Data
+              </button>
             </Link>
           </div>
 
@@ -175,7 +190,9 @@ const SpecificRecyclingPoint = ({ recyclingPointID }) => {
               href="#"
               className="bg-[#f29620] text-[#fff] py-2 px-3 rounded-md text-sm"
             >
+                           <button onClick={handleButtonClick1} >
               View Blockchain Data
+              </button>
             </Link>
           </div>
 
