@@ -3,6 +3,7 @@ import { FaServicestack, FaTruckPickup } from "react-icons/fa6";
 import { MdOutlineEvent } from "react-icons/md";
 import { TbReport, TbRecycle } from "react-icons/tb";
 import { GoGift } from "react-icons/go";
+import { CiViewTable } from "react-icons/ci";
 
 export const generateSidebarLinksUser = (id) => {
   const sidebarLinks = [
@@ -71,6 +72,11 @@ export const sidebarLinksDistrictAdmin = [
     linkText: `Community Waste Movements`,
     linkTo: "/dashboard/district-admin/community-waste-movements",
     linkIcon: <TbRecycle />,
+  },
+  {
+    linkText: `Community Waste Movements`,
+    linkTo: "/dashboard/district-admin/community-waste-movement-entries",
+    linkIcon: <CiViewTable />,
   },
 ];
 
