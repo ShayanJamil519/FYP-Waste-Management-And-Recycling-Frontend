@@ -147,12 +147,7 @@ const ChartOne = () => {
         </div>
         <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-[#f5f7fd] p-1 ">
-            <button className="rounded bg-white py-1 px-3 text-xs font-medium text-black shadow-card hover:bg-white ">
-              Day
-            </button>
-            <button className="rounded py-1 px-3 text-xs font-medium text-black hover:bg-white ">
-              Week
-            </button>
+
             <button className="rounded py-1 px-3 text-xs font-medium text-black hover:bg-white ">
               Month
             </button>

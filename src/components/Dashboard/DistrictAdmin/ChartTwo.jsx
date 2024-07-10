@@ -72,10 +72,11 @@ const ChartTwo = () => {
   const { data: totalWasteData, isLoading: totalWasteLoading, error: totalWasteError } = useGetTotalWasteLast7Days(district);
   const { data: recycledWasteData, isLoading: recycledWasteLoading, error: recycledWasteError } = useGetWasteRecycledByDistrict(district);
 
-  console.log("data1")
+  console.log("data1 chart 2")
   console.log(totalWasteData)
+  console.log(totalWasteData?.totalAmounts)
   console.log("data2")
-  console.log(recycledWasteData)
+  console.log(recycledWasteData?.dailyWaste)
   const [state, setState] = useState({
     series: [
       {
@@ -90,23 +91,25 @@ const ChartTwo = () => {
   });
 
   useEffect(() => {
-    if (Array.isArray(totalWasteData) && Array.isArray(recycledWasteData)) {
+    if (totalWasteData?.totalAmounts && recycledWasteData?.dailyWaste) {
+      console.log("reaching hereeeeeee")
       setState((prevState) => ({
         ...prevState,
         series: [
           {
             ...prevState.series[0],
-            data: totalWasteData,
+            data: totalWasteData?.totalAmounts,
           },
           {
             ...prevState.series[1],
-            data: recycledWasteData,
+            data: recycledWasteData?.dailyWaste,
           },
         ],
       }));
     }
   }, [totalWasteData, recycledWasteData]);
-
+  console.log("after use")
+  console.log(state)
   if (totalWasteLoading || recycledWasteLoading) return <div>Loading...</div>;
   if (totalWasteError || recycledWasteError) return <div>Error: {totalWasteError || recycledWasteError}</div>;
 
@@ -156,7 +159,7 @@ const ChartTwo = () => {
         <div id="chartTwo" className="-ml-5 -mb-9">
           <ReactApexChart
             options={options}
-            series={state.series}
+            series={state?.series}
             type="bar"
             height={350}
           />

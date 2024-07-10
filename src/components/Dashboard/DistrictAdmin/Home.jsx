@@ -60,8 +60,8 @@ export const Home = () => {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7 ">
         <CardDataStats
           title="Total Waste Received"
-          total={totalWasteRecycled}
-          rate="0.43%"
+          total={totalWasteRecycled + " Trucks"}
+          rate=""
           levelUp
         >
           <div className="bg-[#eff2f7] p-3 rounded-full">
