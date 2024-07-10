@@ -34,15 +34,14 @@ const NewRecyclingPoint = () => {
     keamari: ["baldia", "site", "harbour", "mauripur"],
   };
   const router = useRouter();
-  // const subDivisionOptions = ["Division 1", "Division 2", "Division 3"];
-  // const districtOptions = ["District 1", "District 2", "District 3"];
+
   const { user } = useStateContext();
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
 
   const [data, setData] = useState({
     name: "",
-    admin: user?.userId,
+    admin: "",
     district: "",
     subdivision: "",
     image: "",
@@ -52,8 +51,7 @@ const NewRecyclingPoint = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(name);
-    console.log("handleInput");
+
     setData({
       ...data,
       [name]: value,
@@ -97,14 +95,13 @@ const NewRecyclingPoint = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      console.log("admin")
-      console.log(data.admin)
       addMutate(
         {},
         {
           onSuccess: (response) => {
             toast.success(response?.data?.message);
             setIsLoading(false);
+            router.push("/dashboard/admin/all-recycling-points");
           },
           onError: (response) => {
             toast.error(response.response.data.message);
@@ -120,13 +117,11 @@ const NewRecyclingPoint = () => {
 
   return (
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
-      <h1 className="font-bold text-3xl">Community Waste Movements</h1>
+      <h1 className="font-bold text-3xl">Establish a New Recycling Point</h1>
       <p className="text-sm mt-3 leading-6 text-[#62706b]">
-        Please complete the form below, to request a quote, and we’ll be in
-        touch. Or you can call us and our specialists will provide help!
+        Please complete the form below to set up a new recycling point.
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
-
         <div className="my-3">
           {image ? (
             <div className="">
@@ -148,8 +143,8 @@ const NewRecyclingPoint = () => {
             <label htmlFor="avatar-upload" className="cursor-pointer">
               <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
                 <FaUpload className="text-2xl" />
-                <p>Upload your image</p>
-                <p className="text-xs mt-2">Click to browse your image here</p>
+                <p>Upload Image of Recycling Point</p>
+                <p className="text-xs mt-2">Click to browse the image</p>
               </div>
             </label>
           )}
@@ -166,13 +161,13 @@ const NewRecyclingPoint = () => {
 
         <div className="grid grid-cols-2 gap-5">
           <Input
-            label="name"
+            label="Recycling Point Name"
             type="text"
-            placeholder="Please write you details"
+            placeholder="Please enter recycling point name"
             name="name"
             onChange={handleInputChange}
             value={data.name}
-            required
+            require={true}
           />
           <div>
             <label
@@ -202,7 +197,7 @@ const NewRecyclingPoint = () => {
               htmlFor="subdivision-select"
               className="font-semibold text-sm text-[#202725] mb-1"
             >
-              Select Your SubDivision
+              Select Your Sub Division
             </label>
             <select
               id="subdivision-select"
@@ -220,21 +215,37 @@ const NewRecyclingPoint = () => {
                     {subDivision}
                   </option>
                 ))}
-             
             </select>
           </div>
-          
+
+          <Input
+            label="Admin ID"
+            type="text"
+            placeholder="Please enter admin id"
+            name="admin"
+            onChange={handleInputChange}
+            value={data.admin}
+            require={true}
+          />
         </div>
         <div className="grid place-items-center mt-6">
           {isLoading ? (
-            <FaSpinner className="animate-spin" /> // Show spinner if isLoading is true
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+              disabled
+            >
+              <FaSpinner className="animate-spin mr-2 text-white" />
+              <span className={"text-white"}>Loading...</span>
+            </button>
           ) : (
             <button
               type="submit"
+              // onClick={resetForm}
               className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
             >
-              Submit
-              <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
+              Create Recycling Point
+              <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
                 <IoIosArrowRoundForward className="text-[27px] font-bold" />
               </span>{" "}
               <style jsx>{`
