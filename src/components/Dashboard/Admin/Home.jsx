@@ -1,10 +1,15 @@
+"use client";
 import dynamic from "next/dynamic";
 import { IoEyeOutline } from "react-icons/io5";
 import { CgShoppingCart } from "react-icons/cg";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsPeople } from "react-icons/bs";
-
+import { useStateContext } from "@/app/StateContext";
 import CardDataStats from "./CardDataStats";
+import {
+  useGetComplaintsSummary,
+  useGetTotalWasteReceived,
+} from "../../../hooks/districtAdmin-hook"; // Adjust the path as needed
 
 const ChartOne = dynamic(() => import("./ChartOne"), {
   ssr: false,
@@ -22,13 +27,38 @@ import TableOne from "./TableOne";
 import ChatCard from "./ChatCard";
 
 export const Home = () => {
+  const { user } = useStateContext();
+  const district = user?.district;
+
+  const {
+    data: complaintData,
+    isLoading: complaintLoading,
+    error: complaintError,
+  } = useGetComplaintsSummary(district);
+
+  const {
+    data: wasteData,
+    isLoading: wasteLoading,
+    error: wasteError,
+  } = useGetTotalWasteReceived(district);
+
+
+  const totalComplaints = complaintData?.totalComplaints || 0;
+  const complaintsResolved = complaintData?.validComplaints || 0;
+  const totalWasteRecycled = wasteData?.totalWasteReceived || 0;
+  const recyclingPercentage = wasteData?.avgRecyclablePercentage || 0;
+
+  if (complaintLoading || wasteLoading) return <div>Loading...</div>;
+  if (complaintError || wasteError)
+    return <div>Error: {complaintError || wasteError}</div>;
+
   return (
     <div className="">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7 ">
         <CardDataStats
-          title="Total Waste Recycled"
-          total="$3.456K"
-          rate="0.43%"
+          title="Total Waste Received"
+          total={totalWasteRecycled + " Trucks"}
+          rate=""
           levelUp
         >
           <div className="bg-[#eff2f7] p-3 rounded-full">
@@ -37,7 +67,7 @@ export const Home = () => {
         </CardDataStats>
         <CardDataStats
           title="Recycling Percentage"
-          total="25%"
+          total={`${recyclingPercentage}%`}
           rate="4.35%"
           levelUp
         >
@@ -47,7 +77,7 @@ export const Home = () => {
         </CardDataStats>
         <CardDataStats
           title="Total Complaints"
-          total="250"
+          total={totalComplaints}
           rate="2.59%"
           levelUp
         >
@@ -56,8 +86,8 @@ export const Home = () => {
           </div>
         </CardDataStats>
         <CardDataStats
-          title="Complaints Resolved"
-          total="235"
+          title="Valid Complaints"
+          total={complaintsResolved}
           rate="0.95%"
           levelDown
         >
@@ -69,7 +99,6 @@ export const Home = () => {
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7 2xl:gap-7">
         <ChartOne />
-
         <ChartTwo />
         <div className="col-span-12 xl:col-span-12 w-full">
           <ChartThree />

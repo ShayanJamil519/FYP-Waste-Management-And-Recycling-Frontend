@@ -1,10 +1,9 @@
+
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useStateContext } from "@/app/StateContext";
 import ReactApexChart from "react-apexcharts";
-// import dynamic from "next/dynamic";
-// const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-//   ssr: false,
-// });
+import {useMonthlyWastePercentages} from '../../../hooks/districtAdmin-hook'; // Adjust the path as needed
 
 const options = {
   chart: {
@@ -16,7 +15,6 @@ const options = {
     show: true,
     position: "bottom",
   },
-
   plotOptions: {
     pie: {
       donut: {
@@ -49,16 +47,33 @@ const options = {
 };
 
 const ChartThree = () => {
-  const [state, setState] = useState({
-    series: [65, 34, 12, 56],
-  });
+  const { user } = useStateContext();
+  const district = user?.district;
+  const { data, isLoading, error } = useMonthlyWastePercentages(district);
+  console.log(data)
+  const [series, setSeries] = useState([0, 0, 0, 0]);
+  
+
+  useEffect(() => {
+    if (data) {
+      setSeries([
+        data.averageMetalloids,
+        data.averageOther || 0, // Adjust for other if needed
+        data.averagePlasticPercentage,
+        data.averageGlassPercentage,
+      ]);
+    }
+  }, [data]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7 pb-5  sm:px-7 xl:col-span-5 font-poppins">
+    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7 pb-5 sm:px-7 xl:col-span-5 font-poppins">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Waste Recycling Analytics Analytics
+            Waste Recycling Analytics
           </h5>
         </div>
         <div>
@@ -69,7 +84,6 @@ const ChartThree = () => {
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
               <option value="">Monthly</option>
-              <option value="">Yearly</option>
             </select>
             <span className="absolute top-1/2 right-3 z-10 -translate-y-1/2">
               <svg
@@ -99,7 +113,7 @@ const ChartThree = () => {
         <div id="chartThree" className="mx-auto flex justify-center">
           <ReactApexChart
             options={options}
-            series={state.series}
+            series={series}
             type="donut"
           />
         </div>

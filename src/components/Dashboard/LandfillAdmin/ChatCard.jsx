@@ -5,8 +5,7 @@ import formatDate from "@/utils/helper";
 
 const ChatCard = () => {
   const { data, isLoading, error } = useGetTopViewedThreads();
-  console.log("thread Data");
-  console.log(data);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }

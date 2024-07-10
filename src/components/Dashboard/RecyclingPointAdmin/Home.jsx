@@ -42,10 +42,7 @@ export const Home = () => {
     error: wasteError,
   } = useGetTotalWasteReceived(district);
 
-  console.log("wasteData")
-  console.log(wasteData)
-  console.log("complainData")
-  console.log(complaintData)
+
   const totalComplaints = complaintData?.totalComplaints || 0;
   const complaintsResolved = complaintData?.validComplaints || 0;
   const totalWasteRecycled = wasteData?.totalWasteReceived || 0;
