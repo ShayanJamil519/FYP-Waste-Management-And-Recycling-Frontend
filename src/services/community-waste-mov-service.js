@@ -21,7 +21,19 @@ class WasteMovement {
     );
     return res;
   }
-
+  async getWasteCollectionByDistrict() {
+    console.log("in ser")
+    const { data } = await axios.get(
+      `${apiUrl}/entry/getAllEntriesByDistrictAdmin`,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  }
   async getWaste(subdivision) {
     const { data } = await axios.get(
       `${apiUrl}/entry/get-entry-subdivision/${subdivision}`,

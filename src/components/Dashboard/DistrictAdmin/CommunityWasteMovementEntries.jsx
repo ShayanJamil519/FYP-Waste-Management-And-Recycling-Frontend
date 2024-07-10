@@ -3,20 +3,24 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
+import { useStateContext } from "@/app/StateContext";
 import { useRef, useState } from "react";
-import { useGetAllInputEntries } from "@/hooks/recyclePointEntries";
+import { useGetWasteDistrict } from "@/hooks/community-waste-movements";
 import DataLoader from "@/components/Shared/DataLoader";
 import UploadReportButton from "@/components/Shared/UploadReportButton";
 
 const CommunityWasteMovementEntries = () => {
   const tableRef = useRef();
+  const { user } = useStateContext();
+  const districtAdmin =  user?.userId
   const paginate = usePagination();
 
-  const { data, isLoading, isError } = useGetAllInputEntries();
-
+  const { data, isLoading, isError } = useGetWasteDistrict(districtAdmin);
+  console.log(data)
   const { currentPage, totalPages, visibleItems, goToPage } = paginate(
-    data && data?.inputEntries
+    data 
   );
+  console.log(visibleItems)
 
   if (isLoading) {
     return (
@@ -99,7 +103,7 @@ const CommunityWasteMovementEntries = () => {
               </div>
               <div className="hidden items-center sm:flex">
                 <p className="text-sm text-black dark:text-white">
-                  {product.quantityReceived}
+                  {product.totalAmount}
                 </p>
               </div>
               {/* <div className=" flex items-center col-span-2">
@@ -114,12 +118,12 @@ const CommunityWasteMovementEntries = () => {
               </div>
               <div className=" flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  {product.district}
+                  {product.subdivision}
                 </p>
               </div>
               <div className=" flex items-center">
                 <p className="text-sm text-meta-3">
-                  {formatDate(product.dateAndTime)}
+                  {formatDate(product.date)}
                 </p>
               </div>
             </div>

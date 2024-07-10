@@ -23,4 +23,10 @@ const useGetWaste = (subdivision) => {
   );
 };
 
-export { usePostWaste,useGetWaste };
+const useGetWasteDistrict = () => {
+  return useQuery(["entry/get-entry-subdivision"], () =>
+    WasteMovement.getWasteCollectionByDistrict()
+  );
+};
+
+export { usePostWaste,useGetWaste , useGetWasteDistrict};

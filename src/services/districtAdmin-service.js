@@ -33,7 +33,7 @@ class DistrictAdminService {
     );
     return data;
   }
-
+  
   async getMonthlyComplaintsSummary(district) {
     const { data } = await axios.get(
       `${apiUrl}/complaint/getMonthlyComplaintsSummary/${district}`,
