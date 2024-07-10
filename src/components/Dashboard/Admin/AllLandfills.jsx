@@ -7,6 +7,7 @@ import { useState } from "react";
 import LandfillEntryModal from "./LandfillEntryModal";
 import { useGetAllLandfills, useDeleteLandfill } from "@/hooks/landfillEntries";
 import DataLoader from "@/components/Shared/DataLoader";
+import { toast } from "react-toastify";
 
 const AllLandfillsTable = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -31,9 +32,11 @@ const AllLandfillsTable = () => {
   const handleDeleteLandfill = async (id) => {
     try {
       await deleteLandfillMutation.mutateAsync(id);
+      toast.success("Landfill deleted successfully");
+      window.location.reload();
       // Handle success, e.g., show a success message or update state
     } catch (error) {
-      // Handle error, e.g., display error message
+      toast.error(error?.response?.data?.message);
     }
   };
 
