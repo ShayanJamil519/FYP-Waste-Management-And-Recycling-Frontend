@@ -91,6 +91,7 @@ const ComplainForm = () => {
     longitude: parseFloat(localStorage.getItem("longitude")),
     image: "",
     subDivision: "",
+    status : ""
   });
 
   const { mutate: addMutate } = useComplain(JSON.stringify(userData));
@@ -116,7 +117,15 @@ const ComplainForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    detectionDimension.predictionName === undefined
+    ? setUserData(prevData => ({
+      ...prevData,
+      status: "discarded"
+    }))
+    : setUserData(prevData => ({
+      ...prevData,
+      status: "pending"
+    }))
     if (!image) {
       toast.error("Please upload an image");
       return;
@@ -175,7 +184,8 @@ const ComplainForm = () => {
               await result[Object.keys(result)[2]].data()
             );
             let n = Array.from(await result[Object.keys(result)[3]].data());
-
+            console.log("nnnn")
+            console.log(n)
             const detections = [];
 
             for (let i = 0; i < n; i++) {
@@ -201,10 +211,17 @@ const ComplainForm = () => {
               const y_max = Math.floor(boundingBox[2] * 450);
               const x_min = Math.floor(boundingBox[1] * 450);
               const x_max = Math.floor(boundingBox[3] * 450);
-
+              console.log(score)
+              console.log(THRESHOLD)
+              if(score < THRESHOLD){
+                console.log("here")
+                
+              }
               //const container = img.parentNode;
               if (score > THRESHOLD) {
                 const color = classColors[className];
+
+                
 
                 setDetectionDimension({
                   y_min,
