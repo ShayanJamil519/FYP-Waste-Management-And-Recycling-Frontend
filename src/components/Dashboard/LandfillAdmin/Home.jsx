@@ -103,9 +103,7 @@ export const Home = () => {
         <div className="col-span-12 xl:col-span-12 w-full">
           <ChartThree />
         </div>
-        <div className="col-span-12 xl:col-span-8">
-          <TableOne />
-        </div>
+
         <ChatCard />
       </div>
     </div>
