@@ -5,10 +5,7 @@ import Pagination from "../Pagination";
 import usePagination from "@/utils/usePagination";
 import { useState } from "react";
 import LandfillEntryModal from "./LandfillEntryModal";
-import {
-  useGetAllLandfills,
-  useDeleteLandfill,
-} from "@/hooks/landfillEntries";
+import { useGetAllLandfills, useDeleteLandfill } from "@/hooks/landfillEntries";
 import DataLoader from "@/components/Shared/DataLoader";
 
 const AllLandfillsTable = () => {
@@ -31,7 +28,6 @@ const AllLandfillsTable = () => {
     }
   };
 
-
   const handleDeleteLandfill = async (id) => {
     try {
       await deleteLandfillMutation.mutateAsync(id);
@@ -41,7 +37,7 @@ const AllLandfillsTable = () => {
     }
   };
 
-  const handleEditLandfill = (id,admin) => {
+  const handleEditLandfill = (id, admin) => {
     console.log("Itemmmmmmmmmmmmmm");
     console.log(visibleItems);
     // console.log(visibleItems);
@@ -67,19 +63,18 @@ const AllLandfillsTable = () => {
     data && data?.landfillPoints
   );
 
-
   return (
     <div>
       {/* Table */}
       <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
         <div className="py-4 px-4 md:px-6 xl:px-7.5">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Top Products
+            All Landfills
           </h4>
         </div>
 
-        <div className="grid grid-cols-6 border-t border-stroke py-4 px-4  sm:grid-cols-7 md:px-6 2xl:px-7">
-          <div className="col-span-2 flex items-center">
+        <div className="grid grid-cols-6 border-t border-stroke py-4 px-4  sm:grid-cols-6 md:px-6 2xl:px-7">
+          <div className="col-span-1 flex items-center">
             <p className="font-medium">Image</p>
           </div>
           <div className=" hidden items-center sm:flex">
@@ -91,9 +86,7 @@ const AllLandfillsTable = () => {
           <div className=" flex items-center col-span-2">
             <p className="font-medium">Id</p>
           </div>
-          {/* <div className=" flex items-center">
-            <p className="font-medium">Amount</p>
-          </div> */}
+
           <div className=" flex items-center">
             <p className="font-medium">Actions</p>
           </div>
@@ -102,19 +95,19 @@ const AllLandfillsTable = () => {
         {/* Table Body */}
         <div className="h-[55vh] overflow-auto">
           {visibleItems.map((product, key) => (
-            
-              <div
-              className=" grid grid-cols-6 border-t border-stroke py-2 px-4  sm:grid-cols-7 md:px-6 2xl:px-7"
+            <div
+              className=" grid grid-cols-6 border-t border-stroke py-2 px-4  sm:grid-cols-6 md:px-6 2xl:px-7"
               key={key}
             >
-              <div className="col-span-2 flex items-center">
+              <div className="col-span-1 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-20 h-20 rounded-md">
-                    <img src={product?.image?.url} alt="" />
+                  <div className=" ">
+                    <img
+                      src={product?.image?.url}
+                      alt="logo"
+                      className="w-20  rounded-xl"
+                    />
                   </div>
-                  {/* <p className="text-sm text-black dark:text-white">
-                    {item?.district}
-                  </p> */}
                 </div>
               </div>
               <div className="col-span-1 flex items-center">
@@ -131,87 +124,38 @@ const AllLandfillsTable = () => {
               </div>
               <div className=" flex items-center col-span-2">
                 <p className="text-sm text-black dark:text-white ">
-                  {truncateDescription(product._id,25)}
+                  {truncateDescription(product._id, 25)}
                 </p>
               </div>
               <div className=" flex gap-3 justify-start items-center text-[20px]">
-                <MdEdit
+                <MdDelete
                   className="cursor-pointer"
-                  onClick={() => handleEditLandfill(product._id,product.admin)}
+                  onClick={() => handleDeleteLandfill(product._id)}
                 />
-                <MdDelete className="cursor-pointer" onClick={() => handleDeleteLandfill(product._id)} />
               </div>
             </div>
           ))}
         </div>
-        {/* <div className="h-[55vh] overflow-auto">
-          {visibleItems.map((product, key) => (
-            <div
-              className=" grid grid-cols-6 border-t border-stroke py-6 px-4  sm:grid-cols-7 md:px-6 2xl:px-7"
-              key={key}
-            >
-              <div className="col-span-2 flex items-center">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <p className="text-sm text-black dark:text-white">
-                    {product.district}
-                  </p>
-                </div>
-              </div>
-              <div className="hidden items-center sm:flex">
-                <p className="text-sm text-black dark:text-white">
-                  {product.name}
-                </p>
-              </div>
-              <div className=" flex items-center col-span-2">
-                <p className="text-sm text-black dark:text-white ">
-                  {truncateDescription(product._id,12)}
-                </p>
-              </div>
-              <div className=" flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {product.subDivision}
-                </p>
-              </div>
-              <div className="col-span-2 flex items-center">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-20 h-20 rounded-md">
-                    <img src={product?.image?.url} alt="item" />
-                  </div>
-                </div>
-              </div>
-              {/* <div className=" flex items-center">
-                <p className="text-sm text-meta-3">{product.email}</p>
-              </div> */}
-              {/* <div className=" flex gap-3 justify-start items-center text-[20px]">
-                <MdEdit
-                  className="cursor-pointer"
-                  onClick={() => handleEditLandfill(product._id,product.admin)}
-                />
-                <MdDelete
-                  className="cursor-pointer"
-                   
-                />
-              </div>
-            </div>
-          ))}
-        </div> */} 
       </div>
       {/* Pagination */}
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={goToPage}
-      />
+
+      {visibleItems?.length > 5 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={goToPage}
+        />
+      )}
 
       {/* Edit Modal */}
 
-      {openLandfillEntryModal && (
+      {/* {openLandfillEntryModal && (
         <LandfillEntryModal
           setOpenLandfillEntryModal={setOpenLandfillEntryModal}
           id={selectedId}
           admin={admin}
         />
-      )}
+      )} */}
     </div>
   );
 };
