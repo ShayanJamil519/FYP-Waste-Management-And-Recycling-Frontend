@@ -8,8 +8,6 @@ const useUserId = () => {
   return useQuery({ queryKey: ["user"], queryFn: () => AuthService.getMyId() });
 };
 
-
-
 const useUserSignup = (userData) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -72,17 +70,13 @@ const useGetAllUsers = () => {
 };
 
 const useUpdate = () => {
-  console.log("hookkk")
-  const mutation = useMutation(({ threadId ,data}) =>
-    AuthService.updateRole(threadId , data)
+  const mutation = useMutation(({ threadId, data }) =>
+    AuthService.updateRole(threadId, data)
   );
 
-  const addResponsee = async (threadId , data) => {
+  const addResponsee = async (threadId, data) => {
     try {
-      console.log("assaaaa")
-      console.log(threadId)
-      console.log(data)
-      const response = await mutation.mutateAsync({ threadId , data });
+      const response = await mutation.mutateAsync({ threadId, data });
       return response;
     } catch (error) {
       throw new Error(error.message);
@@ -104,5 +98,5 @@ export {
   useGetAllUsers,
   useUserForgotPassword,
   useUserResetPassword,
-  useUpdate
+  useUpdate,
 };

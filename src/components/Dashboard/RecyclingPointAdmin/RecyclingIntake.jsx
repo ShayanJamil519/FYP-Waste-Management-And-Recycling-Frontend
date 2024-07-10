@@ -12,7 +12,6 @@ import { FaUpload } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 
 const RecyclingIntake = () => {
-
   const allowedSubDivision = {
     south: ["garden", "liyari", "saddar", "aram bagh", "civil line"],
     east: [
@@ -49,30 +48,12 @@ const RecyclingIntake = () => {
 
   const { mutate: addMutate } = useInputEntry(JSON.stringify(data));
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   if (name === "image") {
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setData({ ...data, [name]: reader.result });
-  //       }
-  //     };
-
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   } else {
-  //     setData({ ...data, [name]: value });
-  //   }
-  // };
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(name);
-    console.log("handleInput");
+
     setData({
       ...data,
-      [name]: value,
+      [name]: name === "quantityReceived" ? Number(value) : value,
     });
   };
 
@@ -148,8 +129,7 @@ const RecyclingIntake = () => {
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
       <h1 className="font-bold text-3xl">Recycling Input</h1>
       <p className="text-sm mt-3 leading-6 text-[#62706b]">
-        Please complete the form below, to request a quote, and we’ll be in
-        touch. Or you can call us and our specialists will provide help!
+        Please complete the form below to submit recycling intake
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
         {/* File Upload */}
@@ -174,8 +154,8 @@ const RecyclingIntake = () => {
             <label htmlFor="avatar-upload" className="cursor-pointer">
               <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
                 <FaUpload className="text-2xl" />
-                <p>Upload your image</p>
-                <p className="text-xs mt-2">Click to browse your image here</p>
+                <p>Upload image of the waste</p>
+                <p className="text-xs mt-2">Click to browse the image</p>
               </div>
             </label>
           )}
@@ -198,22 +178,8 @@ const RecyclingIntake = () => {
             >
               Select Your District
             </label>
-            {/* <select
-              id="district-select"
-              name="district"
-              required
-              value={data.district}
-              onChange={handleSelectChange}
-              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
-            >
-              <option value="">Select District</option>
-              {districtOptions.map((district, index) => (
-                <option key={index} value={district}>
-                  {district}
-                </option>
-              ))}
-            </select> */}
-                        <select
+
+            <select
               id="district-select"
               name="district"
               required
@@ -230,9 +196,10 @@ const RecyclingIntake = () => {
             </select>
           </div>
           <Input
-            label="quantityReceived"
-            type="text"
-            placeholder="Please write you details"
+            label="Quantity Received"
+            type="number"
+            require={true}
+            placeholder="Please enter quanity received"
             name="quantityReceived"
             onChange={handleInputChange}
             value={data.quantityReceived}
@@ -242,23 +209,9 @@ const RecyclingIntake = () => {
               htmlFor="sourceSubdivision-select"
               className="font-semibold text-sm text-[#202725] mb-1"
             >
-              Select Your SubDivision
+              Select Your Sub Division
             </label>
-            {/* <select
-              id="sourceSubdivision-select"
-              name="sourceSubdivision"
-              required
-              value={data.sourceSubdivision}
-              onChange={handleSelectChange}
-              className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df] "
-            >
-              <option value="">Select SubDivision</option>
-              {sourceSubdivisionOptions.map((sourceSubdivision, index) => (
-                <option key={index} value={sourceSubdivision}>
-                  {sourceSubdivision}
-                </option>
-              ))}
-            </select> */}
+
             <select
               id="subDivision-select"
               required
@@ -278,9 +231,9 @@ const RecyclingIntake = () => {
             </select>
           </div>
           <Input
-            label="area"
+            label="Area"
             type="text"
-            placeholder="Please write you details"
+            placeholder="Please enter area"
             name="area"
             onChange={handleInputChange}
             value={data.area}

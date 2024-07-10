@@ -89,21 +89,13 @@ class AuthService {
   }
 
   async updateRole(threadId, data) {
-    try {
-      const response = await axios.post(`${apiUrl}/user-role/${threadId}`,
-      data ,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error)
-      throw new Error("Internal server error");
-    }
+    const response = await axios.post(`${apiUrl}/user-role/${threadId}`, data, {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
   }
 
   async ResetPassword(userData) {
@@ -116,8 +108,6 @@ class AuthService {
 
     return res;
   }
-
- 
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

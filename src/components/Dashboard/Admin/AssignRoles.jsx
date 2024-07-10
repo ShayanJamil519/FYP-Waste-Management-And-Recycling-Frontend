@@ -9,9 +9,7 @@ import WasteManagementContractInteraction from "@/utils/wasteMangementContractIn
 
 import { FaSpinner } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa6";
-import {
-  useUpdate
-} from "../../../hooks/auth-hook";
+import { useUpdate } from "../../../hooks/auth-hook";
 const rolesData = [
   {
     value: 0,
@@ -35,10 +33,7 @@ const rolesData = [
   },
 ];
 
-
-
 const AssignRoles = () => {
-  
   const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState({
@@ -47,22 +42,20 @@ const AssignRoles = () => {
   });
 
   const [userData, setUserData] = useState({
-    role : ""
+    role: "",
   });
 
   const getRoleText = (value) => {
-    console.log("role")
-    const role = rolesData.find(role => role.value == value);
-    console.log(role.text)
-    setUserData(prevState => ({
-      ...prevState,
-      role: role.text
-    }));
-    return role ? role.text : 'Role not found';
-  }
+    const role = rolesData.find((role) => role?.value == value);
 
-  const { addResponsee, error } =
-  useUpdate();
+    setUserData((prevState) => ({
+      ...prevState,
+      role: role?.text,
+    }));
+    return role ? role?.text : "Role not found";
+  };
+
+  const { addResponsee, error: roleUpdateError } = useUpdate();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -71,24 +64,30 @@ const AssignRoles = () => {
       ...data,
       [name]: value,
     });
-    console.log("val")
-    console.log(value)
-    const role = rolesData.find(role => role.value == value);
-    console.log(role.text)
-    setUserData(prevState => ({
+
+    const role = rolesData.find((role) => role?.value == value);
+
+    setUserData((prevState) => ({
       ...prevState,
-      role: role.text
+      role: role?.text,
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const threadId = data?.address
-    const role = getRoleText(data?.role)
-    console.log("userData")
-    console.log(userData)
-    await addResponsee(threadId, userData);
+    const threadId = data?.address;
+    const role = getRoleText(data?.role);
+
+    try {
+      await addResponsee(threadId, userData);
+
+      if (roleUpdateError?.response?.data?.message == "User not found") {
+        toast.error("User not found");
+        return;
+      }
+    } catch (error) {}
+
     try {
       await WasteManagementContractInteraction.AssignUserRole(
         data?.address,
