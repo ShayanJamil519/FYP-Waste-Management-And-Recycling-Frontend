@@ -33,13 +33,11 @@ const CommunityWasteMovements = () => {
   const router = useRouter();
   const { user } = useStateContext();
 
-  console.log({ user });
-
   const [subDivisionOptions, setSubDivisionOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
 
-  const [data, setData] = useState({
+  const initialData = {
     districtAdmin: user?.userId,
     date: "",
     notes: "",
@@ -47,7 +45,9 @@ const CommunityWasteMovements = () => {
     subdivision: "",
     area: "",
     image: "",
-  });
+  };
+
+  const [data, setData] = useState(initialData);
 
   const { mutate: addMutate } = usePostWaste(JSON.stringify(data));
 
@@ -106,12 +106,13 @@ const CommunityWasteMovements = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      await WasteManagementContractInteraction.RecordWasteCollection(
-        data.date,
-        data.totalAmount,
-        data.area,
-        data.notes
-      );
+      const response =
+        await WasteManagementContractInteraction.RecordWasteCollection(
+          data.date,
+          data.totalAmount,
+          data.area,
+          data.notes
+        );
 
       // If the transaction is successful, call the addMutate function
       addMutate(
@@ -120,6 +121,12 @@ const CommunityWasteMovements = () => {
           onSuccess: (response) => {
             toast.success(response?.data?.message);
             setIsLoading(false);
+            setData(initialData);
+            setTimeout(() => {
+              router.push(
+                "/dashboard/district-admin/community-waste-movement-entries"
+              );
+            }, 1000);
           },
           onError: (response) => {
             toast.error(response.response.data.message);

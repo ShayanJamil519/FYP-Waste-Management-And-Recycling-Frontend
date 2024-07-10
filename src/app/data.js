@@ -74,7 +74,7 @@ export const sidebarLinksDistrictAdmin = [
     linkIcon: <TbRecycle />,
   },
   {
-    linkText: `Community Waste Movements`,
+    linkText: `Community Waste Movements Entries`,
     linkTo: "/dashboard/district-admin/community-waste-movement-entries",
     linkIcon: <CiViewTable />,
   },
