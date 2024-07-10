@@ -10,6 +10,7 @@ import {
   useDeleteRecyclingPoint,
 } from "../../../hooks/recyclePointEntries";
 import DataLoader from "@/components/Shared/DataLoader";
+import { toast } from "react-toastify";
 
 const AllRecyclingPointsTable = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -20,7 +21,6 @@ const AllRecyclingPointsTable = () => {
   const { data, isLoading, isError } = useGetAllRecyclingPoints();
 
   const truncateDescription = (description, maxLength) => {
-    console.log(visibleItems);
     if (description.length <= maxLength) {
       return description;
     } else {
@@ -34,9 +34,11 @@ const AllRecyclingPointsTable = () => {
   const handleDeleteRecyclingPoint = async (id) => {
     try {
       await deleteRecyclingMutation.mutateAsync(id);
+      toast.success("Recycling point deleted successfully");
+      window.location.reload();
       // Handle success, e.g., show a success message or update state
     } catch (error) {
-      // Handle error, e.g., display error message
+      toast.error(error?.response?.data?.message);
     }
   };
 
