@@ -55,7 +55,7 @@ const AllUsers = () => {
 
         <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-4 md:px-6 2xl:px-7">
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">District</p>
+            <p className="font-medium">Profile & District</p>
           </div>
 
           <div className="col-span-1 flex items-center">

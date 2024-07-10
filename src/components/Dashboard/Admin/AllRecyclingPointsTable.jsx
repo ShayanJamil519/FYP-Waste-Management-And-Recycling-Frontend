@@ -20,7 +20,7 @@ const AllRecyclingPointsTable = () => {
   const { data, isLoading, isError } = useGetAllRecyclingPoints();
 
   const truncateDescription = (description, maxLength) => {
-    console.log(visibleItems)
+    console.log(visibleItems);
     if (description.length <= maxLength) {
       return description;
     } else {
@@ -40,10 +40,10 @@ const AllRecyclingPointsTable = () => {
     }
   };
 
-  const handleEditRecyclingPoint = (id,admin) => {
+  const handleEditRecyclingPoint = (id, admin) => {
     console.log("Itemmmmmmmmmmmmmm");
     // console.log(visibleItems);
-    
+
     setOpenRecyclingPointModal(true);
     setAdmin(admin);
     setSelectedId(id);
@@ -74,12 +74,12 @@ const AllRecyclingPointsTable = () => {
       <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
         <div className="py-4 px-4 md:px-6 xl:px-7.5">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Top Products
+            All Recycling Points
           </h4>
         </div>
 
-        <div className="grid grid-cols-6 border-t border-stroke py-4 px-4  sm:grid-cols-7 md:px-6 2xl:px-7">
-          <div className="col-span-2 flex items-center">
+        <div className="grid grid-cols-6 border-t border-stroke py-4 px-4  sm:grid-cols-6 md:px-6 2xl:px-7">
+          <div className="col-span-1 flex items-center">
             <p className="font-medium">Image</p>
           </div>
           <div className=" hidden items-center sm:flex">
@@ -99,19 +99,19 @@ const AllRecyclingPointsTable = () => {
         {/* Table Body */}
         <div className="h-[55vh] overflow-auto">
           {visibleItems.map((product, key) => (
-            
-              <div
-              className=" grid grid-cols-6 border-t border-stroke py-2 px-4  sm:grid-cols-7 md:px-6 2xl:px-7"
+            <div
+              className=" grid grid-cols-6 border-t border-stroke py-2 px-4  sm:grid-cols-6 md:px-6 2xl:px-7"
               key={key}
             >
-              <div className="col-span-2 flex items-center">
+              <div className="col-span-1 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-20 h-20 rounded-md">
-                    <img src={product?.image?.url} alt="" />
+                  <div className="">
+                    <img
+                      src={product?.image?.url}
+                      alt="logo"
+                      className="w-20  rounded-xl"
+                    />
                   </div>
-                  {/* <p className="text-sm text-black dark:text-white">
-                    {item?.district}
-                  </p> */}
                 </div>
               </div>
               <div className="col-span-1 flex items-center">
@@ -128,34 +128,26 @@ const AllRecyclingPointsTable = () => {
               </div>
               <div className=" flex items-center col-span-2">
                 <p className="text-sm text-black dark:text-white ">
-                  {truncateDescription(product._id,25)}
+                  {truncateDescription(product._id, 25)}
                 </p>
               </div>
               <div className=" flex gap-3 justify-start items-center text-[20px]">
-                <MdEdit
+                <MdDelete
                   className="cursor-pointer"
-                  onClick={() => handleEditRecyclingPoint(product._id,product.admin)}
+                  onClick={() => handleDeleteRecyclingPoint(product._id)}
                 />
-                <MdDelete className="cursor-pointer" onClick={() => handleDeleteRecyclingPoint(product._id)} />
               </div>
             </div>
           ))}
         </div>
       </div>
+
       {/* Pagination */}
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={goToPage}
-      />
-
-      {/* Edit Modal */}
-
-      {openRecyclingPointModal && (
-        <RecyclingPointModal
-          setOpenRecyclingPointModal={setOpenRecyclingPointModal}
-          id={selectedId}
-          admin={admin}
+      {visibleItems?.length > 5 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={goToPage}
         />
       )}
     </div>
