@@ -2,36 +2,48 @@
 import Input from "../../CC/Input";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { FaSpinner } from "react-icons/fa";
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import { useStateContext } from "@/app/StateContext";
 import { useGetIncentive, useUpdateIncentive } from "../../../hooks/incentives";
 import IncentivesContractInteraction from "@/utils/incentivesContractIntegration";
+import { toast } from "react-toastify";
 
 const ClaimIncentivesForm = () => {
+  const { user } = useStateContext();
+  console.log(user?.subdivison)
+  let id = user?.userId;
+  const subdivision = user?.subdivison;
   const [incentivesData, setIncentivesData] = useState({
     random: "chandioo",
+    subDivision : subdivision
   });
-
-  const { user } = useStateContext();
-
-  let id = user?.userId;
   const { mutate: updateMutate } = useUpdateIncentive(
     JSON.stringify(incentivesData),
     id
   );
 
-  const { data, isError } = useGetIncentive(id);
-
+  const { data, isError } = useGetIncentive(subdivision);
+  console.log("get asdassda")
   console.log({ data });
 
   const [isLoading, setIsLoading] = useState(false);
   const currentDate = new Date();
-  const amount = 8;
-  const subdivision = user?.subdivision;
-  const currentMonth = currentDate.getMonth() + 1;
+  const amount = data?.tokenIncentives?.tokenBalance;
 
+
+
+  const currentMonth = currentDate.getMonth() + 1;
+  useEffect(() => {
+    if (user && user.subdivison) {
+      setIncentivesData((prevData) => ({
+        ...prevData,
+        subDivision: user?.subdivison,
+      }));
+    }
+  }, [user]);
   const handleButtonClick = async () => {
     // event.preventDefault();
+    console.log(incentivesData)
     setIsLoading(true);
     try {
       updateMutate(
@@ -66,7 +78,7 @@ const ClaimIncentivesForm = () => {
     <div className=" p-10 font-poppins bg-[#fff] ">
       {data && data.exists ? (
         <h1 className="text-lg ">
-          You have already claimed x tokens of your subdivision named{" "}
+          You have already claimed {amount} tokens of your subdivision named{" "}
           {subdivision}
         </h1>
       ) : (

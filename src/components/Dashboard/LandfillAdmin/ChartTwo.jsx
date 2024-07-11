@@ -1,6 +1,12 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
+import { useStateContext } from "@/app/StateContext";
+import {
+  useGetTotalWasteLast7Days,
+  useGetWasteRecycledByDistrict,
+} from "../../../hooks/districtAdmin-hook"; // Adjust the path as needed
 
 const options = {
   colors: ["#3C50E0", "#80CAEE"],
@@ -16,7 +22,6 @@ const options = {
       enabled: false,
     },
   },
-
   responsive: [
     {
       breakpoint: 1536,
@@ -42,7 +47,6 @@ const options = {
   dataLabels: {
     enabled: false,
   },
-
   xaxis: {
     categories: ["M", "T", "W", "T", "F", "S", "S"],
   },
@@ -52,7 +56,6 @@ const options = {
     fontFamily: "Satoshi",
     fontWeight: 500,
     fontSize: "14px",
-
     markers: {
       radius: 99,
     },
@@ -63,32 +66,59 @@ const options = {
 };
 
 const ChartTwo = () => {
+  const { user } = useStateContext();
+  const district = user?.district;
+
+  const { data: totalWasteData, isLoading: totalWasteLoading, error: totalWasteError } = useGetTotalWasteLast7Days(district);
+  const { data: recycledWasteData, isLoading: recycledWasteLoading, error: recycledWasteError } = useGetWasteRecycledByDistrict(district);
+
+  console.log("data1 chart 2")
+  console.log(totalWasteData)
+  console.log(totalWasteData?.totalAmounts)
+  console.log("data2")
+  console.log(recycledWasteData?.dailyWaste)
   const [state, setState] = useState({
     series: [
       {
         name: "Waste generated",
-        data: [44, 55, 41, 67, 22, 43, 65],
+        data: [],
       },
       {
         name: "Waste Recycled",
-        data: [13, 23, 20, 8, 13, 27, 15],
+        data: [],
       },
     ],
   });
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
+  useEffect(() => {
+    if (totalWasteData?.totalAmounts && recycledWasteData?.dailyWaste) {
+      console.log("reaching hereeeeeee")
+      setState((prevState) => ({
+        ...prevState,
+        series: [
+          {
+            ...prevState.series[0],
+            data: totalWasteData?.totalAmounts,
+          },
+          {
+            ...prevState.series[1],
+            data: recycledWasteData?.dailyWaste,
+          },
+        ],
+      }));
+    }
+  }, [totalWasteData, recycledWasteData]);
+  console.log("after use")
+  console.log(state)
+  if (totalWasteLoading || recycledWasteLoading) return <div>Loading...</div>;
+  if (totalWasteError || recycledWasteError) return <div>Error: {totalWasteError || recycledWasteError}</div>;
 
   return (
     <div className="col-span-12 rounded-sm border  bg-white p-7 xl:col-span-4 font-poppins">
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black ">
-            Profit this week
+            Waste Generation Data
           </h4>
         </div>
         <div>
@@ -98,7 +128,6 @@ const ChartTwo = () => {
               id="#"
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
-              <option value="">This Week</option>
               <option value="">Last Week</option>
             </select>
             <span className="absolute top-1/2 right-3 z-10 -translate-y-1/2">
@@ -129,7 +158,7 @@ const ChartTwo = () => {
         <div id="chartTwo" className="-ml-5 -mb-9">
           <ReactApexChart
             options={options}
-            series={state.series}
+            series={state?.series}
             type="bar"
             height={350}
           />
