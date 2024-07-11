@@ -8,12 +8,14 @@ import usePagination from "@/utils/usePagination";
 import { useGetComplaintsInDistrict } from "../../../hooks/complain-hook";
 import DataLoader from "@/components/Shared/DataLoader";
 import ViewUserComplaintsModal from "./ViewUserComplaintsModal";
+import { useStateContext } from "@/app/StateContext";
 
 const UserComplaints = () => {
+  const { user } = useStateContext();
   const [viewUserComplainModal, setViewUserComplainModal] = useState(false);
   const paginate = usePagination();
 
-  const district = "south";
+  const district = user?.district;
   const { data, isLoading, isError } = useGetComplaintsInDistrict(district);
 
   // Check loading and error states
@@ -39,18 +41,18 @@ const UserComplaints = () => {
       <div className="rounded-sm border border-stroke bg-white shadow-default  font-poppins ">
         <div className="py-4 px-4 md:px-6 xl:px-7.5">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Top items
+            My Complaints
           </h4>
         </div>
 
-        <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
-          <div className="col-span-2 flex items-center">
-            <p className="font-medium">District</p>
+        <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-6 md:px-6 2xl:px-7">
+          <div className="col-span-1 flex items-center">
+            <p className="font-medium">Image & District</p>
           </div>
           <div className=" hidden items-center sm:flex">
             <p className="font-medium">Area</p>
           </div>
-          <div className=" flex items-center col-span-2">
+          <div className=" flex items-center col-span-1">
             <p className="font-medium">Description</p>
           </div>
           <div className=" flex items-center">
@@ -69,13 +71,17 @@ const UserComplaints = () => {
           {visibleItems &&
             visibleItems.map((item, key) => (
               <div
-                className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
+                className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-6 md:px-6 2xl:px-7"
                 key={key}
               >
-                <div className="col-span-2 flex items-center">
+                <div className="col-span-1 flex items-center">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                    <div className=" w-20 h-20 rounded-md">
-                      <img src={item?.image?.url} alt="item" />
+                    <div className=" w-20 h-12 rounded-md">
+                      <img
+                        src={item.image.url}
+                        alt="logo"
+                        className="w-full h-full rounded-md"
+                      />
                     </div>
                     <p className="text-sm text-black dark:text-white">
                       {item?.district}
@@ -87,7 +93,7 @@ const UserComplaints = () => {
                     {item?.area}
                   </p>
                 </div>
-                <div className=" flex items-center col-span-2">
+                <div className=" flex items-center col-span-1">
                   <p className="text-sm text-black dark:text-white ">
                     {item?.description}
                   </p>
@@ -106,23 +112,26 @@ const UserComplaints = () => {
                 <div className=" flex items-center">
                   <p className="text-sm text-meta-3">item.date</p>
                 </div>
-                <div className=" flex gap-3 justify-start items-center text-[20px]">
-                  <MdEdit
-                    className="cursor-pointer"
+                <div className=" flex justify-start items-center">
+                  <button
+                    className="text-[15px] bg-[#f29620] py-2 px-2 rounded-md text-[#fff]"
                     onClick={() => setViewUserComplainModal(true)}
-                  />
-                  <MdDelete className="cursor-pointer" />
+                  >
+                    View Response
+                  </button>
                 </div>
               </div>
             ))}
         </div>
       </div>
       {/* Pagination */}
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={goToPage}
-      />
+      {visibleItems?.length > 5 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={goToPage}
+        />
+      )}
 
       {/* Edit Modal */}
 
