@@ -68,12 +68,6 @@ const ProfileDropdown = () => {
       linkTo: `/dashboard/${navigateTo}`,
       icon: <RxDashboard />,
     },
-
-    {
-      linkText: "Account Settings",
-      linkTo: "#",
-      icon: <IoSettingsOutline />,
-    },
   ];
 
   return (
