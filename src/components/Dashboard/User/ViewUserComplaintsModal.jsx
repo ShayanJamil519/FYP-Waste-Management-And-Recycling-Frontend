@@ -31,9 +31,9 @@ const ViewUserComplaintsModal = ({ setViewUserComplainModal }) => {
   };
 
   const [info, setInfo] = useState({
-    time,
-    date,
-    comments,
+    time: "",
+    date: "",
+    comments: "",
   });
 
   const handleInputChange = (event) => {
@@ -42,26 +42,6 @@ const ViewUserComplaintsModal = ({ setViewUserComplainModal }) => {
     console.log(value);
     setInfo({ ...info, [name]: value });
   };
-
-  // const { mutate: addMutate } = complainEdit(JSON.stringify(data));
-  //   const handleSubmit = async (event) => {
-  //     event.preventDefault();
-
-  //     addMutate(
-  //       {},
-  //       {
-  //         onSuccess: (response) => {
-  //           if (response?.data?.error) {
-  //             toast.error(response?.data?.error);
-  //           }
-  //           if (response?.data?.message) {
-  //             toast.success(response?.data?.message);
-  //             router.push("/");
-  //           }
-  //         },
-  //       }
-  //     );
-  //   };
 
   return (
     <Modal onClose={setViewUserComplainModal}>

@@ -22,22 +22,19 @@ class ComplainService {
   }
 
   async getComplaintsInDistrict(district) {
-    const { data } = await axios.get(
-      `${apiUrl}/complaint/get-complaints-district/${district}`,
-      {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const { data } = await axios.get(`${apiUrl}/get-all-complaints`, {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    });
 
     return data;
   }
 
   async deleteComplaintById(complaintId) {
     try {
-      console.log("service")
+      console.log("service");
       const response = await axios.delete(
         `${apiUrl}/complaint/delete-complaint/${complaintId}`,
         {

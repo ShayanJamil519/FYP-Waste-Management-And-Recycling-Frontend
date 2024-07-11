@@ -34,7 +34,8 @@ export default function LayoutWrapper({ children }) {
         <QueryClientProvider client={queryClient}>
           {!pathname?.includes("/dashboard") && <Header />}
           {children}
-          <ChatBot />
+          {/* {!pathname?.startsWith("/dashboard") && <ChatBot />} */}
+
           {showFooter && <Footer />}
         </QueryClientProvider>
       </StateProvider>

@@ -9,6 +9,7 @@ import { useGetComplaintsInDistrict } from "../../../hooks/complain-hook";
 import DataLoader from "@/components/Shared/DataLoader";
 import ViewUserComplaintsModal from "./ViewUserComplaintsModal";
 import { useStateContext } from "@/app/StateContext";
+import formatDate from "@/utils/helper";
 
 const UserComplaints = () => {
   const { user } = useStateContext();
@@ -55,15 +56,15 @@ const UserComplaints = () => {
           <div className=" flex items-center col-span-1">
             <p className="font-medium">Description</p>
           </div>
-          <div className=" flex items-center">
+          <div className="col-span-2 flex items-center">
             <p className="font-medium">Response</p>
           </div>
           <div className=" flex items-center">
             <p className="font-medium">Date</p>
           </div>
-          <div className=" flex items-center">
+          {/* <div className=" flex items-center">
             <p className="font-medium">Actions</p>
-          </div>
+          </div> */}
         </div>
 
         {/* Table Body */}
@@ -98,28 +99,28 @@ const UserComplaints = () => {
                     {item?.description}
                   </p>
                 </div>
-                <div className=" flex items-center">
+                <div className="col-span-2 flex items-center">
                   <p className="text-sm text-black dark:text-white">
                     {item?.response.length > 0 ? (
-                      item?.response.map((_i, index) => (
-                        <span key={index}>{_i?.date}</span>
-                      ))
+                      <span>{item?.response[0]?.comments}</span>
                     ) : (
                       <span>No Response Found</span>
                     )}
                   </p>
                 </div>
                 <div className=" flex items-center">
-                  <p className="text-sm text-meta-3">item.date</p>
+                  <p className="text-sm text-meta-3">
+                    {formatDate(item?.createdAt)}
+                  </p>
                 </div>
-                <div className=" flex justify-start items-center">
+                {/* <div className=" flex justify-start items-center">
                   <button
                     className="text-[15px] bg-[#f29620] py-2 px-2 rounded-md text-[#fff]"
                     onClick={() => setViewUserComplainModal(true)}
                   >
                     View Response
                   </button>
-                </div>
+                </div> */}
               </div>
             ))}
         </div>
