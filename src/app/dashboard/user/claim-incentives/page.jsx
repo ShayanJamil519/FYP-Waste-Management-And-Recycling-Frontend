@@ -6,7 +6,6 @@ const page = () => {
   return (
     <div>
       <ClaimIncentivesForm />
-      <IncentivesHistory />
     </div>
   );
 };
