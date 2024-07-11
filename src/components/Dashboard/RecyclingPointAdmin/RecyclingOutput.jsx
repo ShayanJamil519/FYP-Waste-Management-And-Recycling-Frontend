@@ -29,30 +29,13 @@ const RecyclingOutput = () => {
 
   const { mutate: addMutate } = useOutputEntry(JSON.stringify(data));
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   if (name === "image") {
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setData({ ...data, [name]: reader.result });
-  //       }
-  //     };
-
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   } else {
-  //     setData({ ...data, [name]: value });
-  //   }
-  // };
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(name);
-    console.log("handleInput");
+
     setData({
       ...data,
-      [name]: value,
+      [name]:
+        name === "image" || name === "inputEntryId" ? value : Number(value),
     });
   };
 
@@ -75,6 +58,9 @@ const RecyclingOutput = () => {
           onSuccess: (response) => {
             toast.success(response?.data?.message);
             setIsLoading(false);
+            router.push(
+              "/dashboard/recycling-point-admin/recycling-output-entries"
+            );
           },
           onError: (response) => {
             console.error("An error occurred:");
@@ -118,8 +104,7 @@ const RecyclingOutput = () => {
     <div className="p-4 sm:p-5 md:p-10 bg-[#fff] rounded-md  font-poppins">
       <h1 className="font-bold text-3xl">Recycling Output</h1>
       <p className="text-sm mt-3 leading-6 text-[#62706b]">
-        Please complete the form below, to request a quote, and we’ll be in
-        touch. Or you can call us and our specialists will provide help!
+        Please complete the form below to submit recycling intake
       </p>
       <form className="w-full mt-10 " onSubmit={handleSubmit}>
         {/* File Upload */}
@@ -144,8 +129,8 @@ const RecyclingOutput = () => {
             <label htmlFor="avatar-upload" className="cursor-pointer">
               <div className="w-full h-32 bg-gray-200 rounded-md flex flex-col items-center  justify-center text-gray-700">
                 <FaUpload className="text-2xl" />
-                <p>Upload your image</p>
-                <p className="text-xs mt-2">Click to browse your image here</p>
+                <p>Upload image of the recyclable waste</p>
+                <p className="text-xs mt-2">Click to browse the image</p>
               </div>
             </label>
           )}
@@ -162,83 +147,89 @@ const RecyclingOutput = () => {
 
         <div className="grid grid-cols-2 gap-5">
           <Input
-            label="inputEntryId"
+            label="Input Entry ID"
             type="text"
-            placeholder="Please write you details"
+            require={true}
+            placeholder="Please enter input entry ID"
             name="inputEntryId"
             onChange={handleInputChange}
             value={data.inputEntryId}
           />
           <Input
-            label="recyclablePercentage"
-            type="text"
-            placeholder="Please write you details"
+            label="Recyclable Percentage"
+            type="number"
+            require={true}
+            placeholder="Please enter recyclable percentage"
             name="recyclablePercentage"
             onChange={handleInputChange}
             value={data.recyclablePercentage}
           />
           <Input
-            label="plasticPercentage"
-            type="text"
-            placeholder="Please write you details"
+            label="Plastic Percentage"
+            type="number"
+            require={true}
+            placeholder="Please enter plastic percentage"
             name="plasticPercentage"
             onChange={handleInputChange}
             value={data.plasticPercentage}
           />
           <Input
-            label="glassPercentage"
-            type="text"
-            placeholder="Please write you details"
+            label="Glass Percentage"
+            type="number"
+            require={true}
+            placeholder="Please enter glass percentage"
             name="glassPercentage"
             onChange={handleInputChange}
             value={data.glassPercentage}
           />
           <Input
-            label="metalloidsPercentage"
-            type="text"
-            placeholder="Please write you details"
+            label="Metalloids Percentage"
+            type="number"
+            require={true}
+            placeholder="Please enter metalloids percentage"
             name="metalloidsPercentage"
             onChange={handleInputChange}
             value={data.metalloidsPercentage}
           />
           <Input
-            label="marketValue"
-            type="text"
-            placeholder="Please write you details"
+            label="Market Value"
+            type="number"
+            require={true}
+            placeholder="Please enter market value"
             name="marketValue"
             onChange={handleInputChange}
             value={data.marketValue}
           />
         </div>
         <div className="grid place-items-center mt-6">
-              {isLoading ? (
-                <button
-                  type="submit"
-                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
-                  disabled
-                >
-                  <FaSpinner className="animate-spin mr-2 text-white" />
-                  <span className={"text-white"}>Loading...</span>
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  // onClick={resetForm}
-                  className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
-                >
-                  Send Output
-                  <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
-                    <IoIosArrowRoundForward className="text-[27px] font-bold" />
-                  </span>{" "}
-                  <style jsx>{`
-                    button:hover span {
-                      background-color: #fff;
-                      color: #257830;
-                    }
-                  `}</style>
-                </button>
-              )}
-            </div>
+          {isLoading ? (
+            <button
+              type="submit"
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out outline-none border-0 px-7 py-5 rounded-sm"
+              disabled
+            >
+              <FaSpinner className="animate-spin mr-2 text-white" />
+              <span className={"text-white"}>Loading...</span>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              // onClick={resetForm}
+              className="mt-6 w-full flex justify-center items-center font-semibold text-sm gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] hover:text-[#fff] outline-none border-0 px-7 py-5 rounded-sm"
+            >
+              Send Output
+              <span className="p-0 rounded-full bg-[#fff] transition duration-500 text-[#20332c]">
+                <IoIosArrowRoundForward className="text-[27px] font-bold" />
+              </span>{" "}
+              <style jsx>{`
+                button:hover span {
+                  background-color: #fff;
+                  color: #257830;
+                }
+              `}</style>
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

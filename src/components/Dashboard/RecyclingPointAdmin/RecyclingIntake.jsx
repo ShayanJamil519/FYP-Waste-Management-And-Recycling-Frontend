@@ -85,6 +85,9 @@ const RecyclingIntake = () => {
           onSuccess: (response) => {
             toast.success(response?.data?.message);
             setIsLoading(false);
+            router.push(
+              "/dashboard/recycling-point-admin/recycling-input-entries"
+            );
           },
           onError: (response) => {
             console.error("An error occurred:");

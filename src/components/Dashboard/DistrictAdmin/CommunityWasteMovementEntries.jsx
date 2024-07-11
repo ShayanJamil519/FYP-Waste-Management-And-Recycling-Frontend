@@ -31,7 +31,7 @@ const CommunityWasteMovementEntries = () => {
   if (isError) {
     return (
       <div className="w-full h-[70vh] flex justify-center items-center">
-        Error loading recycling input entries
+        Error loading community waste movement entries
       </div>
     );
   }
@@ -53,7 +53,7 @@ const CommunityWasteMovementEntries = () => {
       >
         <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Top Products
+            Community Waste Movement Entries
           </h4>
           <UploadReportButton
             tableRef={tableRef}
@@ -61,7 +61,7 @@ const CommunityWasteMovementEntries = () => {
           />
         </div>
 
-        <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-8 md:px-6 2xl:px-7">
+        <div className="grid grid-cols-7 border-t border-stroke py-4 px-4  sm:grid-cols-5 md:px-6 2xl:px-7">
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Image</p>
           </div>
@@ -86,17 +86,18 @@ const CommunityWasteMovementEntries = () => {
         <div className="h-[55vh] overflow-auto">
           {visibleItems.map((product, key) => (
             <div
-              className=" grid grid-cols-7 border-t border-stroke py-6 px-4  sm:grid-cols-8 md:px-6 2xl:px-7"
+              className=" grid grid-cols-7 border-t border-stroke py-2 px-4  sm:grid-cols-5 md:px-6 2xl:px-7"
               key={key}
             >
               <div className="col-span-1 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className=" w-20 h-20 rounded-md">
-                    <img src={product.image.url} alt="" />
+                  <div className=" w-20 h-12 rounded-md">
+                    <img
+                      src={product.image.url}
+                      alt="logo"
+                      className="w-full h-full rounded-md"
+                    />
                   </div>
-                  {/* <p className="text-sm text-black dark:text-white">
-                    {item?.district}
-                  </p> */}
                 </div>
               </div>
               <div className="hidden items-center sm:flex">
@@ -129,11 +130,13 @@ const CommunityWasteMovementEntries = () => {
         </div>
       </div>
       {/* Pagination */}
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={goToPage}
-      />
+      {visibleItems?.length > 5 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={goToPage}
+        />
+      )}
 
       {/* Edit Modal */}
     </div>
