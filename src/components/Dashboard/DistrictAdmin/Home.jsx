@@ -68,7 +68,7 @@ export const Home = () => {
         <CardDataStats
           title="Recycling Percentage"
           total={`${recyclingPercentage}%`}
-          rate="4.35%"
+          rate=""
           levelUp
         >
           <div className="bg-[#eff2f7] p-3 rounded-full">
@@ -78,7 +78,7 @@ export const Home = () => {
         <CardDataStats
           title="Total Complaints"
           total={totalComplaints}
-          rate="2.59%"
+          rate=""
           levelUp
         >
           <div className="bg-[#eff2f7] p-3 rounded-full">
@@ -88,7 +88,7 @@ export const Home = () => {
         <CardDataStats
           title="Valid Complaints"
           total={complaintsResolved}
-          rate="0.95%"
+          rate=""
           levelDown
         >
           <div className="bg-[#eff2f7] p-3 rounded-full">
