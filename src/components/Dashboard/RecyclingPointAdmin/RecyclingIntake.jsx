@@ -219,7 +219,7 @@ const RecyclingIntake = () => {
               id="subDivision-select"
               required
               name="subDivision"
-              value={data.subDivision}
+              value={data.sourceSubdivision}
               onChange={handleSelectChange}
               className="outline-none text-sm  p-4 w-full rounded-md border-2 border-[#d9e4df]"
               disabled={!data.district}
