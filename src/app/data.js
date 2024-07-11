@@ -224,21 +224,21 @@ export const testimonialsData = [
 export const aboutServicesData = [
   {
     icon: <FaServicestack />,
-    title: "Corporate Services",
+    title: "User Registration",
     description:
-      "Guaranteed that all of your universal waste management is performed safely and responsibly.",
+      "Users sign up and set up their profiles with necessary details. They can then schedule waste pickups at their convenience, with real-time tracking at each stage of the process. Continuous updates based on user feedback ensure optimal performance and improvement.",
   },
   {
     icon: <FaTruckPickup />,
-    title: "Convenient Pickup",
+    title: "Waste Management",
     description:
-      "We offer business pickup services to safely recycle your electronics in a safe manner.",
+      "Advanced technology sorts collected waste into recyclables, compostables, and landfill waste. Users can file and track complaints through the platform, ensuring quick resolution. Comprehensive reports and data insights help system improve their waste management practices.",
   },
   {
     icon: <MdOutlineEvent />,
-    title: "E-waste Events",
+    title: "System Integration",
     description:
-      "We work with non-profits, businesses, and other organizations to host community e-waste events.",
+      "The system integrates with external services using blockchain for secure transactions and API integration for enhanced functionality. Educational resources and community events promote sustainable practices, while robust security measures ensure data safety and regulatory compliance. ",
   },
 ];
 
@@ -246,23 +246,27 @@ export const aboutaccordionOurMissionData = [
   {
     title: "Reducing Waste",
     content:
-      "Stet clita kasd gubergren, no sea takimata sanctus est lorem ipsum dolor sit amet ipsum dolor sit amet, consetetur elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+      "Our primary goal is to reduce the amount of waste generated. We implement advanced sorting and processing technologies to ensure that as much waste as possible is diverted from landfills and repurposed in sustainable ways.",
   },
   {
     title: "Reduce Program",
-    content: "Additional content for Reduce Program goes here...",
+    content:
+      "The Reduce Program focuses on educating individuals and businesses about minimizing waste production. By promoting practices such as reducing single-use items and choosing products with minimal packaging, we aim to significantly lower the waste footprint.",
   },
   {
     title: "Recycle More",
-    content: "Additional content for Recycle More goes here...",
+    content:
+      "We encourage and facilitate increased recycling efforts through user-friendly services and community initiatives. Our comprehensive recycling programs are designed to make recycling accessible and efficient for everyone.",
   },
   {
     title: "Reduce Program",
-    content: "Additional content for Reduce Program goes here...",
+    content:
+      "The Reduce Program focuses on educating individuals and businesses about minimizing waste production. By promoting practices such as reducing single-use items and choosing products with minimal packaging, we aim to significantly lower the waste footprint.",
   },
   {
     title: "Recycle More",
-    content: "Additional content for Recycle More goes here...",
+    content:
+      "We encourage and facilitate increased recycling efforts through user-friendly services and community initiatives. Our comprehensive recycling programs are designed to make recycling accessible and efficient for everyone.",
   },
 ];
 

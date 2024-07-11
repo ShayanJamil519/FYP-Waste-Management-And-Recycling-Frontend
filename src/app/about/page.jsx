@@ -11,8 +11,8 @@ const page = () => {
       <Hero title="About Us" bgImage="/about/about__hero.jpg" />
       <Welcome />
       <OurMission />
-      <WasteBreakDown />
-      <Testimonials />
+      {/* <WasteBreakDown /> */}
+      {/* <Testimonials /> */}
     </div>
   );
 };
