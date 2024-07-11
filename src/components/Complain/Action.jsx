@@ -30,9 +30,13 @@ const Action = () => {
       <div className="font-poppins text-[#fff] mt-5 sm:mt-10">
         <p className="flex justify-start items-center sm:gap-6 gap-3 mb-2">
           <MdMarkEmailUnread className="text-[25px]" />
-          <span className="cursor-pointer sm:text-base text-sm">
-            Recy-sense@gmail.com
-          </span>
+
+          <a
+            href="mailto:recy8001@gmail.com"
+            className="cursor-pointer sm:text-base text-sm"
+          >
+            recy8001@gmail.com
+          </a>
         </p>
         <p className="flex justify-start items-center sm:gap-6 gap-3 ">
           <FaPhone className="text-[21px]" />

@@ -26,13 +26,13 @@ const Landfills = () => {
   return (
     <div className="w-full bg-[#f7f9f8] min-h-screen pt-16 md:pt-32 pb-10 md:pb-20 px-3 md:px-10">
       <h6 className="text-center font-bold text-[#f29620]">
-        Safe And Trusted Waste Collection Service
+        Safe And Trusted Waste Collection{" "}
       </h6>
       <h1 className="font-paralucent text-[27px] md:text-3xl lg:text-4xl mt-5 mb-16 lg:w-2/4 mx-auto text-left lg:text-center text-[#182822] leading-normal">
-        Devoted & Trustworthy Waste Collection Services
+        Devoted & Trustworthy Waste Collection
       </h1>
       <div className="overflow-x-auto lg:overflow-hidden w-full flex lg:flex-wrap justify-start lg:justify-center items-start lg:gap-x-6 lg:gap-y-20">
-        {data.landfillPoints.map((point) => (
+        {data?.landfillPoints.map((point) => (
           <div
             key={point._id}
             className="flex-shrink-0 lg:shrink-unset lg:w-[28%] w-[85%] mr-6 lg:mr-unset"
@@ -40,7 +40,7 @@ const Landfills = () => {
             <img
               src={point.image.url || "/default-image.jpg"}
               alt={point.name}
-              className="w-full sm:h-fit h-[300px] rounded-lg object-cover"
+              className="w-full sm:h-[200px] h-[250px] rounded-lg object-cover"
             />
             <div className="p-4 md:p-7 relative rounded-lg w-[90%] -mt-28 bg-[#fff] font-poppins transition duration-500 ease-in-out shadow-sm hover:shadow-lg shadow-[#ddd9d9]">
               <h1 className="font-paralucent text-xl text-[#182822] hover:text-[#f29620] transition duration-500 ease-in-out cursor-pointer">

@@ -41,7 +41,7 @@ const RecyclingPoints = () => {
             <img
               src={point?.image.url || "/default-image.jpg"}
               alt={point?.name}
-              className="w-full sm:h-fit h-[300px] rounded-lg object-cover"
+              className="w-full sm:h-[200px] h-[300px] rounded-lg object-cover"
             />
             <div className="p-4 md:p-7 relative rounded-lg w-[90%] -mt-28 bg-[#fff] font-poppins transition duration-500 ease-in-out shadow-sm hover:shadow-lg shadow-[#ddd9d9]">
               <h1 className="font-paralucent text-xl text-[#182822] hover:text-[#f29620] transition duration-500 ease-in-out cursor-pointer">
@@ -51,9 +51,7 @@ const RecyclingPoints = () => {
                 {point?.district}
               </p>
               <button
-                onClick={() =>
-                  router.push(`/recycling-points/${point?.admin}`)
-                }
+                onClick={() => router.push(`/recycling-points/${point?.admin}`)}
                 className="flex justify-center items-center gap-3 transition duration-500 ease-in-out hover:bg-[#257830] text-[#20332c] hover:text-[#fff] outline-none border-2 hover:border-[#257830] border-[#20332c] px-5 py-3 rounded-sm"
               >
                 View

@@ -17,7 +17,7 @@ const Hero = ({ title, bgImage, page }) => {
         {title}
       </h1>
 
-      {page === "showSearch" && (
+      {/* {page === "showSearch" && (
         <div className="mt-3 lg:mt-4 flex w-[90%] md:w-fit mx-auto justify-center items-center bg-white rounded-lg font-poppins">
           <input
             type="text"
@@ -28,7 +28,7 @@ const Hero = ({ title, bgImage, page }) => {
             <FiSearch className="text-[26px]" />
           </button>
         </div>
-      )}
+      )} */}
 
       <div className="absolute bottom-0 right-0 left-0 flex justify-center items-center sm:py-5 py-3 border-t-[1px] border-[#d3d1d1]">
         <div className="text-[#fff] font-poppins  flex justify-center items-center w-fit">

@@ -6,7 +6,7 @@ const page = () => {
   return (
     <div>
       <Hero
-        title="Learn. Share. Discuss."
+        title="Find Landfill Points"
         bgImage="/home/hero__slider1.jpg"
         page="showSearch"
       />

@@ -35,7 +35,7 @@ export default function LayoutWrapper({ children }) {
           {!pathname?.includes("/dashboard") && <Header />}
           {children}
           {/* {!pathname?.startsWith("/dashboard") && <ChatBot />} */}
-
+          <ChatBot />
           {showFooter && <Footer />}
         </QueryClientProvider>
       </StateProvider>

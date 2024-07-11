@@ -1,7 +1,7 @@
 "use client";
 import apiUrl from "@/utils/baseURL";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RiChat3Fill } from "react-icons/ri";
 import { RxCross1 } from "react-icons/rx";
 
@@ -26,6 +26,7 @@ function BotMessage({ message }) {
 }
 
 export default function ChatBot() {
+  const chatbotRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -34,6 +35,23 @@ export default function ChatBot() {
   const toggleChatbot = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleClickOutside = (event) => {
+    if (chatbotRef.current && !chatbotRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -82,7 +100,10 @@ export default function ChatBot() {
       )}
 
       {isOpen && (
-        <div className="bg-white rounded-lg shadow-lg py-4 pl-4 pr-1 mt-2 w-80  z-40 relative">
+        <div
+          ref={chatbotRef}
+          className="bg-white rounded-lg shadow-lg py-4 pl-4 pr-1 mt-2 w-80  z-40 relative"
+        >
           <div className="flex justify-between items-center pr-2 border-b pb-2 mb-4">
             <h3 className="text-lg font-semibold">Chatbot Assistant</h3>
             <button
