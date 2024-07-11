@@ -2,8 +2,10 @@
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const AboutUs = () => {
+  const router = useRouter();
   return (
     <div className="w-full text-[#000]">
       {/* Top Container */}
@@ -28,7 +30,10 @@ const AboutUs = () => {
               these incentives, promoting a fair and accountable system.
             </p>
             <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
-              <span className="text-[#257830] text-[15px] font-semibold font-poppins">
+              <span
+                onClick={() => router.push("/contact")}
+                className="text-[#257830] text-[15px] font-semibold font-poppins"
+              >
                 Contact Us Now
               </span>
               <span className="p-1 rounded-full bg-[#257830] transition duration-500  text-[#fff] ">
@@ -50,7 +55,10 @@ const AboutUs = () => {
               User
               <br className="lg:block hidden" /> Satisfaction
             </h1>
-            <p className="mt-3 mb-5 text-sm">
+            <p
+              onClick={() => router.push("/about")}
+              className="mt-3 mb-5 text-sm"
+            >
               Municipal authorities can utilize our platform to incentivize
               communities based on the quality of segregated waste.
             </p>
@@ -64,7 +72,10 @@ const AboutUs = () => {
                   transform: scale(1.2);
                 }
               `}</style>
-              <span className="text-[#fff] text-[14px] font-semibold font-poppins">
+              <span
+                onClick={() => router.push("/about")}
+                className="text-[#fff] text-[14px] font-semibold font-poppins"
+              >
                 Explore More
               </span>
             </div>

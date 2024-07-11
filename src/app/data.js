@@ -192,10 +192,10 @@ export const howItWorksHomeData = [
 
 export const howItWorksHomeListData = [
   {
-    list: "Commercial & Business Waste Management Experts",
+    list: "Comprehensive Waste Management & Recycling Solutions",
   },
   {
-    list: "Provide Regular, Reliable and Convenient Services",
+    list: "Delivering Efficient, Sustainable, and User-Friendly Services",
   },
 ];
 

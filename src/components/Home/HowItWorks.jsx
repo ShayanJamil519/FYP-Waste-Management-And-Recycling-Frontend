@@ -1,11 +1,13 @@
 "use client";
 import { howItWorksHomeData, howItWorksHomeListData } from "@/app/data";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaPlay } from "react-icons/fa";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoIosCheckmark } from "react-icons/io";
 
 const HowItWorks = () => {
+  const router = useRouter();
   return (
     <div className="min-h-screen py-10 md:py-20 lg:py-36 px-4 md:px-10 lg:px-20">
       {/* Top Container */}
@@ -16,7 +18,10 @@ const HowItWorks = () => {
         </h1>
 
         <div className="relative">
-          <div class="sm:w-[8.5rem] sm:h-[8.5rem] w-[7.5rem] h-[7.5rem] text-uppercase transform -rotate-103 font-bold z-[-1] rotating">
+          <div
+            onClick={() => router.push("/contact")}
+            class="sm:w-[8.5rem] sm:h-[8.5rem] w-[7.5rem] h-[7.5rem] text-uppercase transform -rotate-103 font-bold z-[-1] rotating"
+          >
             <svg viewBox="0 0 200 200">
               <path
                 id="textPath"
@@ -104,7 +109,10 @@ const HowItWorks = () => {
                 environment.
               </p>
               <div className="hover_effect flex justify-start items-center gap-3 mt-2 cursor-pointer ">
-                <span className="text-[#257830] text-[15px] font-semibold font-poppins">
+                <span
+                  onClick={() => router.push("/about")}
+                  className="text-[#257830] text-[15px] font-semibold font-poppins"
+                >
                   See How It Works?
                 </span>
                 <span className="p-1 rounded-full bg-[#257830] transition duration-500  text-[#fff] ">
@@ -125,7 +133,10 @@ const HowItWorks = () => {
           </p>
           {/* Buttons Container */}
           <div className="font-poppins my-5 sm:my-7 flex sm:flex-row flex-col justify-start items-center gap-4 sm:gap-7 text-[15px] font-semibold">
-            <button className="flex sm:w-1/2 lg:w-fit w-full justify-center items-center gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] outline-none border-0 px-10 py-5 rounded-sm">
+            <button
+              onClick={() => router.push("/about")}
+              className="flex sm:w-1/2 lg:w-fit w-full justify-center items-center gap-3 bg-[#20332c] transition duration-500 ease-in-out hover:bg-[#257830] text-[#fff] outline-none border-0 px-10 py-5 rounded-sm"
+            >
               Explore Our Goals{" "}
               <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#20332c] ">
                 <IoIosArrowRoundForward className="text-[27px] font-bold" />
@@ -138,7 +149,10 @@ const HowItWorks = () => {
               `}</style>
             </button>
             {/* ==== */}
-            <button className="flex sm:w-1/2 lg:w-fit w-full justify-center items-center gap-3 bg-[#fff] text-[#257830] border-2 border-[#257830] transition duration-500 ease-in-out hover:bg-[#257830] hover:text-[#fff] outline-none  px-10 py-[22px] rounded-sm">
+            <button
+              onClick={() => router.push("/about")}
+              className="flex sm:w-1/2 lg:w-fit w-full justify-center items-center gap-3 bg-[#fff] text-[#257830] border-2 border-[#257830] transition duration-500 ease-in-out hover:bg-[#257830] hover:text-[#fff] outline-none  px-10 py-[22px] rounded-sm"
+            >
               About Us
             </button>
           </div>

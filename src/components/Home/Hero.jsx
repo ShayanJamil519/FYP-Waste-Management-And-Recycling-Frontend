@@ -18,6 +18,8 @@ import { motion } from "framer-motion";
 SwiperCore.use([Navigation, Pagination]);
 
 const Hero = () => {
+  const router = useRouter();
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2, // Adjust this threshold as needed
@@ -62,7 +64,10 @@ const Hero = () => {
           </p>
           {/* Buttons Container */}
           <div className="font-poppins flex sm:flex-row flex-col w-full justify-start items-center gap-5 sm:gap-10 text-[15px] font-semibold">
-            <button className="flex w-full sm:w-fit justify-center items-center gap-3 bg-[#f29620] transition duration-500 ease-in-out hover:bg-[#fff] hover:text-[#000] outline-none border-0 px-10 py-4 sm:py-5 rounded-sm">
+            <button
+              onClick={() => router.push("/recycling-points")}
+              className="flex w-full sm:w-fit justify-center items-center gap-3 bg-[#f29620] transition duration-500 ease-in-out hover:bg-[#fff] hover:text-[#000] outline-none border-0 px-10 py-4 sm:py-5 rounded-sm"
+            >
               Explore Our Services{" "}
               <span className="p-0 rounded-full bg-[#fff]  transition duration-500 text-[#f29620] ">
                 <IoIosArrowRoundForward className="text-[27px] font-bold" />
@@ -75,7 +80,10 @@ const Hero = () => {
               `}</style>
             </button>
             {/* ==== */}
-            <button className="flex w-full sm:w-fit justify-center items-center gap-3 bg-[#fff] text-[#000] transition duration-500 ease-in-out hover:bg-[#f29620] hover:text-[#fff] outline-none border-0 px-10 py-[17px] sm:py-[22px] rounded-sm">
+            <button
+              onClick={() => router.push("/about")}
+              className="flex w-full sm:w-fit justify-center items-center gap-3 bg-[#fff] text-[#000] transition duration-500 ease-in-out hover:bg-[#f29620] hover:text-[#fff] outline-none border-0 px-10 py-[17px] sm:py-[22px] rounded-sm"
+            >
               More About Us!
             </button>
           </div>
