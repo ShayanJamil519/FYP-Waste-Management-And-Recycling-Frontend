@@ -12,15 +12,13 @@ import UploadReportButton from "@/components/Shared/UploadReportButton";
 const CommunityWasteMovementEntries = () => {
   const tableRef = useRef();
   const { user } = useStateContext();
-  const districtAdmin =  user?.userId
+  const districtAdmin = user?.userId;
   const paginate = usePagination();
 
   const { data, isLoading, isError } = useGetWasteDistrict(districtAdmin);
-  console.log(data)
-  const { currentPage, totalPages, visibleItems, goToPage } = paginate(
-    data 
-  );
-  console.log(visibleItems)
+  console.log(data);
+  const { currentPage, totalPages, visibleItems, goToPage } = paginate(data);
+  console.log(visibleItems);
 
   if (isLoading) {
     return (
@@ -68,7 +66,7 @@ const CommunityWasteMovementEntries = () => {
             <p className="font-medium">Image</p>
           </div>
           <div className=" hidden items-center sm:flex">
-            <p className="font-medium">Quantity</p>
+            <p className="font-medium">Quantity (Trucks)</p>
           </div>
           <div className=" flex items-center">
             <p className="font-medium">Area</p>

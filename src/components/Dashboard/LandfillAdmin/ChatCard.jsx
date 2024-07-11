@@ -15,7 +15,7 @@ const ChatCard = () => {
   }
 
   return (
-    <div className="col-span-12 rounded-sm border  bg-white py-6 xl:col-span-4 font-poppins">
+    <div className="col-span-12 rounded-sm border  bg-white py-6 xl:col-span-12 font-poppins">
       <h4 className="mb-4 px-5 text-xl font-semibold text-black ">
         Top Articles
       </h4>

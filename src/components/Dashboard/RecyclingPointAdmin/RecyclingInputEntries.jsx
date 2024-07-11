@@ -66,7 +66,7 @@ const RecyclingInputEntries = () => {
             <p className="font-medium">Image</p>
           </div>
           <div className=" hidden items-center sm:flex">
-            <p className="font-medium">Quantity</p>
+            <p className="font-medium">Quantity (Trucks)</p>
           </div>
           <div className=" flex items-center">
             <p className="font-medium">Area</p>
