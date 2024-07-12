@@ -53,6 +53,8 @@ const Footer = () => {
               <Link href="/complain" className="hover:underline">
                 Complain
               </Link>
+              </li>
+              <li className="mb-3 sm:mb-4">
               <a 
   href="https://sepolia.etherscan.io/address/0xfbf2811c435ccafe4a6bc28b26cb6a5660b75838" 
   target="_blank" 
