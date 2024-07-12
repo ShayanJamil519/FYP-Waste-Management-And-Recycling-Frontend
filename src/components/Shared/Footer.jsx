@@ -53,6 +53,14 @@ const Footer = () => {
               <Link href="/complain" className="hover:underline">
                 Complain
               </Link>
+              <a 
+  href="https://sepolia.etherscan.io/address/0xfbf2811c435ccafe4a6bc28b26cb6a5660b75838" 
+  target="_blank" 
+  rel="noopener noreferrer" 
+  className="hover:underline"
+>
+  Blockchain Data
+</a>
             </li>
           </ul>
         </div>
