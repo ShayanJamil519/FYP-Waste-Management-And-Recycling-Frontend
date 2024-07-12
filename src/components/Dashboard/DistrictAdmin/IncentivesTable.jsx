@@ -167,7 +167,7 @@ const IncentivesTable = () => {
             <p className="font-medium">Total Users</p>
           </div>
           <div className=" flex items-center justify-center col-span-2">
-            <p className="font-medium">Tokens Alloted Per House</p>
+            <p className="font-medium">Tokens Alloted</p>
           </div>
           <div className=" flex justify-center items-center">
             <p className="font-medium">Action</p>
